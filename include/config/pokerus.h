@@ -15,7 +15,7 @@
 #define P_POKERUS_HERD_IMMUNITY          FALSE      // If TRUE, Pokémon that have been previously infected by the Pokérus in your party reduce the chances of your party getting infected by the Pokérus (because they can be rolled at the target of the infection but are now "immune")
 #define P_POKERUS_WEAK_VARIANT           FALSE      // If TRUE, the variant 0 of Pokérus can be erased by stronger variant when Pokérus is spreading
 
-#define P_POKERUS_INFECTION_ODDS         3          // Actual probability is POKERUS_INFECTION_ODDS/65536
+#define P_POKERUS_INFECTION_ODDS         0          // Actual probability is POKERUS_INFECTION_ODDS/65536
 #define P_POKERUS_SPREAD_ODDS            21846      // Actual probability is POKERUS_SPREAD_ODDS/65536 (21846 should correspond to the vanilla Random() % 3)
 
 #endif // GUARD_CONFIG_POKERUS_H
