@@ -73,21 +73,7 @@
       "script": "PalletTown_ProfessorOaksLab_EventScript_ProfOak",
       "flag": "FLAG_HIDE_OAK_IN_HIS_LAB"
     },
-    {
-      "local_id": "LOCALID_BULBASAUR_BALL",
-      "type": "object",
-      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 8,
-      "y": 4,
-      "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
-      "movement_range_x": 1,
-      "movement_range_y": 1,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "PalletTown_ProfessorOaksLab_EventScript_BulbasaurBall",
-      "flag": "FLAG_HIDE_BULBASAUR_BALL"
-    },
+
     {
       "local_id": "LOCALID_SQUIRTLE_BALL",
       "type": "object",
@@ -100,7 +86,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "PalletTown_ProfessorOaksLab_EventScript_SquirtleBall",
+      "script": "PalletTown_ProfessorOaksLab_EventScript_PikachuBall",
       "flag": "FLAG_HIDE_SQUIRTLE_BALL"
     },
     {
