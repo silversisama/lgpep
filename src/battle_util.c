@@ -14,6 +14,7 @@
 #include "generational_changes.h"
 #include "party_menu.h"
 #include "pokemon.h"
+#include "nuzlocke.h"
 #include "international_string_util.h"
 #include "item.h"
 #include "util.h"
@@ -23,7 +24,7 @@
 #include "safari_zone.h"
 #include "sound.h"
 #include "sprite.h"
-#include "string_util.h"
+#include "string_util.h" 
 #include "task.h"
 #include "test_runner.h"
 #include "trig.h"
@@ -633,6 +634,8 @@ bool32 TryRunFromBattle(enum BattlerId battler)
     {
         gCurrentTurnActionNumber = gBattlersCount;
         gBattleOutcome = B_OUTCOME_RAN;
+        // Nuzlocke: Mark area as used if running from catchable Pokemon (not duplicate/shiny)
+        NuzlockeOnBattleEnd();
     }
 
     return effect;
@@ -688,6 +691,8 @@ void HandleAction_Run(void)
             {
                 gCurrentTurnActionNumber = gBattlersCount;
                 gBattleOutcome = B_OUTCOME_MON_FLED;
+                // Nuzlocke: Mark area as used if running from catchable Pokemon (not duplicate/shiny)
+                NuzlockeOnBattleEnd();
             }
         }
     }

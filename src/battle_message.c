@@ -13,7 +13,7 @@
 #include "graphics.h"
 #include "international_string_util.h"
 #include "item.h"
-#include "link.h"
+#include "link.h" 
 #include "menu.h"
 #include "palette.h"
 #include "recorded_battle.h"
@@ -422,6 +422,7 @@ const u8 *const gBattleStringsTable[STRINGID_COUNT] =
     [STRINGID_WALLYUSEDITEM]                        = COMPOUND_STRING("WALLY used {B_LAST_ITEM}!"), //no decapitalize until it is everywhere
     [STRINGID_TRAINERBLOCKEDBALL]                   = COMPOUND_STRING("The Trainer blocked your Poké Ball!"),
     [STRINGID_DONTBEATHIEF]                         = COMPOUND_STRING("Don't be a thief!"),
+    [STRINGID_NUZLOCKEBLOCKEDBALL]                  = COMPOUND_STRING("Nuzlocke rules prevent you from catching this Pokémon!"),
     [STRINGID_ITDODGEDBALL]                         = COMPOUND_STRING("It dodged your thrown Poké Ball! This Pokémon can't be caught!"),
     [STRINGID_PKMNBROKEFREE]                        = COMPOUND_STRING("Oh no! The Pokémon broke free!"),
     [STRINGID_ITAPPEAREDCAUGHT]                     = COMPOUND_STRING("Aww! It appeared to be caught!"),
@@ -2825,6 +2826,15 @@ void BufferStringBattle(enum StringID stringID, enum BattlerId battler)
         break;
     case STRINGID_TRAINERSLIDE:
         stringPtr = gBattleStruct->trainerSlideMsg;
+        break;
+    case STRINGID_NUZLOCKE_FIRST_ENCOUNTER:
+        stringPtr = gText_NuzlockeFirstEncounter;
+        break;
+    case STRINGID_NUZLOCKE_DUPLICATE:
+        stringPtr = gText_NuzlockeDuplicate;
+        break;
+    case STRINGID_NUZLOCKE_SHINY:
+        stringPtr = gText_NuzlockeShiny;
         break;
     default: // load a string from the table
         if (stringID >= STRINGID_COUNT)

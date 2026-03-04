@@ -9,7 +9,7 @@
 #include "credits_frlg.h"
 #include "clock.h"
 #include "dexnav.h"
-#include "event_data.h"
+#include "event_data.h" 
 #include "event_object_movement.h"
 #include "event_scripts.h"
 #include "fake_rtc.h"
@@ -45,6 +45,7 @@
 #include "mirage_tower.h"
 #include "money.h"
 #include "new_game.h"
+#include "nuzlocke.h"
 #include "oras_dowse.h"
 #include "palette.h"
 #include "play_time.h"
@@ -392,6 +393,9 @@ void DoWhiteOut(void)
 {
     RunScriptImmediately(EventScript_WhiteOut);
     HealPlayerParty();
+    // Handle Nuzlocke whiteout - mark all party Pokemon as dead
+    if (IsNuzlockeActive())
+        NuzlockeHandleWhiteout();
     Overworld_ResetStateAfterWhiteOut();
     SetWarpDestinationToLastHealLocation();
     WarpIntoMap();

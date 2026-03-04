@@ -3,6 +3,7 @@
 #include "data.h"
 #include "decompress.h"
 #include "event_scripts.h"
+#include "event_data.h"
 #include "gpu_regs.h"
 #include "malloc.h"
 #include "math_util.h"
@@ -18,9 +19,11 @@
 #include "string_util.h"
 #include "task.h"
 #include "text_window.h"
-#include "util.h"
+#include "util.h" 
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "nuzlocke.h"
+#include "constants/flags_frlg.h"
 
 #if IS_FRLG
 
@@ -54,6 +57,7 @@ struct OakSpeechResources
 static EWRAM_DATA struct OakSpeechResources *sOakSpeechResources = NULL;
 
 static void Task_NewGameScene(u8);
+static bool8 sNuzlockeModeSelected = FALSE;
 
 static void ControlsGuide_LoadPage1(void);
 static void Task_ControlsGuide_HandleInput(u8);
@@ -82,6 +86,7 @@ static void Task_OakSpeech_YourNameWhatIsIt(u8);
 static void Task_OakSpeech_FadeOutForPlayerNamingScreen(u8);
 static void Task_OakSpeech_HandleRivalNameInput(u8);
 static void Task_OakSpeech_DoNamingScreen(u8);
+void CreateYesNoMenuParameterized(u8, u8, u16, u16, u8, u8);
 static void Task_OakSpeech_ConfirmName(u8);
 static void Task_OakSpeech_HandleConfirmNameInput(u8);
 static void Task_OakSpeech_FadeOutPlayerPic(u8);
@@ -89,6 +94,12 @@ static void Task_OakSpeech_FadeOutRivalPic(u8);
 static void Task_OakSpeech_FadeInRivalPic(u8);
 static void Task_OakSpeech_AskRivalsName(u8);
 static void Task_OakSpeech_ReshowPlayersPic(u8);
+static void Task_OakSpeech_NuzlockeChallenge(u8);
+static void Task_OakSpeech_CreateNuzlockeYesNo(u8);
+static void Task_OakSpeech_ProcessNuzlockeYesNoMenu(u8);
+static void Task_OakSpeech_YesNuzlocke(u8);
+static void Task_OakSpeech_NoNuzlocke(u8);
+static void Task_OakSpeech_Farewell(u8);
 static void Task_OakSpeech_LetsGo(u8);
 static void Task_OakSpeech_FadeOutBGM(u8);
 static void Task_OakSpeech_SetUpExitAnimation(u8);
@@ -111,7 +122,7 @@ static void ClearTrainerPic(void);
 static void CreateFadeInTask(u8, u8);
 static void CreateFadeOutTask(u8, u8);
 static void PrintNameChoiceOptions(u8, u8);
-static void GetDefaultName(u8, u8);
+static void GetDefaultName(u8, u8); 
 
 extern const u8 gText_Controls[];
 extern const u8 gText_Next[];
@@ -1600,6 +1611,66 @@ static void Task_OakSpeech_LetsGo(u8 taskId)
 {
     if (gTasks[taskId].tTrainerPicFadeState != 0)
     {
+        gTasks[taskId].func = Task_OakSpeech_NuzlockeChallenge;
+    }
+}
+
+static void Task_OakSpeech_NuzlockeChallenge(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+        {
+            ClearWindowTilemap(sOakSpeechResources->windowIds[0]);
+            OakSpeechPrintMessage(gText_OakSpeech_NuzlockeChallenge, sOakSpeechResources->textSpeed, FALSE);
+            gTasks[taskId].func = Task_OakSpeech_CreateNuzlockeYesNo;
+        }
+}
+
+static void Task_OakSpeech_CreateNuzlockeYesNo(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
+        CreateYesNoMenuParameterized(2, 1, 0xF3, 0xDF, 2, 15);
+        gTasks[taskId].func = Task_OakSpeech_ProcessNuzlockeYesNoMenu;
+    }
+}
+
+static void Task_OakSpeech_ProcessNuzlockeYesNoMenu(u8 taskId)
+{
+    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    {
+    case 0: // YES
+        PlaySE(SE_SELECT);
+        gTasks[taskId].func = Task_OakSpeech_YesNuzlocke;
+        break;
+    case 1: // NO
+    case MENU_B_PRESSED:
+        PlaySE(SE_SELECT);
+        gTasks[taskId].func = Task_OakSpeech_NoNuzlocke;
+        break;
+    }
+}
+
+static void Task_OakSpeech_YesNuzlocke(u8 taskId)
+{
+    FlagSet(FLAG_NUZLOCKE);
+    sNuzlockeModeSelected = TRUE;
+    ClearWindowTilemap(sOakSpeechResources->windowIds[0]);
+    OakSpeechPrintMessage(gText_OakSpeech_YesNuzlocke, sOakSpeechResources->textSpeed, FALSE);
+    gTasks[taskId].func = Task_OakSpeech_Farewell;
+}
+
+static void Task_OakSpeech_NoNuzlocke(u8 taskId)
+{
+    FlagClear(FLAG_NUZLOCKE);
+    ClearWindowTilemap(sOakSpeechResources->windowIds[0]);
+    OakSpeechPrintMessage(gText_OakSpeech_NoNuzlocke, sOakSpeechResources->textSpeed, FALSE);
+    gTasks[taskId].func = Task_OakSpeech_Farewell;
+}
+
+static void Task_OakSpeech_Farewell(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
         StringExpandPlaceholders(gStringVar4, gOakSpeech_Text_LetsGo);
         OakSpeechPrintMessage(gStringVar4, sOakSpeechResources->textSpeed, TRUE);
         gTasks[taskId].tTimer = 30;
@@ -2164,6 +2235,18 @@ static void GetDefaultName(u8 hasPlayerBeenNamed, u8 nameChoice)
         dest[i] = EOS;
 }
 
+
+bool8 WasNuzlockeModeSelected(void)
+{
+    return sNuzlockeModeSelected;
+}
+
+void ClearNuzlockeModeSelection(void)
+{
+    sNuzlockeModeSelected = FALSE;
+}
+
+
 #undef tSpriteTimer
 #undef tTrainerPicPosX
 #undef tTrainerPicFadeState
@@ -2189,5 +2272,6 @@ static void GetDefaultName(u8 hasPlayerBeenNamed, u8 nameChoice)
 #undef tBlendTarget2
 #undef tUnusedState
 #undef tFadeTimer
+
 
 #endif // IS_FRLG

@@ -2,7 +2,7 @@
 #define GUARD_WILD_ENCOUNTER_H
 
 #include "rtc.h"
-#include "constants/wild_encounter.h"
+#include "constants/wild_encounter.h" 
 #include "wild_encounter_ow.h"
 
 #define HEADER_NONE 0xFFFF
@@ -52,7 +52,7 @@ extern const struct WildPokemon gWildFeebas;
 extern bool8 gIsFishingEncounter;
 extern bool8 gIsSurfingEncounter;
 extern u8 gChainFishingDexNavStreak;
-
+bool8 IsWildPokemonCatchableInNuzlocke(void);
 u8 ChooseWildMonLevel(const struct WildPokemon *wildPokemon, u8 wildMonIndex, enum WildPokemonArea area);
 void DisableWildEncounters(bool8 disabled);
 bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior);

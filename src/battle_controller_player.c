@@ -13,8 +13,9 @@
 #include "bg.h"
 #include "data.h"
 #include "item.h"
-#include "item_menu.h"
+#include "item_menu.h" 
 #include "link.h"
+#include "nuzlocke.h"
 #include "main.h"
 #include "m4a.h"
 #include "palette.h"
@@ -1253,6 +1254,8 @@ void SetBattleEndCallbacks(enum BattlerId battler)
         }
         else
         {
+            // Call Nuzlocke battle end handling before ending battle
+            NuzlockeOnBattleEnd();
             m4aSongNumStop(SE_LOW_HEALTH);
             gMain.inBattle = FALSE;
             gMain.callback1 = gPreBattleCallback1;

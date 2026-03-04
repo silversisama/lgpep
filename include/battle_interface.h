@@ -1,7 +1,7 @@
 #ifndef GUARD_BATTLE_INTERFACE_H
 #define GUARD_BATTLE_INTERFACE_H
 
-#include "battle_controllers.h"
+#include "battle_controllers.h" 
 
 // used for sBattlerCoords and sBattlerHealthboxCoords
 enum BattleCoordTypes
@@ -86,6 +86,7 @@ enum
 #define TAG_FAIRY_INDICATOR_TILE        0xD78E
 #define TAG_STELLAR_INDICATOR_TILE      0xD78F
 #define TAG_TERA_TRIGGER_TILE           0xD790
+#define TAG_NUZLOCKE_INDICATOR_TILE     0xD791
 
 #define TAG_GIMMICK_TRIGGER_PAL         0xD777
 #define TAG_MEGA_INDICATOR_PAL          0xD778

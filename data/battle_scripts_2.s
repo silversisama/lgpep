@@ -3,7 +3,7 @@
 #include "constants/battle.h"
 #include "constants/battle_script_commands.h"
 #include "constants/battle_anim.h"
-#include "constants/battle_string_ids.h"
+#include "constants/battle_string_ids.h" 
 #include "constants/moves.h"
 #include "constants/songs.h"
 #include "constants/game_stat.h"
@@ -245,6 +245,13 @@ BattleScript_TrainerBallBlock::
 	printstring STRINGID_DONTBEATHIEF
 	waitmessage B_WAIT_TIME_LONG
 	finishaction
+
+BattleScript_NuzlockeBallBlock::
+	waitmessage B_WAIT_TIME_LONG
+	printstring STRINGID_NUZLOCKEBLOCKEDBALL
+	waitmessage B_WAIT_TIME_LONG
+	finishaction
+
 
 BattleScript_RunByUsingItem::
 	playse SE_FLEE

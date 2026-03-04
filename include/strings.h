@@ -10,7 +10,7 @@ extern const u8 gText_ExpandedPlaceholder_Ruby[];
 extern const u8 gText_ExpandedPlaceholder_Emerald[];
 extern const u8 gText_ExpandedPlaceholder_Aqua[];
 extern const u8 gText_ExpandedPlaceholder_Magma[];
-extern const u8 gText_ExpandedPlaceholder_Archie[];
+extern const u8 gText_ExpandedPlaceholder_Archie[]; 
 extern const u8 gText_ExpandedPlaceholder_Maxie[];
 extern const u8 gText_ExpandedPlaceholder_Kyogre[];
 extern const u8 gText_ExpandedPlaceholder_Groudon[];
@@ -18,6 +18,11 @@ extern const u8 gText_ExpandedPlaceholder_Brendan[];
 extern const u8 gText_ExpandedPlaceholder_May[];
 extern const u8 gText_ExpandedPlaceholder_Red[];
 extern const u8 gText_ExpandedPlaceholder_Green[];
+
+// Nuzlocke strings
+extern const u8 gText_NuzlockeFirstEncounter[];
+extern const u8 gText_NuzlockeDuplicate[];
+extern const u8 gText_NuzlockeShiny[];
 
 extern const u8 gText_Lv50[];
 extern const u8 gText_OpenLevel[];
@@ -2198,7 +2203,10 @@ extern const u8 gText_Volcanobadge[];
 extern const u8 gText_Earthbadge[];
 extern const u8 gText_OakImportantToGetToKnowPokemonThroughly[];
 extern const u8 gText_OakThisIsListOfPokemon[];
-
+extern const u8 gText_OakSpeech_NuzlockeChallenge[];
+extern const u8 gText_OakSpeech_NoNuzlocke[];
+extern const u8 gText_OakSpeech_YesNuzlocke[];
+extern const u8 gText_OakSpeech_Farewell[];
 extern const u8 gText_Boy[];
 extern const u8 gText_Girl[];
 

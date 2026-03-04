@@ -5,7 +5,7 @@ void ItemUseOutOfBattle_Mail(u8 taskId);
 void ItemUseOutOfBattle_Bike(u8 taskId);
 void ItemUseOutOfBattle_Rod(u8 taskId);
 void ItemUseOutOfBattle_Itemfinder(u8 taskId);
-void ItemUseOutOfBattle_PokeblockCase(u8 taskId);
+void ItemUseOutOfBattle_PokeblockCase(u8 taskId); 
 void ItemUseOutOfBattle_CoinCase(u8 taskId);
 void ItemUseOutOfBattle_PokemonBoxLink(u8 taskId);
 void ItemUseOutOfBattle_PowderJar(u8 taskId);
@@ -58,6 +58,7 @@ enum {
     BALL_THROW_UNABLE_SEMI_INVULNERABLE,
     BALL_THROW_ABLE,
     BALL_THROW_UNABLE_DISABLED_FLAG,
+    BALL_THROW_UNABLE_NUZLOCKE,
 };
 
 bool32 CanThrowBall(void);

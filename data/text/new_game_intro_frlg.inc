@@ -235,6 +235,48 @@ gOakSpeech_Text_RememberRivalsName::
 	.string "That's right! I remember now!\n"
 	.string "His name is {RIVAL}!\p$"
 
+
+gText_OakSpeech_NuzlockeChallenge::
+	.string "Oh, before we begin…\n"
+	.string "There’s something new I’ve been\l"
+	.string "researching.\p"
+	.string "It’s called the NUZLOCKE CHALLENGE!\p"
+	.string "It’s a special way to journey that\n"
+	.string "makes your adventure more difficult\l"
+	.string "and more meaningful.\p"
+	.string "Under these rules, if one of your\n"
+	.string "POKéMON faints, it’s considered unable\l"
+	.string "to battle and must be released.\p"
+	.string "Also, you may only catch the first\n"
+	.string "POKéMON you encounter in each area.\p"
+	.string "These rules test a TRAINER’s bond\n"
+	.string "with their team.\p"
+	.string "Every choice matters!\p"
+	.string "So, would you like to play the\n"
+	.string "NUZLOCKE CHALLENGE?\p"
+	.string "$"
+
+gText_OakSpeech_NoNuzlocke::
+	.string "That’s quite all right!\p"
+	.string "There’s no shame in taking your\n"
+	.string "journey at your own pace.\p"
+	.string "I’ll leave the NUZLOCKE CHALLENGE\n"
+	.string "disabled.\p"
+	.string "If you decide you want to take on\n"
+	.string "the challenge, you'll need to start\l"
+	.string "a new game.\p"
+	.string "$"
+
+gText_OakSpeech_YesNuzlocke::
+	.string "I see!\n"
+	.string "You’re looking for a real challenge!\p"
+	.string "I’ll enable the NUZLOCKE CHALLENGE\n"
+	.string "for your adventure.\p"
+	.string "Take good care of your POKéMON.\n"
+	.string "Every one of them will be important!\p"
+	.string "$"
+
+
 gOakSpeech_Text_LetsGo::
 	.string "{PLAYER}!\p"
 	.string "Your very own POKéMON legend is\n"
