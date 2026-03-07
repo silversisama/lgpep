@@ -324,6 +324,8 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Erika;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Koga;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Sabrina;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Blaine;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Jessie;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_James;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Giovanni;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_MomFrlg;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Celio;
@@ -669,6 +671,8 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_WOMAN_1_FRLG]             = &gObjectEventGraphicsInfo_Woman1Frlg,
     [OBJ_EVENT_GFX_BATTLE_GIRL]              = &gObjectEventGraphicsInfo_BattleGirl,
     [OBJ_EVENT_GFX_MAN]                      = &gObjectEventGraphicsInfo_Man,
+    [OBJ_EVENT_GFX_JESSIE]                   = &gObjectEventGraphicsInfo_Jessie,
+    [OBJ_EVENT_GFX_JAMES]                    = &gObjectEventGraphicsInfo_James,
     [OBJ_EVENT_GFX_ROCKER]                   = &gObjectEventGraphicsInfo_Rocker,
     [OBJ_EVENT_GFX_FAT_MAN_FRLG]             = &gObjectEventGraphicsInfo_FatManFrlg,
     [OBJ_EVENT_GFX_WOMAN_2_FRLG]             = &gObjectEventGraphicsInfo_Woman2Frlg,

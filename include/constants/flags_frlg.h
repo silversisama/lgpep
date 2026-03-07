@@ -152,9 +152,9 @@
 #define FLAG_SEARCHING                                     0x0AF
 #define FLAG_DEXNAV_GET                                    0x0B0
 #define FLAG_DETECTOR_MODE                                 0x0B1
-#define FLAG_EXPSHARE               0x0B2
-#define FLAG_NUZLOCKE                0x0B3
-#define FLAG_0x0B4               0x0B4
+#define FLAG_EXPSHARE                                      0x0B2
+#define FLAG_NUZLOCKE                                      0x0B3
+#define FLAG_SANDBOX_MODE                                  0x0B4
 #define FLAG_0x0B5               0x0B5
 #define FLAG_0x0B6               0x0B6
 #define FLAG_0x0B7               0x0B7

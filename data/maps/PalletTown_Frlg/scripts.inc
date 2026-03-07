@@ -77,6 +77,13 @@ PalletTown_EventScript_OakRatingScene::
 	releaseall
 	end
 
+TeamRocketCutscene::
+	lock
+	fadescreen FADE_TO_BLACK
+	callnative TeamRocketIntro
+	waitstate
+	return
+
 PalletTown_EventScript_EndOakRatingScene::
 	closemessage
 	applymovement LOCALID_PALLET_PROF_OAK, PalletTown_Movement_OakExit

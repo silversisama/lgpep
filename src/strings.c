@@ -177,6 +177,15 @@ const u8 gText_ThePC[] = _("the PC");
 const u8 gText_NuzlockeFirstEncounter[] = _("Alright, here's the first POKéMON\nof the area. Better make it count!\p");
 const u8 gText_NuzlockeDuplicate[] = _("We've already caught this POKéMON.\pThe Duplicate Clause lets us try\nfor another after this battle.\p");
 const u8 gText_NuzlockeShiny[] = _("Oh wow, a Shiny!\pThe Shiny Clause lets us try to\ncatch this no matter what!\p");
+const u8 gText_TRProtect_The_World[] = _("Prepare for trouble! And make it\ndouble!");
+const u8 gText_TRUnite_The_People[] = _("To protect the world from\ndevastation!");
+const u8 gText_TRTo_Denounce_Evil[] = _("To unite all peoples within our\nnation!");
+const u8 gText_TRTo_Extend_Reach[] = _("To denounce the evils of truth\nand love! To extend our reach to");
+const u8 gText_TRThe_Stars_Above[] = _("the stars above!$");
+const u8 gText_TRJessie[] = _("Jessie!");
+const u8 gText_TRJames[] = _("James!");
+const u8 gText_TRBlast_Off[] = _("Team Rocket blasts off at the speed\nof light! Surrender now, or prepare");
+const u8 gText_TRMeowth_Thats_Right[] = _("to fight! Meowth! That's right!");
 
 const u8 *const gBagMenu_ReturnToStrings[] =
 {
@@ -498,6 +507,7 @@ const u8 gText_Key_Items[] = _("KEY ITEMS");
 const u8 gText_Poke_Balls[] = _("POKé BALLS");
 const u8 gText_TMs_Hms[] = _("TMs & HMs");
 const u8 gText_Berries2[] = _("BERRIES");
+const u8 gText_StatEditor[] = _("{FONT_NARROW}EDIT STATS");
 const u8 gText_SomeonesPC[] = _("SOMEONE'S PC");
 const u8 gText_LanettesPC[] = _("LANETTE'S PC");
 const u8 gText_BillsPc[] = _("BILL'S PC");
