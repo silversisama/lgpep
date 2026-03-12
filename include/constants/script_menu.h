@@ -195,7 +195,7 @@
 #define STDSTRING_CUTE2            11
 #define STDSTRING_SMART2           12
 #define STDSTRING_TOUGH2           13
-#define STDSTRING_ITEMS            14
+#define STDSTRING_HEALING_ITEMS    14
 #define STDSTRING_KEYITEMS         15
 #define STDSTRING_POKEBALLS        16
 #define STDSTRING_TMHMS            17
@@ -220,6 +220,8 @@
 #define STDSTRING_VOLCANO_BADGE    36
 #define STDSTRING_EARTH_BADGE      37
 #define STDSTRING_COINS            38
+#define STDSTRING_HELD_ITEMS       39
+#define STDSTRING_MISC_ITEMS       40
 
 // Dynamic Multichoice Callbacks
 

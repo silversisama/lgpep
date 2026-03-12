@@ -227,11 +227,11 @@ CeladonCity_Gym_Text_GymStatue::
 	.string "CELADON POKéMON GYM\n"
 	.string "LEADER: ERIKA\p"
 	.string "WINNING TRAINERS:\n"
-	.string "{RIVAL}$"
+	.string "Blue$"
 
 CeladonCity_Gym_Text_GymStatuePlayerWon::
 	.string "CELADON POKéMON GYM\n"
 	.string "LEADER: ERIKA\p"
 	.string "WINNING TRAINERS:\n"
-	.string "{RIVAL}, {PLAYER}$"
+	.string "Blue, {PLAYER}$"
 

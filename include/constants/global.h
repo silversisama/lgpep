@@ -23,6 +23,7 @@
 #include "config/debug.h"
 #include "config/dexnav.h"
 #include "config/follower_npc.h"
+#include "config/frlg_bag.h"
 #include "config/general.h"
 #include "config/item.h"
 #include "config/overworld.h"
@@ -110,7 +111,9 @@ enum Language
 #define ROAMER_COUNT 1 // Number of maximum concurrent active roamers
 
 // Bag constants
-#define BAG_ITEMS_COUNT 30
+#define BAG_HEALING_ITEMS_COUNT 30
+#define BAG_HELD_ITEMS_COUNT 30
+#define BAG_MISC_ITEMS_COUNT 47
 #define BAG_KEYITEMS_COUNT 30
 #define BAG_POKEBALLS_COUNT 16
 #define BAG_TMHM_COUNT 64

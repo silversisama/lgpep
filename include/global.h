@@ -1081,7 +1081,9 @@ struct ExternalEventFlags
 
 struct Bag
 {
-    struct ItemSlot items[BAG_ITEMS_COUNT];
+    struct ItemSlot HealingItems[BAG_HEALING_ITEMS_COUNT];
+    struct ItemSlot heldItems[BAG_HELD_ITEMS_COUNT];
+    struct ItemSlot miscItems[BAG_MISC_ITEMS_COUNT];
     struct ItemSlot keyItems[BAG_KEYITEMS_COUNT];
     struct ItemSlot pokeBalls[BAG_POKEBALLS_COUNT];
     struct ItemSlot TMsHMs[BAG_TMHM_COUNT];

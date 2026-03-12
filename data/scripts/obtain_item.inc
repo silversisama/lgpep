@@ -18,15 +18,27 @@ EventScript_ObtainItemMessage::
 
 EventScript_BufferPocketNameAndTryFanfare::
 	switch VAR_RESULT
-	case POCKET_ITEMS,      EventScript_BufferItemsPocket
+	case POCKET_HEALING_ITEMS,      EventScript_BufferHealingItemsPocket
+	case POCKET_HELD_ITEMS,      EventScript_BufferHeldItemsPocket
+	case POCKET_MISC_ITEMS,      EventScript_BufferMiscItemsPocket
 	case POCKET_KEY_ITEMS,  EventScript_BufferKeyItemsPocket
 	case POCKET_POKE_BALLS, EventScript_BufferPokeballsPocket
 	case POCKET_TM_HM,      EventScript_BufferTMHMsPocket
 	case POCKET_BERRIES,    EventScript_BufferBerriesPocket
 	end
 
-EventScript_BufferItemsPocket::
-	bufferstdstring STR_VAR_3, STDSTRING_ITEMS
+EventScript_BufferHealingItemsPocket::
+	bufferstdstring STR_VAR_3, STDSTRING_HEALING_ITEMS
+	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedItem
+	return
+
+EventScript_BufferHeldItemsPocket::
+	bufferstdstring STR_VAR_3, STDSTRING_HELD_ITEMS
+	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedItem
+	return
+
+EventScript_BufferMiscItemsPocket::
+	bufferstdstring STR_VAR_3, STDSTRING_MISC_ITEMS
 	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedItem
 	return
 
@@ -251,15 +263,25 @@ Std_PutItemAway::
 
 EventScript_BufferPutAwayPocketName::
 	switch VAR_RESULT
-	case POCKET_ITEMS,       EventScript_BufferPutAwayPocketItems
+	case POCKET_HEALING_ITEMS,       EventScript_BufferPutAwayPocketHealingItems
+	case POCKET_HELD_ITEMS,       EventScript_BufferPutAwayPocketHeldItems
+	case POCKET_MISC_ITEMS,       EventScript_BufferPutAwayPocketMiscItems
 	case POCKET_KEY_ITEMS,   EventScript_BufferPutAwayPocketKeyItems
 	case POCKET_POKE_BALLS,  EventScript_BufferPutAwayPocketPokeBalls
 	case POCKET_TM_HM,     EventScript_BufferPutAwayPocketTMCase
 	case POCKET_BERRIES, EventScript_BufferPutAwayPocketBerryPouch
 	end
 
-EventScript_BufferPutAwayPocketItems::
-	bufferstdstring STR_VAR_3, STDSTRING_ITEMS
+EventScript_BufferPutAwayPocketHealingItems::
+	bufferstdstring STR_VAR_3, STDSTRING_HEALING_ITEMS
+	return
+
+EventScript_BufferPutAwayPocketHeldItems::
+	bufferstdstring STR_VAR_3, STDSTRING_HELD_ITEMS
+	return
+
+EventScript_BufferPutAwayPocketMiscItems::
+	bufferstdstring STR_VAR_3, STDSTRING_MISC_ITEMS
 	return
 
 EventScript_BufferPutAwayPocketKeyItems::

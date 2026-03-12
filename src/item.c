@@ -92,7 +92,9 @@ struct ItemSlot NONNULL BagPocket_GetSlotData(struct BagPocket *pocket, u32 pock
 {
     switch (pocket->id)
     {
-    case POCKET_ITEMS:
+    case POCKET_HEALING_ITEMS:
+    case POCKET_HELD_ITEMS:
+    case POCKET_MISC_ITEMS:
     case POCKET_KEY_ITEMS:
     case POCKET_POKE_BALLS:
     case POCKET_TM_HM:
@@ -115,7 +117,9 @@ void NONNULL BagPocket_SetSlotData(struct BagPocket *pocket, u32 pocketPos, stru
 
     switch (pocket->id)
     {
-    case POCKET_ITEMS:
+    case POCKET_HEALING_ITEMS:
+    case POCKET_HELD_ITEMS:
+    case POCKET_MISC_ITEMS:
     case POCKET_KEY_ITEMS:
     case POCKET_POKE_BALLS:
     case POCKET_TM_HM:
@@ -141,9 +145,17 @@ void ApplyNewEncryptionKeyToBagItems(u32 newKey)
 
 void SetBagItemsPointers(void)
 {
-    gBagPockets[POCKET_ITEMS].itemSlots = gSaveBlock1Ptr->bag.items;
-    gBagPockets[POCKET_ITEMS].capacity = BAG_ITEMS_COUNT;
-    gBagPockets[POCKET_ITEMS].id = POCKET_ITEMS;
+    gBagPockets[POCKET_HEALING_ITEMS].itemSlots = gSaveBlock1Ptr->bag.HealingItems;
+    gBagPockets[POCKET_HEALING_ITEMS].capacity = BAG_HEALING_ITEMS_COUNT;
+    gBagPockets[POCKET_HEALING_ITEMS].id = POCKET_HEALING_ITEMS;
+
+    gBagPockets[POCKET_HELD_ITEMS].itemSlots = gSaveBlock1Ptr->bag.heldItems;
+    gBagPockets[POCKET_HELD_ITEMS].capacity = BAG_HELD_ITEMS_COUNT;
+    gBagPockets[POCKET_HELD_ITEMS].id = POCKET_HELD_ITEMS;
+
+    gBagPockets[POCKET_MISC_ITEMS].itemSlots = gSaveBlock1Ptr->bag.miscItems;
+    gBagPockets[POCKET_MISC_ITEMS].capacity = BAG_MISC_ITEMS_COUNT;
+    gBagPockets[POCKET_MISC_ITEMS].id = POCKET_MISC_ITEMS;
 
     gBagPockets[POCKET_KEY_ITEMS].itemSlots = gSaveBlock1Ptr->bag.keyItems;
     gBagPockets[POCKET_KEY_ITEMS].capacity = BAG_KEYITEMS_COUNT;
@@ -339,6 +351,24 @@ static bool32 NONNULL BagPocket_AddItem(struct BagPocket *pocket, enum Item item
         }
     }
 
+    if (FRLG_I_ADD_TM_CASE_WITH_TMS)
+    {
+        if (pocket->id == POCKET_TM_HM)
+        {
+            if (!CheckBagHasItem(ITEM_TM_CASE, 1))
+                AddBagItem(ITEM_TM_CASE, 1);
+        }
+    }
+
+    if (FRLG_I_ADD_BERRY_POUCH_WITH_BERRIES)
+    {
+        if (pocket->id == POCKET_BERRIES)
+        {
+            if (!CheckBagHasItem(ITEM_BERRY_POUCH, 1))
+                AddBagItem(ITEM_BERRY_POUCH, 1);
+        }
+    }
+
     Free(tempPocketSlotQuantities);
     return count == 0;
 }
@@ -481,7 +511,14 @@ static void NONNULL BagPocket_CompactItems(struct BagPocket *pocket)
     }
 }
 
-void RemovePCItem(u8 index, u16 count)
+void RemovePCItem(enum Item itemId, u16 count)
+{
+    struct BagPocket dummyPocket = DUMMY_PC_BAG_POCKET;
+
+    BagPocket_RemoveItem(&dummyPocket, itemId, count);
+}
+
+void RemovePCItemFromIndex(u8 index, u16 count)
 {
     struct BagPocket dummyPocket = DUMMY_PC_BAG_POCKET;
 
@@ -834,6 +871,13 @@ u32 GetItemHoldEffectParam(enum Item itemId)
 const u8 *GetItemDescription(enum Item itemId)
 {
     return gItemsInfo[SanitizeItemId(itemId)].description;
+}
+
+const u8 *GetItemLongDescription(enum Item itemId)
+{
+    if (gItemsInfo[SanitizeItemId(itemId)].descriptionLong == NULL)
+        return gItemsInfo[SanitizeItemId(itemId)].description;
+    return gItemsInfo[SanitizeItemId(itemId)].descriptionLong;
 }
 
 u8 GetItemImportance(enum Item itemId)

@@ -80,7 +80,9 @@ struct GFRomHeader
     u32 gcnLinkFlagsOffset;
     u32 gameClearFlag;
     u32 ribbonFlag;
-    u8 bagCountItems;
+    u8 bagCountHealingItems;
+    u8 bagCountHeldItems;
+    u8 bagCountMiscItems;
     u8 bagCountKeyItems;
     u8 bagCountPokeballs;
     u8 bagCountTMHMs;
@@ -162,7 +164,9 @@ __attribute__((section(".text.header_gf"))) USED static const struct GFRomHeader
     .gcnLinkFlagsOffset = offsetof(struct SaveBlock2, gcnLinkFlags),
     .gameClearFlag = FLAG_SYS_GAME_CLEAR,
     .ribbonFlag = FLAG_SYS_RIBBON_GET,
-    .bagCountItems = BAG_ITEMS_COUNT,
+    .bagCountHealingItems = BAG_HEALING_ITEMS_COUNT,
+    .bagCountHeldItems = BAG_HELD_ITEMS_COUNT,
+    .bagCountMiscItems = BAG_MISC_ITEMS_COUNT,
     .bagCountKeyItems = BAG_KEYITEMS_COUNT,
     .bagCountPokeballs = BAG_POKEBALLS_COUNT,
     .bagCountTMHMs = BAG_TMHM_COUNT,

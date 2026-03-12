@@ -7390,8 +7390,8 @@ u16 GetSpeciesPreEvolution(u16 species)
 
         for (j = 0; evolutions[j].method != EVOLUTIONS_END; j++)
         {
-            if (SanitizeSpeciesId(evolutions[j].targetSpecies) == species)
-                return i;
+            if (IsSpeciesEnabled(evolutions[j].targetSpecies) && SanitizeSpeciesId(evolutions[j].targetSpecies) == species)
+            return i;
         }
     }
 

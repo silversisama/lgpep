@@ -1287,35 +1287,35 @@ PalletTown_ProfessorOaksLab_EventScript_RightSignAlt::
 	end
 
 PalletTown_ProfessorOaksLab_Text_RivalGrampsIsntAround::
-	.string "{RIVAL}: What, it's only {PLAYER}?\n"
+	.string "Blue: What, it's only {PLAYER}?\n"
 	.string "Gramps isn't around.$"
 
 PalletTown_ProfessorOaksLab_Text_RivalFedUpWithWaiting::
-	.string "{RIVAL}: Gramps!\n"
+	.string "Blue: Gramps!\n"
 	.string "I'm fed up with waiting!$"
 
 PalletTown_ProfessorOaksLab_Text_RivalNoFairWhatAboutMe::
-	.string "{RIVAL}: Hey! Gramps! No fair!\n"
+	.string "Blue: Hey! Gramps! No fair!\n"
 	.string "What about me?$"
 
 PalletTown_ProfessorOaksLab_Text_RivalGoChoosePlayer::
-	.string "{RIVAL}: Heh, I don't need to be\n"
+	.string "Blue: Heh, I don't need to be\n"
 	.string "greedy like you. I'm mature!\p"
 	.string "Go ahead and choose, {PLAYER}!$"
 
 PalletTown_ProfessorOaksLab_Text_RivalIllTakeThisOneThen::
-	.string "{RIVAL}: I'll take this one, then!$"
+	.string "Blue: I'll take this one, then!$"
 
 PalletTown_ProfessorOaksLab_Text_RivalReceivedMonFromOak::
-	.string "{RIVAL} received the {STR_VAR_1}\n"
+	.string "Blue received the {STR_VAR_1}\n"
 	.string "from PROF. OAK!$"
 
 PalletTown_ProfessorOaksLab_Text_RivalMyMonLooksTougher::
-	.string "{RIVAL}: My POKéMON looks a lot\n"
+	.string "Blue: My POKéMON looks a lot\n"
 	.string "tougher than yours.$"
 
 PalletTown_ProfessorOaksLab_Text_RivalLetsCheckOutMons::
-	.string "{RIVAL}: Wait, {PLAYER}!\n"
+	.string "Blue: Wait, {PLAYER}!\n"
 	.string "Let's check out our POKéMON!\p"
 	.string "Come on, I'll take you on!$"
 
@@ -1326,24 +1326,24 @@ PalletTown_ProfessorOaksLab_Text_RivalDefeat::
 
 @ Also used for early Route 22 battle
 Text_RivalVictory::
-	.string "{RIVAL}: Yeah!\n"
+	.string "Blue: Yeah!\n"
 	.string "Am I great or what?$"
 
 PalletTown_ProfessorOaksLab_Text_RivalGoToughenMyMon::
-	.string "{RIVAL}: Okay! I'll make my\n"
+	.string "Blue: Okay! I'll make my\n"
 	.string "POKéMON battle to toughen it up!\p"
 	.string "{PLAYER}! Gramps!\n"
 	.string "Smell you later!$"
 
 PalletTown_ProfessorOaksLab_Text_RivalGramps::
-	.string "{RIVAL}: Gramps!$"
+	.string "Blue: Gramps!$"
 
 PalletTown_ProfessorOaksLab_Text_RivalWhatDidYouCallMeFor::
-	.string "{RIVAL}: I almost forgot!\n"
+	.string "Blue: I almost forgot!\n"
 	.string "What did you call me for?$"
 
 PalletTown_ProfessorOaksLab_Text_RivalLeaveItToMeGramps::
-	.string "{RIVAL}: All right, Gramps!\n"
+	.string "Blue: All right, Gramps!\n"
 	.string "Leave it all to me!$"
 
 PalletTown_ProfessorOaksLab_Text_RivalTellSisNotToGiveYouMap::
@@ -1357,7 +1357,7 @@ PalletTown_ProfessorOaksLab_Text_RivalTellSisNotToGiveYouMap::
 	.string "my place after this!$"
 
 PalletTown_ProfessorOaksLab_Text_OakThreeMonsChooseOne::
-	.string "OAK: {RIVAL}?\n"
+	.string "OAK: Blue?\n"
 	.string "Let me think…\p"
 	.string "Oh, that's right, I told you to\n"
 	.string "come! Just wait!\p"
@@ -1374,7 +1374,7 @@ PalletTown_ProfessorOaksLab_Text_OakThreeMonsChooseOne::
 	.string "Go on, choose!$"
 
 PalletTown_ProfessorOaksLab_Text_OakBePatientRival::
-	.string "OAK: Be patient, {RIVAL}.\n"
+	.string "OAK: Be patient, Blue.\n"
 	.string "You can have one, too!$"
 
 PalletTown_ProfessorOaksLab_Text_OakWhichOneWillYouChoose::
@@ -1456,7 +1456,7 @@ PalletTown_ProfessorOaksLab_Text_OakPokedexOnDesk::
 	.string "It's a high-tech encyclopedia!$"
 
 PalletTown_ProfessorOaksLab_Text_OakTakeTheseWithYou::
-	.string "OAK: {PLAYER} and {RIVAL}.\n"
+	.string "OAK: {PLAYER} and Blue.\n"
 	.string "Take these with you.$"
 
 PalletTown_ProfessorOaksLab_Text_ReceivedPokedexFromOak::
@@ -1502,7 +1502,7 @@ PalletTown_ProfessorOaksLab_Text_OakMonsAroundWorldWait::
 PalletTown_ProfessorOaksLab_Text_OakAddedNothingToPokedex::
 	.string "Ah, {PLAYER}!\n"
 	.string "How is your POKéDEX shaping up?\p"
-	.string "{RIVAL} has already caught some\n"
+	.string "Blue has already caught some\n"
 	.string "POKéMON and added to the data.\p"
 	.string "So, {PLAYER}, let's have a look at\n"
 	.string "your POKéDEX.\p"
@@ -1597,7 +1597,7 @@ PalletTown_ProfessorOaksLab_Text_OakSightingsOfRareMons::
 	.string "like you to go in my place.$"
 
 PalletTown_ProfessorOaksLab_Text_RivalJustLetMeHandleEverything::
-	.string "{RIVAL}: Hey, I heard that!\p"
+	.string "Blue: Hey, I heard that!\p"
 	.string "Gramps, what's with favoring\n"
 	.string "{PLAYER} over me all the time?\p"
 	.string "I went and collected more POKéMON,\n"
@@ -1626,7 +1626,7 @@ PalletTown_ProfessorOaksLab_Text_PlayersPokedexWasUpgraded::
 	.string "{PLAYER}'s POKéDEX was upgraded!$"
 
 PalletTown_ProfessorOaksLab_Text_OakMustReallyWorkToFillPokedex::
-	.string "Now, {PLAYER} and {RIVAL}!\p"
+	.string "Now, {PLAYER} and Blue!\p"
 	.string "This time, you really must work\n"
 	.string "towards filling your POKéDEXES.\p"
 	.string "I urge you to make them the best\n"
@@ -1635,7 +1635,7 @@ PalletTown_ProfessorOaksLab_Text_OakMustReallyWorkToFillPokedex::
 	.string "undertaking in POKéMON history!$"
 
 PalletTown_ProfessorOaksLab_Text_RivalIllCompleteThePokedex::
-	.string "{RIVAL}: Gramps, calm down.\n"
+	.string "Blue: Gramps, calm down.\n"
 	.string "Don't get so excited.\p"
 	.string "I'll get the POKéDEX completed,\n"
 	.string "don't you worry about a thing.\p"
