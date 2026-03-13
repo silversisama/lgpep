@@ -2230,6 +2230,7 @@ extern const u8 gText_OakSpeech_YesNuzlocke[];
 extern const u8 gText_OakSpeech_Farewell[];
 extern const u8 gText_Boy[];
 extern const u8 gText_Girl[];
-
+extern const u8 gText_BallsCannotBeUsedNuz[];
+extern const u8 gText_TrainerCardNuzlockePokedex[];
 
 #endif // GUARD_STRINGS_H
