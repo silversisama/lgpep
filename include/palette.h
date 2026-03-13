@@ -86,7 +86,7 @@ extern struct PaletteFadeControl gPaletteFade;
 extern u32 gPlttBufferTransferPending;
 extern u16 ALIGNED(4) gPlttBufferUnfaded[PLTT_BUFFER_SIZE];
 extern u16 ALIGNED(4) gPlttBufferFaded[PLTT_BUFFER_SIZE];
-
+u32 PrevPaletteFadeResult(void); // Battle Speed Up
 void LoadPalette(const void *src, u32 offset, u32 size);
 void LoadPaletteFast(const void *src, u32 offset, u32 size);
 void FillPalette(u32 value, u32 offset, u32 size);

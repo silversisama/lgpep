@@ -1234,3 +1234,13 @@ const u8 gText_Volcanobadge[] = _("VOLCANOBADGE");
 const u8 gText_Earthbadge[] = _("EARTHBADGE");
 const u8 gText_OakImportantToGetToKnowPokemonThroughly[] = _("OAK: It's important to get to know\nyour POKéMON thoroughly.\p");
 const u8 gText_OakThisIsListOfPokemon[] = _("This is a list of your POKéMON,\n{PLAYER}.\pOpen this to check the skills\nand moves of your POKéMON.\pYou also choose POKéMON here if\nyou want to use an item on one.{PAUSE_UNTIL_PRESS}");
+
+const u8 gText_SmallDot[] = _("·");
+const u8 gText_LargeDot[] = _("{EMOJI_CIRCLE}");
+const u8 gText_PageNav[] = _("{L_BUTTON}{R_BUTTON} PAGE");
+const u8 gText_BattleSpeed[] = _("BATTLE SPEED");
+const u8 gText_BattleSpeed1x[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}1x");
+const u8 gText_BattleSpeed2x[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}2x");
+const u8 gText_BattleSpeed3x[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}3x");
+const u8 gText_BattleSpeed4x[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}4x");
+

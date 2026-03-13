@@ -1889,18 +1889,21 @@ void CalculateMonStats(struct Pokemon *mon)
 u32 CalculateEvYield (s32 level)
 {     
     if (level < 71 && (level % 10) == 0)
-        return 5;
+        return 10;
     else
-        return 1;
+        return 10;
 }
 
-u32 GetEVsForMonLevel(s32 level) /* doesnt make mudskip cry */
+u32 GetEVsForMonLevel(s32 level) 
 {
-    u32 cappedLevel = min(level, 70);
-    u32 numberOf10s = cappedLevel / 10;
-    u32 numberOfNon10s = level - numberOf10s;
+    // Ensure level is at least 1 to avoid weird math
+    if (level < 1) level = 1;
 
-    u32 levelEvs = numberOf10s * 5 + numberOfNon10s * 1;
+    u32 startingBonus = 8;
+    u32 evsPerLevel = 10;
+
+    // Formula: 8 (base) + (level * 10)
+    u32 levelEvs = startingBonus + (level * evsPerLevel);
 
     return levelEvs;
 }

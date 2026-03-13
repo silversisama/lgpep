@@ -232,7 +232,7 @@ gOakSpeech_Text_ConfirmRivalName::
 	.string "…Er, was it Blue?$"
 
 gOakSpeech_Text_RememberRivalsName::
-	.string "That's right! I remember now!\n"
+	.string "That's right!\n"
 	.string "His name is Blue!\p$"
 
 

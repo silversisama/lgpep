@@ -60,6 +60,15 @@ extern const u8 gText_Double2[];
 extern const u8 gText_Multi[];
 extern const u8 gText_MultiLink[];
 
+extern const u8 gText_BattleSpeed1x[];
+extern const u8 gText_BattleSpeed2x[];
+extern const u8 gText_BattleSpeed3x[];
+extern const u8 gText_BattleSpeed4x[];
+extern const u8 gText_SmallDot[];
+extern const u8 gText_LargeDot[];
+extern const u8 gText_PageNav[];
+extern const u8 gText_BattleSpeed[];
+
 extern const u8 gText_Single[];
 extern const u8 gText_Double[];
 extern const u8 gText_Knockout[];

@@ -359,6 +359,8 @@ void BattleControllerDummy(enum BattlerId battler);
 void StartSendOutAnim(enum BattlerId battler, bool32 dontClearTransform, bool32 dontClearSubstituteBit, bool32 doSlideIn);
 void Controller_WaitForString(enum BattlerId battler);
 void Controller_WaitForHealthBar(enum BattlerId battler);
+// Battle Speed Up (Credit to Pokabbie)
+u32 Rogue_GetBattleSpeedScale(bool32 forHealthbar);
 
 // handlers
 void BtlController_HandleGetMonData(enum BattlerId battler);

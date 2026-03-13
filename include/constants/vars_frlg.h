@@ -164,7 +164,7 @@
 #define VAR_NUZLOCKE_CATCHES_2                           0x4094 // Nuzlocke: Track successful catches in routes/areas (32 bits)
 #define VAR_NUZLOCKE_CATCHES_3                           0x4095 // Nuzlocke: Track successful catches in routes/areas (32 bits)
 #define VAR_NUZLOCKE_CATCHES_4                           0x4096 // Nuzlocke: Track successful catches in routes/areas (32 bits)
-#define VAR_0x4097                 0x4097
+#define VAR_BATTLE_SPEED                                 0x4097
 #define VAR_0x4098                 0x4098
 #define VAR_0x4099                 0x4099
 #define VAR_0x409A                 0x409A

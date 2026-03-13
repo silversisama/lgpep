@@ -25,6 +25,9 @@ struct MultiPartnerMenuPokemon
 #define BOUNCE_MON          0x0
 #define BOUNCE_HEALTHBOX    0x1
 
+bool32 InBattleChoosingMoves();
+bool32 InBattleRunningActions();
+
 enum BattleIntroStates
 {
     BATTLE_INTRO_STATE_GET_MON_DATA,

@@ -1577,7 +1577,7 @@ static void Task_OakSpeech_AskRivalsName(u8 taskId)
     {
         OakSpeechPrintMessage(gOakSpeech_Text_WhatWasHisName, sOakSpeechResources->textSpeed, FALSE);
         sOakSpeechResources->hasPlayerBeenNamed = TRUE;
-        gTasks[taskId].func = Task_OakSpeech_ReshowPlayersPic;
+        gTasks[taskId].func = Task_OakSpeech_MoveRivalDisplayNameOptions;
     }
 }
 
