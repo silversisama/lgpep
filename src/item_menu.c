@@ -331,6 +331,20 @@ static const u8 sContextMenuItems_ItemsPocket[] = {
     ACTION_TOSS,        ACTION_CANCEL
 };
 
+static const u8 sContextMenuItems_ItemsPocketNuz[] = {
+    ACTION_USE,         ACTION_DUMMY,
+    ACTION_TOSS,        ACTION_CANCEL
+};
+
+
+static const u8 sContextMenuItems_BerriesPocketNuz[] = {
+    ACTION_CHECK_TAG,   ACTION_DUMMY,
+    ACTION_USE,         ACTION_DUMMY,
+    ACTION_TOSS,        ACTION_CANCEL
+};
+
+
+
 static const u8 sContextMenuItems_KeyItemsPocket[] = {
     ACTION_USE,         ACTION_REGISTER,
     ACTION_DUMMY,       ACTION_CANCEL
@@ -1690,6 +1704,7 @@ static void OpenContextMenu(u8 taskId)
     {
     case ITEMMENULOCATION_BATTLE:
     case ITEMMENULOCATION_WALLY:
+    
         if (gSpecialVar_ItemId == ITEM_BERRY_POUCH)
         {
             gBagMenu->contextMenuItemsPtr = sContextMenuItems_BattleBerryPouch;
@@ -1697,6 +1712,7 @@ static void OpenContextMenu(u8 taskId)
         }
         else if (GetItemBattleUsage(gSpecialVar_ItemId))
         {
+            if (GetItemBattleUsage(gSpecialVar_ItemId) && (!FlagGet(FLAG_NUZLOCKEHC) || gBagPosition.pocket == POCKET_POKE_BALLS || gBagPosition.location != ITEMMENULOCATION_BATTLE))
             gBagMenu->contextMenuItemsPtr = sContextMenuItems_BattleUse;
             gBagMenu->contextMenuNumItems = ARRAY_COUNT(sContextMenuItems_BattleUse);
         }
@@ -1838,8 +1854,11 @@ static void OpenContextMenu(u8 taskId)
     {
         u8 *end = CopyItemName(gSpecialVar_ItemId, gStringVar1);
         WrapFontIdToFit(gStringVar1, end, FONT_NORMAL, WindowWidthPx(WIN_DESCRIPTION) - 10 - 6);
-        StringExpandPlaceholders(gStringVar4, gText_Var1IsSelected);
-        FillWindowPixelBuffer(WIN_DESCRIPTION, PIXEL_FILL(0));
+    if (GetItemBattleUsage(gSpecialVar_ItemId) && FlagGet(FLAG_NUZLOCKEHC) 
+        && gBagPosition.pocket != POCKET_POKE_BALLS && gBagPosition.location == ITEMMENULOCATION_BATTLE)
+            StringExpandPlaceholders(gStringVar4, gText_Var1NuzlockePrevents);
+    else
+            StringExpandPlaceholders(gStringVar4, gText_Var1IsSelected);        FillWindowPixelBuffer(WIN_DESCRIPTION, PIXEL_FILL(0));
         BagMenu_Print(WIN_DESCRIPTION, FONT_NORMAL, gStringVar4, 3, 1, 0, 0, 0, COLORID_NORMAL);
     }
     if (gBagMenu->contextMenuNumItems == 1)

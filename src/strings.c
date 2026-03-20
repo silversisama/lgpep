@@ -186,6 +186,10 @@ const u8 gText_TRJessie[] = _("Jessie!");
 const u8 gText_TRJames[] = _("James!");
 const u8 gText_TRBlast_Off[] = _("Team Rocket blasts off at the speed\nof light! Surrender now, or prepare");
 const u8 gText_TRMeowth_Thats_Right[] = _("to fight! Meowth! That's right!");
+const u8 gText_Var1NuzlockePrevents[] = _("Nuzlocke challenge\nprevents using\n{STR_VAR_1}.");
+const u8 gText_BallsCannotBeUsedNuz[] = _("You already saw a POKéMON\non this route!{PAUSE_UNTIL_PRESS}");
+const u8 gText_BallsCannotBeUsedDups[] = _("You already own a POKéMON\nof this species!{PAUSE_UNTIL_PRESS}");
+const u8 gText_WontHaveEffectNuzlocke[] = _("It won't have any effect due to\nrunning Nuzlocke challenge.{PAUSE_UNTIL_PRESS}");
 
 const u8 *const gBagMenu_ReturnToStrings[] =
 {

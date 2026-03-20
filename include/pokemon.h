@@ -28,6 +28,7 @@ enum MonData {
     MON_DATA_STATUS,
     MON_DATA_OT_ID,
     MON_DATA_LANGUAGE,
+    MON_DATA_DEAD,
     MON_DATA_SANITY_IS_BAD_EGG,
     MON_DATA_SANITY_HAS_SPECIES,
     MON_DATA_SANITY_IS_EGG,
@@ -39,7 +40,6 @@ enum MonData {
     MON_DATA_HIDDEN_NATURE,
     MON_DATA_HP_LOST,
     MON_DATA_DAYS_SINCE_FORM_CHANGE,
-    MON_DATA_IS_DEAD,
     MON_DATA_ENCRYPT_SEPARATOR,
     MON_DATA_NICKNAME,
     MON_DATA_NICKNAME10,
@@ -267,7 +267,7 @@ struct BoxPokemon
     u8 isEgg:1;
     u8 blockBoxRS:1; // Unused, but Pokémon Box Ruby & Sapphire will refuse to deposit a Pokémon with this flag set.
     u8 daysSinceFormChange:3; // 7 days.
-    u8 isDead:1; // Nuzlocke: Pokemon is permanently fainted
+    u8 dead:1; // Nuzlocke: Pokemon is permanently fainted
     u8 otName[PLAYER_NAME_LENGTH];
     u8 markings:4;
     u8 compressedStatus:4;

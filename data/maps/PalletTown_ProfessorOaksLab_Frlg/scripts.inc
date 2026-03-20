@@ -1138,8 +1138,8 @@ EventScript_GiveNicknameToStarter::
 PalletTown_ProfessorOaksLab_EventScript_RivalPicksStarter::
 	closemessage
 	goto_if_eq PLAYER_STARTER_NUM, 0, PalletTown_ProfessorOaksLab_EventScript_RivalWalksToCharmander
-	goto_if_eq PLAYER_STARTER_NUM, 1, PalletTown_ProfessorOaksLab_EventScript_RivalWalksToBulbasaur
-	goto_if_eq PLAYER_STARTER_NUM, 2, PalletTown_ProfessorOaksLab_EventScript_RivalWalksToSquirtle
+	goto_if_eq PLAYER_STARTER_NUM, 1, PalletTown_ProfessorOaksLab_EventScript_RivalWalksToSquirtle
+	goto_if_eq PLAYER_STARTER_NUM, 2, PalletTown_ProfessorOaksLab_EventScript_RivalWalksToBulbasaur
 	end
 
 PalletTown_ProfessorOaksLab_EventScript_RivalWalksToCharmander::

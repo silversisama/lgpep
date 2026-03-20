@@ -24,6 +24,12 @@ gText_WelcomeCutShort::
 	.string "to full health.\p"
 	.string "Would you like to…$"
 
+
+UNUSEDgText_WeHopeToSeeYouAgain3::
+	.string "Your POKéMON are healed, but cannot\n"
+	.string "level over {STR_VAR_1} due to Nuzlocke.$"
+
+
 gText_NoticesGoldCard::
 	.string "Th-that card…\n"
 	.string "Could it be… The GOLD CARD?!\p"

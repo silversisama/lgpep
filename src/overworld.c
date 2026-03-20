@@ -45,7 +45,6 @@
 #include "mirage_tower.h"
 #include "money.h"
 #include "new_game.h"
-#include "nuzlocke.h"
 #include "oras_dowse.h"
 #include "palette.h"
 #include "play_time.h"
@@ -112,7 +111,8 @@ struct CableClubPlayer
 
 extern const struct MapLayout *const gMapLayouts[];
 extern const struct MapHeader *const *const gMapGroups[];
-
+extern bool8 gNuzlockeEnabled;
+extern bool8 gNuzlockeHardcore;
 static void Overworld_ResetStateAfterWhiteOut(void);
 static void CB2_ReturnToFieldLocal(void);
 static void CB2_ReturnToFieldLink(void);
@@ -393,9 +393,6 @@ void DoWhiteOut(void)
 {
     RunScriptImmediately(EventScript_WhiteOut);
     HealPlayerParty();
-    // Handle Nuzlocke whiteout - mark all party Pokemon as dead
-    if (IsNuzlockeActive())
-        NuzlockeHandleWhiteout();
     Overworld_ResetStateAfterWhiteOut();
     SetWarpDestinationToLastHealLocation();
     WarpIntoMap();
@@ -1924,6 +1921,14 @@ void CB2_NewGame(void)
     StopMapMusic();
     ResetSafariZoneFlag_();
     NewGameInitData();
+     if (gNuzlockeEnabled) // <- set nuzlocke flag
+        FlagSet(FLAG_NUZLOCKE);
+    else
+        FlagClear(FLAG_NUZLOCKE);
+     if (gNuzlockeHardcore) // <- set nuzlocke HC flag
+        FlagSet(FLAG_NUZLOCKEHC);
+    else
+        FlagClear(FLAG_NUZLOCKEHC);
     ResetInitialPlayerAvatarState();
     PlayTimeCounter_Start();
     ScriptContext_Init();

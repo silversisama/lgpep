@@ -256,6 +256,12 @@ gText_OakSpeech_NuzlockeChallenge::
 	.string "NUZLOCKE CHALLENGE?\p"
 	.string "$"
 
+gText_OakSpeech_NuzlockeHC::
+	.string "Do you want to make it\n"
+	.string "hardcore?\p"
+	.string "$"
+
+
 gText_OakSpeech_NoNuzlocke::
 	.string "That’s quite all right!\p"
 	.string "There’s no shame in taking your\n"
@@ -276,6 +282,15 @@ gText_OakSpeech_YesNuzlocke::
 	.string "Every one of them will be important!\p"
 	.string "$"
 
+gText_OakSpeech_YesNuzlockeHC::
+	.string "I see!\n"
+	.string "You’re looking for a real challenge!\p"
+	.string "I’ll enable the NUZLOCKE CHALLENGE\n"
+	.string "for your adventure. Even going the\p"
+	.string "extra mile for a harder challenge!\p"
+	.string "Take good care of your POKéMON.\n"
+	.string "Every one of them will be important!\p"
+	.string "$"
 
 gOakSpeech_Text_LetsGo::
 	.string "{PLAYER}!\p"

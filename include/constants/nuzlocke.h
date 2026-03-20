@@ -9,8 +9,6 @@
 #define NUZLOCKE_ENCOUNTER_DUPLICATE    2 // Duplicate species, can skip
 #define NUZLOCKE_ENCOUNTER_SHINY        3 // Shiny clause applies
 
-// Check if Nuzlocke mode is active
-bool8 IsNuzlockeActive(void);
 
 // Official location-based encounter tracking (from pokeemerald guide)
 bool8 HasWildPokemonBeenSeenInLocation(u8 location, bool8 setEncounteredIfFirst);

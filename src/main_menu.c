@@ -39,7 +39,6 @@
 #include "title_screen.h"
 #include "window.h"
 #include "mystery_gift_menu.h"
-#include "nuzlocke.h"
 #include "constants/flags.h"
 /*
  * Main menu state machine

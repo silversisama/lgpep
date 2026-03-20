@@ -14,7 +14,6 @@
 #include "generational_changes.h"
 #include "party_menu.h"
 #include "pokemon.h"
-#include "nuzlocke.h"
 #include "international_string_util.h"
 #include "item.h"
 #include "util.h"
@@ -634,8 +633,6 @@ bool32 TryRunFromBattle(enum BattlerId battler)
     {
         gCurrentTurnActionNumber = gBattlersCount;
         gBattleOutcome = B_OUTCOME_RAN;
-        // Nuzlocke: Mark area as used if running from catchable Pokemon (not duplicate/shiny)
-        NuzlockeOnBattleEnd();
     }
 
     return effect;
@@ -691,8 +688,6 @@ void HandleAction_Run(void)
             {
                 gCurrentTurnActionNumber = gBattlersCount;
                 gBattleOutcome = B_OUTCOME_MON_FLED;
-                // Nuzlocke: Mark area as used if running from catchable Pokemon (not duplicate/shiny)
-                NuzlockeOnBattleEnd();
             }
         }
     }
@@ -1578,34 +1573,40 @@ u32 TrySetCantSelectMoveBattleScript(enum BattlerId battler)
     {
         gCurrentMove = *choicedMove;
         gLastUsedItem = gBattleMons[battler].item;
-        if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
+        if (!(GetBattlerSide(battler) == B_SIDE_PLAYER && FlagGet(FLAG_NUZLOCKEBAN)))
         {
-            gPalaceSelectionBattleScripts[battler] = BattleScript_SelectingNotAllowedMoveChoiceItemInPalace;
-            gProtectStructs[battler].palaceUnableToUseMove = TRUE;
-        }
-        else
-        {
-            gSelectionBattleScripts[battler] = BattleScript_SelectingNotAllowedMoveChoiceItem;
-            limitations++;
+            if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
+            {
+                gPalaceSelectionBattleScripts[battler] = BattleScript_SelectingNotAllowedMoveChoiceItemInPalace;
+                gProtectStructs[battler].palaceUnableToUseMove = TRUE;
+            }
+            else
+            {
+                gSelectionBattleScripts[battler] = BattleScript_SelectingNotAllowedMoveChoiceItem;
+                limitations++;
+            }
         }
     }
     else if (holdEffect == HOLD_EFFECT_ASSAULT_VEST && IsBattleMoveStatus(move) && moveEffect != EFFECT_ME_FIRST)
     {
-        if ((GetActiveGimmick(battler) == GIMMICK_DYNAMAX))
-            gCurrentMove = MOVE_MAX_GUARD;
-        else
-            gCurrentMove = move;
-        gLastUsedItem = gBattleMons[battler].item;
-        if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
-        {
-            gPalaceSelectionBattleScripts[battler] = BattleScript_SelectingNotAllowedMoveAssaultVestInPalace;
-            gProtectStructs[battler].palaceUnableToUseMove = TRUE;
-        }
-        else
-        {
-            gSelectionBattleScripts[battler] = BattleScript_SelectingNotAllowedMoveAssaultVest;
-            limitations++;
-        }
+            if ((GetActiveGimmick(battler) == GIMMICK_DYNAMAX))
+                gCurrentMove = MOVE_MAX_GUARD;
+            else
+                gCurrentMove = move;
+            gLastUsedItem = gBattleMons[battler].item;
+            if (!(GetBattlerSide(battler) == B_SIDE_PLAYER && FlagGet(FLAG_NUZLOCKEBAN)))
+            {
+                if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
+                {
+                    gPalaceSelectionBattleScripts[battler] = BattleScript_SelectingNotAllowedMoveAssaultVestInPalace;
+                    gProtectStructs[battler].palaceUnableToUseMove = TRUE;
+                }
+                else
+                {
+                    gSelectionBattleScripts[battler] = BattleScript_SelectingNotAllowedMoveAssaultVest;
+                    limitations++;
+                }
+            }
     }
     if (DYNAMAX_BYPASS_CHECK && (GetBattlerAbility(battler) == ABILITY_GORILLA_TACTICS) && *choicedMove != MOVE_NONE
               && *choicedMove != MOVE_UNAVAILABLE && *choicedMove != move)
@@ -1697,10 +1698,16 @@ u32 CheckMoveLimitations(enum BattlerId battler, u8 unusableMoves, u16 check)
             unusableMoves |= 1u << i;
         // Choice Items
         else if (check & MOVE_LIMITATION_CHOICE_ITEM && IsHoldEffectChoice(holdEffect) && *choicedMove != MOVE_NONE && *choicedMove != MOVE_UNAVAILABLE && *choicedMove != move)
-            unusableMoves |= 1u << i;
+        {
+            if (!(GetBattlerSide(battler) == B_SIDE_PLAYER && FlagGet(FLAG_NUZLOCKEBAN)))
+                unusableMoves |= 1u << i;
+        }
         // Assault Vest
         else if (check & MOVE_LIMITATION_ASSAULT_VEST && holdEffect == HOLD_EFFECT_ASSAULT_VEST && IsBattleMoveStatus(move) && moveEffect != EFFECT_ME_FIRST)
-            unusableMoves |= 1u << i;
+        {
+            if (!(GetBattlerSide(battler) == B_SIDE_PLAYER && FlagGet(FLAG_NUZLOCKEBAN)))
+                unusableMoves |= 1u << i;
+        }
         // Gravity
         else if (check & MOVE_LIMITATION_GRAVITY && IsGravityPreventingMove(move))
             unusableMoves |= 1u << i;
@@ -7123,10 +7130,14 @@ static inline u32 CalcAttackStat(struct BattleContext *ctx)
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(2.0));
         break;
     case HOLD_EFFECT_CHOICE_BAND:
+        if (GetBattlerSide(battlerAtk) == B_SIDE_PLAYER && FlagGet(FLAG_NUZLOCKEBAN))
+        break;
         if (IsBattleMovePhysical(move) && GetActiveGimmick(battlerAtk) != GIMMICK_DYNAMAX)
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
         break;
     case HOLD_EFFECT_CHOICE_SPECS:
+        if (GetBattlerSide(battlerAtk) == B_SIDE_PLAYER && FlagGet(FLAG_NUZLOCKEBAN))
+        break;
         if (IsBattleMoveSpecial(move) && GetActiveGimmick(battlerAtk) != GIMMICK_DYNAMAX)
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
         break;
@@ -7316,6 +7327,8 @@ static inline u32 CalcDefenseStat(struct BattleContext *ctx)
         }
         break;
     case HOLD_EFFECT_ASSAULT_VEST:
+        if (GetBattlerSide(battlerDef) == B_SIDE_PLAYER && FlagGet(FLAG_NUZLOCKEBAN))
+        break;
         if (!usesDefStat)
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
         break;
@@ -7619,6 +7632,8 @@ static inline uq4_12_t GetAttackerItemsModifier(enum BattlerId battlerAtk, uq4_1
             return UQ_4_12(1.2);
         break;
     case HOLD_EFFECT_LIFE_ORB:
+        if (GetBattlerSide(battlerAtk) == B_SIDE_PLAYER && FlagGet(FLAG_NUZLOCKEBAN))
+        break;
         return UQ_4_12_FLOORED(1.3);
         break;
     default:

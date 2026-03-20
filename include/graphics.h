@@ -89,7 +89,7 @@ extern const u16 gPokeblockBlack_Pal[];
 extern const u16 gPokeblockWhite_Pal[];
 extern const u16 gPokeblockGold_Pal[];
 extern const u32 gPokeblock_Gfx[];
-
+extern const u8 gNuzlockeCatchableIndicator[] ALIGNED(4);
 extern const u32 gItemIcon_QuestionMark[];
 extern const u16 gItemIconPalette_QuestionMark[];
 

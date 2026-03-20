@@ -22,7 +22,6 @@
 #include "util.h" 
 #include "constants/rgb.h"
 #include "constants/songs.h"
-#include "nuzlocke.h"
 #include "constants/flags_frlg.h"
 
 #if IS_FRLG
@@ -98,7 +97,16 @@ static void Task_OakSpeech_NuzlockeChallenge(u8);
 static void Task_OakSpeech_CreateNuzlockeYesNo(u8);
 static void Task_OakSpeech_ProcessNuzlockeYesNoMenu(u8);
 static void Task_OakSpeech_YesNuzlocke(u8);
-static void Task_OakSpeech_NoNuzlocke(u8);
+EWRAM_DATA bool8 gNuzlockeEnabled = FALSE;
+EWRAM_DATA bool8 gNuzlockeHardcore = FALSE;
+static void Task_OakSpeech_AskNuz(u8);
+static void Task_OakSpeech_ShowNuzOptions(u8);
+static void Task_OakSpeech_HandleNuzInput(u8);
+static void Task_OakSpeech_ClearNuzWindows(u8); // Optional
+static void Task_OakSpeech_AskNuzHC(u8);
+static void Task_OakSpeech_ShowNuzHCOptions(u8);
+static void Task_OakSpeech_HandleNuzHCInput(u8);
+static void Task_OakSpeech_ClearNuzHCWindows(u8); // Optional
 static void Task_OakSpeech_Farewell(u8);
 static void Task_OakSpeech_LetsGo(u8);
 static void Task_OakSpeech_FadeOutBGM(u8);
@@ -112,7 +120,6 @@ static void Task_OakSpeech_FadePlayerPicWhite(u8);
 static void Task_OakSpeech_FadePlayerPicToBlack(u8);
 static void Task_OakSpeech_WaitForFade(u8);
 static void Task_OakSpeech_FreeResources(u8);
-
 static void CB2_ReturnFromNamingScreen(void);
 static void CreateEeveeSprite(u8);
 static void CreatePikachuOrPlatformSprites(u8, u8);
@@ -131,7 +138,7 @@ extern const struct OamData gOamData_AffineOff_ObjBlend_32x32;
 extern const struct OamData gOamData_AffineOff_ObjNormal_32x32;
 extern const struct OamData gOamData_AffineOff_ObjNormal_32x16;
 extern const struct OamData gOamData_AffineOff_ObjNormal_16x8;
-
+static void DrawMainMenuWindowBorder(const struct WindowTemplate *, u16);
 static const u16 sOakSpeech_Background_Pals[] = INCBIN_U16("graphics/oak_speech/bg_tiles.gbapal"); // Shared by the Controls Guide, Pikachu Intro and Oak Speech scenes
 static const u32 sControlsGuide_PikachuIntro_Background_Tiles[] = INCBIN_U32("graphics/oak_speech/bg_tiles.4bpp.smol");
 static const u32 sPikachuIntro_Background_Tilemap[] = INCBIN_U32("graphics/oak_speech/pikachu_intro/tilemap.bin.smolTM");
@@ -1535,6 +1542,112 @@ static void Task_OakSpeech_HandleConfirmNameInput(u8 taskId)
     }
 }
 
+// Add these functions
+static void Task_OakSpeech_AskNuz(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+
+    if (tTrainerPicFadeState != 0)
+    {
+        if (tTimer != 0)
+        {
+            tTimer--;
+        }
+        else
+        {
+            OakSpeechPrintMessage(gText_OakSpeech_NuzlockeChallenge, sOakSpeechResources->textSpeed, FALSE);
+            gTasks[taskId].func = Task_OakSpeech_ShowNuzOptions;
+        }
+    }
+}
+
+static void Task_OakSpeech_ShowNuzOptions(u8 taskId)
+{
+    if (!IsTextPrinterActiveOnWindow(WIN_INTRO_TEXTBOX))
+    {
+        CreateYesNoMenuAtPos(&sIntro_WindowTemplates[WIN_INTRO_YESNO], FONT_NORMAL, 0, 2, STD_WINDOW_BASE_TILE_NUM, 14, 0);
+        gTasks[taskId].func = Task_OakSpeech_HandleNuzInput;
+    }
+}
+static void Task_OakSpeech_HandleNuzInput(u8 taskId)
+{
+    s8 input = Menu_ProcessInput();
+
+    switch (input)
+    {
+    case 0: // YES
+        gNuzlockeEnabled = TRUE;
+        break;
+    case 1: // NO
+    case MENU_B_PRESSED:
+        gNuzlockeEnabled = FALSE;
+        break;
+    case MENU_NOTHING_CHOSEN:
+        return;
+    }
+
+    gTasks[taskId].func = Task_OakSpeech_ClearNuzWindows;
+}
+
+static void Task_OakSpeech_ClearNuzWindows(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+    ClearStdWindowAndFrameToTransparent(tMenuWindowId, TRUE);
+    RemoveWindow(tMenuWindowId);
+    tMenuWindowId = WIN_INTRO_TEXTBOX;
+    ClearDialogWindowAndFrame(tMenuWindowId, TRUE);
+    FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 30, 20);
+    CopyBgTilemapBufferToVram(0);
+    gTasks[taskId].func = Task_OakSpeech_AskNuzHC;
+}
+
+static void Task_OakSpeech_AskNuzHC(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+
+    if (tTrainerPicFadeState != 0)
+    {
+        if (tTimer != 0)
+        {
+            tTimer--;
+        }
+        else
+        {
+            OakSpeechPrintMessage(gText_OakSpeech_NuzlockeHC, sOakSpeechResources->textSpeed, FALSE);
+            gTasks[taskId].func = Task_OakSpeech_ShowNuzHCOptions;
+        }
+    }
+}
+
+static void Task_OakSpeech_ShowNuzHCOptions(u8 taskId)
+{
+    if (!IsTextPrinterActiveOnWindow(WIN_INTRO_TEXTBOX))
+    {
+        CreateYesNoMenuAtPos(&sIntro_WindowTemplates[WIN_INTRO_YESNO], FONT_NORMAL, 0, 2, STD_WINDOW_BASE_TILE_NUM, 14, 0);
+        gTasks[taskId].func = Task_OakSpeech_HandleNuzHCInput;
+    }
+}
+static void Task_OakSpeech_HandleNuzHCInput(u8 taskId)
+{
+    s8 input = Menu_ProcessInput();
+
+    switch (input)
+    {
+    case 0: // YES
+        gNuzlockeHardcore = TRUE;
+        break;
+    case 1: // NO
+    case MENU_B_PRESSED:
+        gNuzlockeHardcore = FALSE;
+        break;
+    case MENU_NOTHING_CHOSEN:
+        return;
+    }
+
+    gTasks[taskId].func = Task_OakSpeech_LetsGo;
+}
+
+
 static void Task_OakSpeech_FadeOutPlayerPic(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
@@ -1602,7 +1715,7 @@ static void Task_OakSpeech_ReshowPlayersPic(u8 taskId)
             gSpriteCoordOffsetX = 0;
             ChangeBgX(2, 0, BG_COORD_SET);
             CreateFadeOutTask(taskId, 2);
-            gTasks[taskId].func = Task_OakSpeech_LetsGo;
+            gTasks[taskId].func = Task_OakSpeech_AskNuz;
         }
     }
 }
@@ -1611,61 +1724,10 @@ static void Task_OakSpeech_LetsGo(u8 taskId)
 {
     if (gTasks[taskId].tTrainerPicFadeState != 0)
     {
-        gTasks[taskId].func = Task_OakSpeech_NuzlockeChallenge;
+        gTasks[taskId].func = Task_OakSpeech_Farewell;
     }
 }
 
-static void Task_OakSpeech_NuzlockeChallenge(u8 taskId)
-{
-    if (!RunTextPrintersAndIsPrinter0Active())
-        {
-            ClearWindowTilemap(sOakSpeechResources->windowIds[0]);
-            OakSpeechPrintMessage(gText_OakSpeech_NuzlockeChallenge, sOakSpeechResources->textSpeed, FALSE);
-            gTasks[taskId].func = Task_OakSpeech_CreateNuzlockeYesNo;
-        }
-}
-
-static void Task_OakSpeech_CreateNuzlockeYesNo(u8 taskId)
-{
-    if (!RunTextPrintersAndIsPrinter0Active())
-    {
-        CreateYesNoMenuParameterized(2, 1, 0xF3, 0xDF, 2, 15);
-        gTasks[taskId].func = Task_OakSpeech_ProcessNuzlockeYesNoMenu;
-    }
-}
-
-static void Task_OakSpeech_ProcessNuzlockeYesNoMenu(u8 taskId)
-{
-    switch (Menu_ProcessInputNoWrapClearOnChoose())
-    {
-    case 0: // YES
-        PlaySE(SE_SELECT);
-        gTasks[taskId].func = Task_OakSpeech_YesNuzlocke;
-        break;
-    case 1: // NO
-    case MENU_B_PRESSED:
-        PlaySE(SE_SELECT);
-        gTasks[taskId].func = Task_OakSpeech_NoNuzlocke;
-        break;
-    }
-}
-
-static void Task_OakSpeech_YesNuzlocke(u8 taskId)
-{
-    FlagSet(FLAG_NUZLOCKE);
-    sNuzlockeModeSelected = TRUE;
-    ClearWindowTilemap(sOakSpeechResources->windowIds[0]);
-    OakSpeechPrintMessage(gText_OakSpeech_YesNuzlocke, sOakSpeechResources->textSpeed, FALSE);
-    gTasks[taskId].func = Task_OakSpeech_Farewell;
-}
-
-static void Task_OakSpeech_NoNuzlocke(u8 taskId)
-{
-    FlagClear(FLAG_NUZLOCKE);
-    ClearWindowTilemap(sOakSpeechResources->windowIds[0]);
-    OakSpeechPrintMessage(gText_OakSpeech_NoNuzlocke, sOakSpeechResources->textSpeed, FALSE);
-    gTasks[taskId].func = Task_OakSpeech_Farewell;
-}
 
 static void Task_OakSpeech_Farewell(u8 taskId)
 {

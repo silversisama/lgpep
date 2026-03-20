@@ -15,7 +15,6 @@
 #include "battle_setup.h"
 #include "battle_tower.h"
 #include "battle_z_move.h" 
-#include "nuzlocke.h"
 #include "battle_gimmick.h"
 #include "berry.h"
 #include "bg.h"
@@ -3110,7 +3109,7 @@ static void ClearSetBScriptingStruct(void)
     memset(&gBattleScripting, 0, sizeof(gBattleScripting));
 
     gBattleScripting.windowsType = temp;
-    gBattleScripting.battleStyle = gSaveBlock2Ptr->optionsBattleStyle;
+    gBattleScripting.battleStyle = (gSaveBlock2Ptr->optionsBattleStyle || FlagGet(FLAG_NUZLOCKEHC));
     #if TESTING
     gBattleScripting.battleStyle = OPTIONS_BATTLE_STYLE_SET;
     #endif
@@ -3776,42 +3775,26 @@ static void DoBattleIntro(void)
             gBattleStruct->eventState.battleIntro++;
         }
         break;
-    case BATTLE_INTRO_STATE_NUZLOCKE_MESSAGE:
-        // Show Nuzlocke encounter message for wild battles
-        if (!(gBattleTypeFlags & BATTLE_TYPE_TRAINER) && IsNuzlockeActive() && FlagGet(FLAG_SYS_POKEDEX_GET))
+    case BATTLE_INTRO_STATE_NUZLOCKE_DUPS_TEXT:
+        if (!(gBattleTypeFlags & BATTLE_TYPE_TRAINER) && !(gBattleControllerExecFlags))
         {
-            u16 species = GetMonData(&gEnemyParty[0], MON_DATA_SPECIES);
-            u32 personality = GetMonData(&gEnemyParty[0], MON_DATA_PERSONALITY);
-            u32 otId = gSaveBlock2Ptr->playerTrainerId[0] | (gSaveBlock2Ptr->playerTrainerId[1] << 8) | 
-                      (gSaveBlock2Ptr->playerTrainerId[2] << 16) | (gSaveBlock2Ptr->playerTrainerId[3] << 24);
-            
-            u8 encounterStatus = GetNuzlockeEncounterStatus(species, personality, otId);
-            
-            if (encounterStatus == NUZLOCKE_ENCOUNTER_CATCHABLE)
+            if (FlagGet(FLAG_NUZLOCKE))
             {
-                PrepareStringBattle(STRINGID_NUZLOCKE_FIRST_ENCOUNTER, GetBattlerAtPosition(B_POSITION_PLAYER_LEFT));
+                if (gNuzlockeCatchStatus == 3) 
+                {
+                    PrepareStringBattle(STRINGID_NUZLOCKESHINY, GetBattlerAtPosition(B_POSITION_PLAYER_LEFT));
+                }
+                else if (gNuzlockeCatchStatus == 2 && !(FlagGet(FLAG_NUZLOCKEHC)))
+                {
+                    PrepareStringBattle(STRINGID_NUZLOCKEDUPS, GetBattlerAtPosition(B_POSITION_PLAYER_LEFT));
+                }
+            }
             gBattleStruct->eventState.battleIntro++;
-                break;
-            }
-            else if (encounterStatus == NUZLOCKE_ENCOUNTER_DUPLICATE)
-            {
-                PrepareStringBattle(STRINGID_NUZLOCKE_DUPLICATE, GetBattlerAtPosition(B_POSITION_PLAYER_LEFT));
-                gBattleStruct->eventState.battleIntro++;
-                break;
-            }
-            else if (encounterStatus == NUZLOCKE_ENCOUNTER_SHINY)
-            {
-                PrepareStringBattle(STRINGID_NUZLOCKE_SHINY, GetBattlerAtPosition(B_POSITION_PLAYER_LEFT));
-                gBattleStruct->eventState.battleIntro++;
-                break;
-            }
         }
-        // Skip to next state if not Nuzlocke or no message to show
-        gBattleStruct->eventState.battleIntro++;
-        break;
-    case BATTLE_INTRO_STATE_WAIT_FOR_NUZLOCKE_MESSAGE:
-        if (!IsBattlerMarkedForControllerExec(GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)))
+        else
+        {
             gBattleStruct->eventState.battleIntro++;
+        }
         break;
     case BATTLE_INTRO_STATE_PRINT_PLAYER_SEND_OUT_TEXT:
         if (!(gBattleTypeFlags & BATTLE_TYPE_SAFARI))
@@ -3898,6 +3881,21 @@ static void DoBattleIntro(void)
         break;
     }
 }
+
+
+static void BattleLostNuzlocke(void)
+{
+    if (gBattleControllerExecFlags == 0)
+    {
+        gBattleMainFunc = HandleEndTurn_FinishBattle;
+        PrepareStringBattle(STRINGID_NUZLOCKELOST, GetBattlerAtPosition(B_POSITION_PLAYER_LEFT));
+        FlagClear(FLAG_NUZLOCKE);
+        FlagClear(FLAG_NUZLOCKEHC);
+        FlagClear(FLAG_NUZLOCKEBAN);
+    }
+}
+
+
 
 static void TryDoEventsBeforeFirstTurn(void)
 {
@@ -4884,7 +4882,10 @@ u32 GetBattlerTotalSpeedStat(enum BattlerId battler, enum Ability ability, enum 
     else if (holdEffect == HOLD_EFFECT_IRON_BALL)
         speed /= 2;
     else if (holdEffect == HOLD_EFFECT_CHOICE_SCARF && GetActiveGimmick(battler) != GIMMICK_DYNAMAX)
-        speed = (speed * 150) / 100;
+    {
+        if (!(GetBattlerSide(battler) == B_SIDE_PLAYER && FlagGet(FLAG_NUZLOCKEBAN)))
+            speed = (speed * 150) / 100;
+    }
     else if (holdEffect == HOLD_EFFECT_QUICK_POWDER && gBattleMons[battler].species == SPECIES_DITTO && !(gBattleMons[battler].volatiles.transformed))
         speed *= 2;
 
@@ -5596,6 +5597,11 @@ static void HandleEndTurn_BattleLost(void)
             gBattleCommunication[MULTISTRING_CHOOSER] = 0;
         }
         gBattlescriptCurrInstr = BattleScript_LocalBattleLost;
+        if (FlagGet(FLAG_NUZLOCKE) && FlagGet(FLAG_SYS_POKEDEX_GET))
+        {
+            gBattleMainFunc = BattleLostNuzlocke;
+            return;
+        }
     }
 
     gBattleMainFunc = HandleEndTurn_FinishBattle;
@@ -5646,7 +5652,7 @@ static void HandleEndTurn_MonFled(void)
 
     PREPARE_MON_NICK_BUFFER(gBattleTextBuff1, gBattlerAttacker, gBattlerPartyIndexes[gBattlerAttacker]);
     gBattlescriptCurrInstr = BattleScript_WildMonFled;
-
+    gNuzlockeCatchStatus = 0;
     gBattleMainFunc = HandleEndTurn_FinishBattle;
 }
 
@@ -5882,7 +5888,6 @@ static void ReturnFromBattleToOverworld(void)
     }
 
     m4aSongNumStop(SE_LOW_HEALTH);
-    NuzlockeOnBattleEnd();
     SetMainCallback2(gMain.savedCallback);
 }
 
@@ -6225,7 +6230,8 @@ void SetTypeBeforeUsingMove(enum Move move, enum BattlerId battler)
     if (holdEffect == HOLD_EFFECT_GEMS
         && GetBattleMoveType(move) == GetItemSecondaryId(heldItem)
         && effect != EFFECT_PLEDGE
-        && effect != EFFECT_OHKO)
+        && effect != EFFECT_OHKO
+        && !(FlagGet(FLAG_NUZLOCKEBAN) && GetBattlerSide(battler) == B_SIDE_PLAYER))
     {
         gSpecialStatuses[battler].gemParam = GetBattlerHoldEffectParam(battler);
         gSpecialStatuses[battler].gemBoost = TRUE;

@@ -4,6 +4,8 @@
 #include "battle_anim.h"
 #include "battle_pyramid.h"
 #include "battle_pyramid_bag.h"
+#include "battle_setup.h"
+#include "region_map.h"
 #include "berry.h"
 #include "berry_pouch.h"
 #include "berry_powder.h"
@@ -50,7 +52,6 @@
 #include "constants/item_effects.h"
 #include "constants/items.h"
 #include "constants/songs.h"
-#include "nuzlocke.h"
 
 
 static void SetUpItemUseCallback(u8);
@@ -1168,16 +1169,24 @@ static u32 GetBallThrowableState(void)
         return BALL_THROW_UNABLE_SEMI_INVULNERABLE;
     else if (FlagGet(B_FLAG_NO_CATCHING) || !IsAllowedToUseBag())
         return BALL_THROW_UNABLE_DISABLED_FLAG;
-    else if (IsNuzlockeActive() && !(gBattleTypeFlags & BATTLE_TYPE_TRAINER))
+    else if (gNuzlockeCatchStatus == 1)
+        return BALL_THROW_UNABLE_NUZLOCKE;
+    else if (gNuzlockeCatchStatus == 2)
+        return BALL_THROW_UNABLE_DUPS;  
+
+    if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && !(gBattleTypeFlags & BATTLE_TYPE_TRAINER) && FlagGet(FLAG_NUZLOCKE))
     {
-        // Check Nuzlocke catching restrictions
-        u16 species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT)]], MON_DATA_SPECIES);
-        u32 personality = GetMonData(&gEnemyParty[gBattlerPartyIndexes[GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT)]], MON_DATA_PERSONALITY);
-        u32 otId = gSaveBlock2Ptr->playerTrainerId[0] | (gSaveBlock2Ptr->playerTrainerId[1] << 8) | 
-                  (gSaveBlock2Ptr->playerTrainerId[2] << 16) | (gSaveBlock2Ptr->playerTrainerId[3] << 24);
-        
-        if (!NuzlockeCanCatchPokemon(species, personality, otId))
+        u8 battlerLeft  = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+        u8 battlerRight = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
+
+        if ((IsBattlerAlive(battlerLeft)  && IsMonShiny(&gEnemyParty[gBattlerPartyIndexes[battlerLeft]])) || (IsBattlerAlive(battlerRight) && IsMonShiny(&gEnemyParty[gBattlerPartyIndexes[battlerRight]])))
+        {
+            return BALL_THROW_ABLE;
+        }
+        else
+        {
             return BALL_THROW_UNABLE_NUZLOCKE;
+        }
     }
     return BALL_THROW_ABLE;
 }
@@ -1240,9 +1249,15 @@ void ItemUseInBattle_PokeBall(u8 taskId)
         break;
     case BALL_THROW_UNABLE_NUZLOCKE:
         if (CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)
-            DisplayItemMessage(taskId, FONT_NORMAL, sText_CantThrowPokeBall_Nuzlocke, CloseItemMessage);
+            DisplayItemMessage(taskId, FONT_NORMAL, gText_BallsCannotBeUsedNuz, CloseItemMessage);
         else
-            DisplayItemMessageInBattlePyramid(taskId, sText_CantThrowPokeBall_Nuzlocke, Task_CloseBattlePyramidBagMessage);
+            DisplayItemMessageInBattlePyramid(taskId, gText_BallsCannotBeUsedNuz, Task_CloseBattlePyramidBagMessage);
+        break;
+    case BALL_THROW_UNABLE_DUPS:
+        if (CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)
+            DisplayItemMessage(taskId, FONT_NORMAL, gText_BallsCannotBeUsedDups, CloseItemMessage);
+        else
+            DisplayItemMessageInBattlePyramid(taskId, gText_BallsCannotBeUsedDups, Task_CloseBattlePyramidBagMessage);
         break;
     }
 }
@@ -1353,7 +1368,11 @@ bool32 CannotUseItemsInBattle(enum Item itemId, struct Pokemon *mon)
             cannotUse = TRUE;
             break;
         case BALL_THROW_UNABLE_NUZLOCKE:
-            failStr = sText_CantThrowPokeBall_Nuzlocke;
+            failStr = gText_BallsCannotBeUsedNuz;
+            cannotUse = TRUE;
+            break;
+        case BALL_THROW_UNABLE_DUPS:
+            failStr = gText_BallsCannotBeUsedDups;
             cannotUse = TRUE;
             break;
         }
@@ -1392,7 +1411,7 @@ bool32 CannotUseItemsInBattle(enum Item itemId, struct Pokemon *mon)
             cannotUse = TRUE;
         break;
     case EFFECT_ITEM_REVIVE:
-        if (hp != 0 || IsMonDead(mon))
+        if (hp != 0 || FlagGet(FLAG_NUZLOCKE))
             cannotUse = TRUE;
         break;
     case EFFECT_ITEM_RESTORE_PP:

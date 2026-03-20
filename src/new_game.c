@@ -166,6 +166,8 @@ void NewGameInitData(void)
 #if IS_FRLG
     u8 rivalName[PLAYER_NAME_LENGTH + 1];
 #endif
+    bool8 nuzlockePrev = FlagGet(FLAG_NUZLOCKE);  // A function lower down here clears this, so retain it and reset it at the end
+    bool8 nuzlockeHCPrev = FlagGet(FLAG_NUZLOCKEHC);  // A function lower down here clears this, so retain it and reset it at the end
     if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
         RtcReset();
 
@@ -236,12 +238,8 @@ void NewGameInitData(void)
     ResetItemFlags();
     ResetDexNav();
     ClearFollowerNPCData();   
-    // Set Nuzlocke flag if it was selected during Birch's speech
-    if (WasNuzlockeModeSelected())
-    {
-        FlagSet(FLAG_NUZLOCKE);
-        ClearNuzlockeModeSelection(); // Reset the selection variable
-    }
+    nuzlockePrev ? FlagSet(FLAG_NUZLOCKE) : FlagClear(FLAG_NUZLOCKE);
+    nuzlockeHCPrev ? FlagSet(FLAG_NUZLOCKEHC) : FlagClear(FLAG_NUZLOCKEHC);
 }
 
 static void ResetMiniGamesRecords(void)

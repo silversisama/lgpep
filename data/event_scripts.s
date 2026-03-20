@@ -1088,7 +1088,6 @@ EventScript_AfterWhiteOutHeal_DisableNuzlocke::
 	clearflag FLAG_NUZLOCKE
 	msgbox gText_NuzlockeDisabled, MSGBOX_DEFAULT
 	@ Auto-save the game (silent, no prompt)
-	special NuzlockeSilentSave
 	msgbox gText_NuzlockeDisabledSave, MSGBOX_DEFAULT
 	@ Now proceed with normal healing since Pokémon can be healed again
 	goto EventScript_AfterWhiteOutHeal_Normal
@@ -1154,7 +1153,6 @@ EventScript_AfterWhiteOutMomHeal_DisableNuzlocke::
 	clearflag FLAG_NUZLOCKE
 	msgbox gText_NuzlockeDisabled, MSGBOX_DEFAULT
 	@ Auto-save the game (silent, no prompt)
-	special NuzlockeSilentSave
 	msgbox gText_NuzlockeDisabledSave, MSGBOX_DEFAULT
 	@ Now proceed with after Nuzlocke disabled mom healing
 	goto EventScript_AfterWhiteOutNuzlockeDisabled

@@ -46,6 +46,12 @@ u32 GetSoftLevelCapExpValue(u32 level, u32 expValue)
     u32 levelDifference;
     u32 currentLevelCap = GetCurrentLevelCap();
 
+    if (FlagGet(FLAG_NUZLOCKEHC))
+    {
+        if (level >= currentLevelCap)
+            return 0;
+    }
+
     if (B_EXP_CAP_TYPE == EXP_CAP_NONE)
         return expValue;
 

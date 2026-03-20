@@ -22,6 +22,7 @@
 #include "test_runner.h"
 #include "text.h"
 #include "trainer_hill.h"
+#include "overworld.h"
 #include "trainer_slide.h"
 #include "trainer_tower.h"
 #include "window.h"
@@ -179,7 +180,7 @@ static const u8 sText_Bills[] = _("BILL's");
 static const u8 sText_EnigmaBerry[] = _("ENIGMA BERRY"); //no decapitalize until it is everywhere
 static const u8 sText_BerrySuffix[] = _(" BERRY"); //no decapitalize until it is everywhere
 const u8 gText_EmptyString3[] = _("");
-
+static const u8 sText_PlayerFailedNuzlocke[] = _("{B_PLAYER_NAME} failed the\nNuzlocke challenge.\pThe Nuzlocke setting\nhas been turned off.\p");
 static const u8 sText_TwoInGameTrainersDefeated[] = _("You defeated {B_TRAINER1_NAME_WITH_CLASS} and {B_TRAINER2_NAME_WITH_CLASS}!\p");
 
 // New battle strings.
@@ -2381,6 +2382,7 @@ void BufferStringBattle(enum StringID stringID, enum BattlerId battler)
     case STRINGID_INTROMSG: // first battle msg
         if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
         {
+            gNuzlockeCatchStatus = HasWildPokmnOnThisRouteBeenSeen(GetCurrentRegionMapSectionId(), FALSE);
             if (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK))
             {
                 if (gBattleTypeFlags & BATTLE_TYPE_TOWER_LINK_MULTI)
@@ -2830,10 +2832,10 @@ void BufferStringBattle(enum StringID stringID, enum BattlerId battler)
     case STRINGID_NUZLOCKE_FIRST_ENCOUNTER:
         stringPtr = gText_NuzlockeFirstEncounter;
         break;
-    case STRINGID_NUZLOCKE_DUPLICATE:
+    case STRINGID_NUZLOCKEDUPS:
         stringPtr = gText_NuzlockeDuplicate;
         break;
-    case STRINGID_NUZLOCKE_SHINY:
+    case STRINGID_NUZLOCKESHINY:
         stringPtr = gText_NuzlockeShiny;
         break;
     default: // load a string from the table

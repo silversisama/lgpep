@@ -36,6 +36,12 @@ EventScript_PkmnCenterNurse_CheckTrainerTowerAndUnionRoom_Frlg::
 	end
 
 EventScript_PkmnCenterNurse_ReturnPkmn_Frlg::
+	goto_if_unset FLAG_NUZLOCKEHC, EventScript_PkmnCenterNurse_ReturnPkmnDefault
+	special LevelCapToString
+	msgbox gText_WeHopeToSeeYouAgain3
+	return
+
+EventScript_PkmnCenterNurse_ReturnPkmnDefault::	
 	message Text_RestoredPkmnToFullHealth_Frlg
 	waitmessage
 	applymovement VAR_LAST_TALKED, Movement_Bow
@@ -57,6 +63,13 @@ EventScript_PkmnCenterNurse_PlayerWaitingInUnionRoom_Frlg::
 EventScript_PkmnCenterNurse_Goodbye_Frlg::
 	msgbox Text_WeHopeToSeeYouAgain_Frlg
 	return
+
+
+gText_WeHopeToSeeYouAgain3::
+	.string "Your POKéMON are healed, but cannot\n"
+	.string "level over {STR_VAR_1} due to Nuzlocke.$"
+
+
 
 Movement_Bow::
 	nurse_joy_bow
