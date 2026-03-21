@@ -38,7 +38,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route1_EventScript_MartClerk",
-      "flag": "0"
+      "flag": "FLAG_HIDE_MEW_ON_ROUTE1"
     },
     {
       "type": "object",
@@ -53,10 +53,53 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route1_EventScript_Boy",
       "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_MEW",
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_MEW",
+      "x": 29,
+      "y": 1,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Route1_Mew_Gives_ShinyCharm",
+      "flag": "0"
     }
   ],
   "warp_events": [],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 14,
+      "y": 2,
+      "elevation": 0,
+      "var": "VAR_MEWEVENTROUTE1",
+      "var_value": "0",
+      "script": "Route1_EventScript_MewTriggerUp"
+    },
+    {
+      "type": "trigger",
+      "x": 14,
+      "y": 3,
+      "elevation": 0,
+      "var": "VAR_MEWEVENTROUTE1",
+      "var_value": "0",
+      "script": "Route1_EventScript_MewTriggerMiddle"
+    },
+    {
+      "type": "trigger",
+      "x": 14,
+      "y": 4,
+      "elevation": 0,
+      "var": "VAR_MEWEVENTROUTE1",
+      "var_value": "0",
+      "script": "Route1_EventScript_MewTriggerDown"
+    }
+  ],
   "bg_events": [
     {
       "type": "sign",

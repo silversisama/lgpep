@@ -1,5 +1,10 @@
 Route1_Frlg_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, Route1_OnTransition
 	.byte 0
+
+Route1_OnTransition::
+	setflag FLAG_HIDE_MEW_ON_ROUTE1
+	end
 
 Route1_EventScript_MartClerk::
 	lock
@@ -21,6 +26,79 @@ Route1_EventScript_MartClerk::
 	release
 	end
 
+Route1_EventScript_MewTriggerUp::
+	lockall
+	setvar VAR_TEMP_1, 0
+	clearflag FLAG_HIDE_MEW_ON_ROUTE1
+	goto Route1_Mew_Gives_ShinyCharm
+	end
+
+Route1_EventScript_MewTriggerMiddle::
+	lockall
+	setvar VAR_TEMP_1, 1
+	clearflag FLAG_HIDE_MEW_ON_ROUTE1
+	goto Route1_Mew_Gives_ShinyCharm
+	end
+
+Route1_EventScript_MewTriggerDown::
+	lockall
+	setvar VAR_TEMP_1, 2
+	clearflag FLAG_HIDE_MEW_ON_ROUTE1
+	goto Route1_Mew_Gives_ShinyCharm
+	end
+
+Route1_Mew_Gives_ShinyCharm::
+	msgbox Route1_MewWatchingYou, MSGBOX_NPC
+	turnobject LOCALID_PLAYER, DIR_EAST
+	addobject LOCALID_MEW
+	setvar VAR_MEWEVENTROUTE1, 1
+	applymovement LOCALID_MEW, Mew_FliesToPlayer
+	waitmovement 0
+	turnobject LOCALID_PLAYER, DIR_NORTH
+	call_if_eq VAR_TEMP_1, 0, Route1_EventScript_MewDown1
+	call_if_eq VAR_TEMP_1, 1, Route1_EventScript_MewDown2
+	call_if_eq VAR_TEMP_1, 2, Route1_EventScript_MewDown3
+	return
+
+Route1_EventScript_MewDown1::
+	applymovement LOCALID_MEW, Mew_FliesDown1
+	waitmovement 0
+	turnobject LOCALID_PLAYER, DIR_WEST
+	turnobject LOCALID_MEW, DIR_EAST
+	goto Route1_Mew_Gives_ShinyCharm2
+	return
+
+Route1_EventScript_MewDown2::
+	applymovement LOCALID_MEW, Mew_FliesDown2
+	waitmovement 0
+	turnobject LOCALID_PLAYER, DIR_WEST
+	turnobject LOCALID_MEW, DIR_EAST
+	goto Route1_Mew_Gives_ShinyCharm2
+	return
+
+Route1_EventScript_MewDown3::
+	applymovement LOCALID_MEW, Mew_FliesDown3
+	waitmovement 0
+	turnobject LOCALID_PLAYER, DIR_WEST
+	turnobject LOCALID_MEW, DIR_EAST
+	goto Route1_Mew_Gives_ShinyCharm2
+	return
+
+Route1_Mew_Gives_ShinyCharm2::
+	msgbox Route1_MewWantsToGiveCharm, MSGBOX_NPC
+	playfanfare MUS_LEVEL_UP
+	bufferitemname STR_VAR_2, ITEM_SHINY_CHARM
+	message gText_ObtainedTheItem
+	waitmessage
+	waitfanfare
+	additem ITEM_SHINY_CHARM
+	applymovement LOCALID_MEW, Mew_FliesToPlayer
+	waitmovement 0
+	removeobject LOCALID_MEW
+	setflag FLAG_HIDE_MEW_ON_ROUTE1
+	releaseall
+	end
+
 Route1_EventScript_AlreadyGotPotion::
 	msgbox Route1_Text_ComeSeeUsIfYouNeedPokeBalls
 	release
@@ -33,6 +111,48 @@ Route1_EventScript_Boy::
 Route1_EventScript_RouteSign::
 	msgbox Route1_Text_RouteSign, MSGBOX_SIGN
 	end
+
+Mew_FliesToPlayer::
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+Mew_FliesDown1::
+	walk_down
+	step_end
+
+Mew_FliesDown2::
+	walk_down
+	walk_down
+	step_end
+
+Mew_FliesDown3::
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+Route1_MewWatchingYou::
+	.string "You feel like something is\n"
+	.string "watching you...$"
+
+Route1_MewWantsToGiveCharm::
+	.string "MEW wants to give you\n"
+	.string "the SHINY CHARM!$"
 
 Route1_Text_WorkAtPokeMartTakeSample::
 	.string "Hi!\n"

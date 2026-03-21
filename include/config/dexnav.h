@@ -12,7 +12,7 @@
 #define DN_VAR_STEP_COUNTER           VAR_STEP_COUNTER_DEXNAV // Steps for finding hidden pokemon
 
 // Search parameters
-#define DEXNAV_TIMEOUT                  15  // 15 seconds is the time out. Max of 1092 seconds allowed
+#define DEXNAV_TIMEOUT                  30  // 30 seconds is the time out. Max of 1092 seconds allowed
 #define SNEAKING_PROXIMITY              4   // Tile amount
 #define CREEPING_PROXIMITY              2
 #define MAX_PROXIMITY                   20
@@ -49,16 +49,16 @@
 #define SEARCHLEVEL100_ITEM             12
 // Chance of encountering one star potential
 #define SEARCHLEVEL0_ONESTAR            0
-#define SEARCHLEVEL5_ONESTAR            14
-#define SEARCHLEVEL10_ONESTAR           17
+#define SEARCHLEVEL5_ONESTAR            80
+#define SEARCHLEVEL10_ONESTAR           30
 #define SEARCHLEVEL25_ONESTAR           17
 #define SEARCHLEVEL50_ONESTAR           15
 #define SEARCHLEVEL100_ONESTAR          8
 // Chance of encountering two star potential
 #define SEARCHLEVEL0_TWOSTAR            0
 #define SEARCHLEVEL5_TWOSTAR            1
-#define SEARCHLEVEL10_TWOSTAR           9
-#define SEARCHLEVEL25_TWOSTAR           16
+#define SEARCHLEVEL10_TWOSTAR           60
+#define SEARCHLEVEL25_TWOSTAR           80
 #define SEARCHLEVEL50_TWOSTAR           17
 #define SEARCHLEVEL100_TWOSTAR          24
 // Chance of encountering three star potential
@@ -66,7 +66,7 @@
 #define SEARCHLEVEL5_THREESTAR          0
 #define SEARCHLEVEL10_THREESTAR         1
 #define SEARCHLEVEL25_THREESTAR         7
-#define SEARCHLEVEL50_THREESTAR         6
-#define SEARCHLEVEL100_THREESTAR        12
+#define SEARCHLEVEL50_THREESTAR         100
+#define SEARCHLEVEL100_THREESTAR        100
 
 #endif // GUARD_CONFIG_DEXNAV_H

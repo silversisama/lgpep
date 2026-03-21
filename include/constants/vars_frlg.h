@@ -163,7 +163,7 @@
 #define VAR_ROUTE_PKMN_SEEN_4                                                       0x4093 // Nuzlocke: Track successful catches in routes/areas (32 bits)
 #define VAR_ROUTE_PKMN_SEEN_5                                                       0x4094 // Nuzlocke: Track successful catches in routes/areas (32 bits)
 #define VAR_ROUTE_PKMN_SEEN_6                           0x4095 // Nuzlocke: Track successful catches in routes/areas (32 bits)
-#define VAR_0x4096                           0x4096 // Nuzlocke: Track successful catches in routes/areas (32 bits)
+#define VAR_MEWEVENTROUTE1                           0x4096 // Nuzlocke: Track successful catches in routes/areas (32 bits)
 #define VAR_BATTLE_SPEED                                 0x4097
 #define VAR_0x4098                 0x4098
 #define VAR_0x4099                 0x4099
