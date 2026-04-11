@@ -166,6 +166,7 @@
 .include "sound/voicegroups/rg_vs_gym_leader.inc"
 .include "sound/voicegroups/rg_vs_trainer.inc"
 .include "sound/voicegroups/rg_vs_wild.inc"
+.include "sound/voicegroups/rg_rocketduo.inc"
 .include "sound/voicegroups/rg_vs_champion.inc"
 .include "sound/voicegroups/rg_pallet.inc"
 .include "sound/voicegroups/rg_oak_lab.inc"

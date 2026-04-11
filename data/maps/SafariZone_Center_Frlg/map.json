@@ -3,7 +3,6 @@
   "name": "SafariZone_Center_Frlg",
   "layout": "LAYOUT_SAFARI_ZONE_CENTER",
   "music": "MUS_EVOLUTION",
-  "region": "REGION_KANTO",
   "region_map_section": "MAPSEC_KANTO_SAFARI_ZONE",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -14,7 +13,7 @@
   "show_map_name": true,
   "floor_number": 0,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": 0,
+  "connections": null,
   "object_events": [
     {
       "type": "object",
@@ -124,9 +123,7 @@
       "dest_warp_id": "1"
     }
   ],
-  "coord_events": [
-
-  ],
+  "coord_events": [],
   "bg_events": [
     {
       "type": "sign",
@@ -162,5 +159,6 @@
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "SafariZone_Center_EventScript_AreaSign"
     }
-  ]
+  ],
+  "region": "REGION_KANTO"
 }

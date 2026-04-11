@@ -611,10 +611,9 @@ static const u8 *const sControlsGuide_Pages2And3_Strings[CONTROLS_GUIDE_STRINGS_
 static const u8 *const sMaleNameChoices[] =
 {
 #if defined(FIRERED)
-    gNameChoice_Red,
-    gNameChoice_Fire,
+    gNameChoice_Yellow,
     gNameChoice_Ash,
-    gNameChoice_Kene,
+    gNameChoice_Leaf,
     gNameChoice_Geki,
 #else
     gNameChoice_Green,
@@ -644,6 +643,8 @@ static const u8 *const sFemaleNameChoices[] =
 #if defined(FIRERED)
     gNameChoice_Red,
     gNameChoice_Fire,
+    gNameChoice_White,
+    gNameChoice_Sakura,
 #else
     gNameChoice_Green,
     gNameChoice_Leaf,
@@ -669,17 +670,10 @@ static const u8 *const sFemaleNameChoices[] =
 
 static const u8 *const sRivalNameChoices[] =
 {
-#if defined(FIRERED)
     gNameChoice_Green,
     gNameChoice_Gary,
     gNameChoice_Kaz,
     gNameChoice_Toru
-#else
-    gNameChoice_Red,
-    gNameChoice_Ash,
-    gNameChoice_Kene,
-    gNameChoice_Geki
-#endif
 };
 
 enum

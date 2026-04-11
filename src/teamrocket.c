@@ -92,14 +92,7 @@ static void RocketIntro_CreateDialogueWindowBorder(u8 bg, u8 x, u8 y, u8 width, 
     FillBgTilemapBufferRect(bg, BG_TILE_V_FLIP(BIRCH_DLG_BASE_TILE_NUM + 6), x+width,   y+height, 1,       1, palNum);
 }
 
-static void RocketIntro_ShowDialogueWindow(u8 windowId, u8 copyToVram)
-{
-    CallWindowFunction(windowId, RocketIntro_CreateDialogueWindowBorder);
-    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
-    PutWindowTilemap(windowId);
-    if (copyToVram == TRUE)
-        CopyWindowToVram(windowId, COPYWIN_FULL);
-}
+
 
 static const struct BgTemplate sRocketBgTemplate = {
     .bg = 1,
@@ -160,6 +153,7 @@ static void Task_TeamRocket_Intro(u8 taskId)
     switch(gTasks[taskId].data[3])
     {
     case 0:
+        Overworld_ChangeMusicTo(MUS_RG_TEACHY_TV_MENU);
         SetVBlankCallback(NULL);
         SetGpuReg(REG_OFFSET_DISPCNT, 0);
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
@@ -189,7 +183,6 @@ static void Task_TeamRocket_Intro(u8 taskId)
         ResetPaletteFade();
         FreeAllSpritePalettes();
         ResetAllPicSprites();
-        PlayBGM(MUS_TEAM_ROCKET_MOTTO);
         LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(14), PLTT_SIZE_4BPP);
         LoadUserWindowBorderGfx(0, 0x2A8, BG_PLTT_ID(13));
         DrawStdFrameWithCustomTileAndPalette(0, TRUE, 0x2A8, 0xD);

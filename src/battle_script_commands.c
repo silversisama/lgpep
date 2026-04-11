@@ -10574,7 +10574,7 @@ static void ComputeBallData(u32 wildMonBattler, u32 playerBattler, struct BallDa
     u32 ballId = ItemIdToBallId(gLastUsedItem);
     struct BattlePokemon *battleMon = &gBattleMons[wildMonBattler];
 
-    ball->multiplier = 100;
+    ball->multiplier = 150;
     ball->divider = 100;
     ball->flatBonus = 0;
     ball->guaranteedCapture = FALSE;
@@ -10582,7 +10582,7 @@ static void ComputeBallData(u32 wildMonBattler, u32 playerBattler, struct BallDa
     if (gSpeciesInfo[battleMon->species].isUltraBeast)
     {
         if (ballId == BALL_BEAST)
-            ball->multiplier = 500;
+            ball->multiplier = 600;
         else
         {
             ball->multiplier = 410;
@@ -10593,17 +10593,17 @@ static void ComputeBallData(u32 wildMonBattler, u32 playerBattler, struct BallDa
     switch (ballId)
     {
     case BALL_GREAT:
-        ball->multiplier = 150;
+        ball->multiplier = 200;
         break;
     case BALL_ULTRA:
-        ball->multiplier = 200;
+        ball->multiplier = 250;
         break;
     case BALL_MASTER:
         ball->guaranteedCapture = TRUE;
         break;
     case BALL_NET:
         if (IS_BATTLER_ANY_TYPE(wildMonBattler, TYPE_WATER, TYPE_BUG))
-            ball->multiplier = B_NET_BALL_MODIFIER >= GEN_7 ? 350 : 300;
+            ball->multiplier = B_NET_BALL_MODIFIER >= GEN_7 ? 400 : 300;
         break;
     case BALL_NEST:
         ball->multiplier = 100;
@@ -10622,19 +10622,19 @@ static void ComputeBallData(u32 wildMonBattler, u32 playerBattler, struct BallDa
         if (GetCurrentMapType() == MAP_TYPE_UNDERWATER
             || (B_DIVE_BALL_MODIFIER >= GEN_4 && (gIsFishingEncounter || gIsSurfingEncounter)))
         {
-            ball->multiplier = 350;
+            ball->multiplier = 400;
         }
         break;
     case BALL_DUSK:
         i = GetTimeOfDay();
         if (i == TIME_EVENING || i == TIME_NIGHT || gMapHeader.cave || gMapHeader.mapType == MAP_TYPE_UNDERGROUND)
-            ball->multiplier = (B_DUSK_BALL_MODIFIER >= GEN_7 ? 300 : 350);
+            ball->multiplier = (B_DUSK_BALL_MODIFIER >= GEN_7 ? 400 : 350);
         break;
     case BALL_TIMER:
         if (B_TIMER_BALL_MODIFIER >= GEN_5)
         {
             ball->multiplier = 4096 + gBattleResults.battleTurnCounter * 1229;
-            ball->divider = 4096;
+            ball->divider = 3072;
         }
         else
         {
@@ -10645,11 +10645,11 @@ static void ComputeBallData(u32 wildMonBattler, u32 playerBattler, struct BallDa
         break;
     case BALL_QUICK:
         if (gBattleResults.battleTurnCounter == 0)
-            ball->multiplier = (B_QUICK_BALL_MODIFIER >= GEN_5 ? 500 : 400);
+            ball->multiplier = (B_QUICK_BALL_MODIFIER >= GEN_5 ? 600 : 400);
         break;
     case BALL_REPEAT:
         if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(battleMon->species), FLAG_GET_CAUGHT))
-            ball->multiplier = (B_REPEAT_BALL_MODIFIER >= GEN_7 ? 350 : 300);
+            ball->multiplier = (B_REPEAT_BALL_MODIFIER >= GEN_7 ? 400 : 300);
         break;
     case BALL_LEVEL:
         if (gBattleMons[playerBattler].level >= 4 * battleMon->level)
@@ -10663,7 +10663,7 @@ static void ComputeBallData(u32 wildMonBattler, u32 playerBattler, struct BallDa
         if (gIsFishingEncounter)
         {
             if (B_LURE_BALL_MODIFIER >= GEN_8)
-                ball->multiplier = 400;
+                ball->multiplier = 500;
             else if (B_LURE_BALL_MODIFIER >= GEN_7)
                 ball->multiplier = 500;
             else
@@ -10679,7 +10679,7 @@ static void ComputeBallData(u32 wildMonBattler, u32 playerBattler, struct BallDa
         {
             if (evolutions[i].method == EVO_ITEM
                 && evolutions[i].param == ITEM_MOON_STONE)
-                ball->multiplier = 400;
+                ball->multiplier = 500;
         }
         break;
     }
@@ -10695,7 +10695,7 @@ static void ComputeBallData(u32 wildMonBattler, u32 playerBattler, struct BallDa
         break;
     case BALL_FAST:
         if (GetSpeciesBaseSpeed(battleMon->species) >= 100)
-            ball->multiplier = 400;
+            ball->multiplier = 500;
         break;
     case BALL_HEAVY:
         i = GetSpeciesWeight(battleMon->species);
@@ -10737,7 +10737,7 @@ static void ComputeBallData(u32 wildMonBattler, u32 playerBattler, struct BallDa
         break;
     case BALL_DREAM:
         if (B_DREAM_BALL_MODIFIER >= GEN_8 && (battleMon->status1 & STATUS1_SLEEP || (GetBattlerAbilityIgnoreMoldBreaker(wildMonBattler) == ABILITY_COMATOSE)))
-            ball->multiplier = 400;
+            ball->multiplier = 500;
         break;
     case BALL_SAFARI:
         if (B_SAFARI_BALL_MODIFIER == GEN_1)

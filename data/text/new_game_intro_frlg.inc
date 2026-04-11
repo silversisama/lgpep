@@ -7,11 +7,20 @@ gNameChoice_Green::
 gNameChoice_Red::
 	.string "RED$"
 
+gNameChoice_White::
+	.string "WHITE$"
+
+gNameChoice_Yellow::
+	.string "YELLOW$"
+
 gNameChoice_Leaf::
 	.string "LEAF$"
 
 gNameChoice_Fire::
 	.string "FIRE$"
+
+gNameChoice_Fire::
+	.string "SAKURA$"
 
 gNameChoice_Gary::
 	.string "GARY$"

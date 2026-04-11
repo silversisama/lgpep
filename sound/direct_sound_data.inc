@@ -191,6 +191,18 @@ DirectSoundWaveData_sc88pro_trumpet_84::
 	.incbin "sound/direct_sound_samples/sc88pro_trumpet_84.bin"
 
 	.align 2
+DirectSoundWaveData_cello::
+	.incbin "sound/direct_sound_samples/cello.bin"
+
+	.align 2
+DirectSoundWaveData_contrabass::
+	.incbin "sound/direct_sound_samples/contrabass.bin"
+
+	.align 2
+DirectSoundWaveData_trumbone::
+	.incbin "sound/direct_sound_samples/trumbone.bin"
+
+	.align 2
 DirectSoundWaveData_sc88pro_tuba_39:: @N.B.: These tuba samples are actually sampled at 36 and 48, then pitched up
 	.incbin "sound/direct_sound_samples/sc88pro_tuba_39.bin"
 
