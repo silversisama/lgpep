@@ -23,6 +23,7 @@
 #include "config/debug.h"
 #include "config/dexnav.h"
 #include "config/follower_npc.h"
+#include "config/game_corner_expansion.h"
 #include "config/frlg_bag.h"
 #include "config/general.h"
 #include "config/item.h"

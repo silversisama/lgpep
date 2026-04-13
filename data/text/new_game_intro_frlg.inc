@@ -19,7 +19,7 @@ gNameChoice_Leaf::
 gNameChoice_Fire::
 	.string "FIRE$"
 
-gNameChoice_Fire::
+gNameChoice_Sakura::
 	.string "SAKURA$"
 
 gNameChoice_Gary::

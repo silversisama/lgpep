@@ -12,7 +12,7 @@
 // When wraparound occurs, the friendship of
 // every party poke gets a slight boost.
 #define VAR_HAPPINESS_STEP_COUNTER          0x4021
-
+ 
 // Counts up every step while a party Pokemon is
 // poisoned. Wraps around at 5. When wraparound
 // occurs, every party Pokemon with the PSN status
@@ -165,18 +165,18 @@
 #define VAR_ROUTE_PKMN_SEEN_6                           0x4095 // Nuzlocke: Track successful catches in routes/areas (32 bits)
 #define VAR_MEWEVENTROUTE1                           0x4096 // Nuzlocke: Track successful catches in routes/areas (32 bits)
 #define VAR_BATTLE_SPEED                                 0x4097
-#define VAR_0x4098                 0x4098
-#define VAR_0x4099                 0x4099
-#define VAR_0x409A                 0x409A
-#define VAR_0x409B                 0x409B
-#define VAR_0x409C                 0x409C
-#define VAR_0x409D                 0x409D
-#define VAR_0x409E                 0x409E
-#define VAR_0x409F                 0x409F
-#define VAR_0x40A0                 0x40A0
-#define VAR_0x40A1                 0x40A1
-#define VAR_0x40A2                 0x40A2
-#define VAR_0x40A3                 0x40A3
+#define VAR_RACER_NAME_1                 0x4098
+#define VAR_RACER_NAME_2                 0x4099
+#define VAR_RACER_NAME_3                 0x409A
+#define VAR_RACER_NAME_4                 0x409B
+#define VAR_RACER_NAME_5                 0x409C
+#define VAR_RACER_NAME_6                 0x409D
+#define VAR_RACER_1                 0x409E
+#define VAR_RACER_2                 0x409F
+#define VAR_RACER_3                 0x40A0
+#define VAR_RACER_4                 0x40A1
+#define VAR_RACER_5                 0x40A2
+#define VAR_RACER_6                 0x40A3
 #define VAR_0x40A4                 0x40A4
 #define VAR_0x40A5                 0x40A5
 #define VAR_0x40A6                 0x40A6

@@ -490,8 +490,19 @@
 #define MUS_RG_TRAINER_TOWER        556 // MUS_RG_T_TOWER
 #define MUS_RG_SLOW_PALLET          557 // MUS_RG_SLOWMASARA
 #define MUS_RG_TEACHY_TV_MENU       558 // MUS_RG_TVNOIZE
-#define MUS_RG_ROCKETDUO               559 // MUS_ROCKETDUO
-#define END_MUS                     MUS_RG_ROCKETDUO
+#define MUS_RG_ROCKETDUO            559 // MUS_ROCKETDUO
+#define MUS_HGSS_CASINO             560 // MUS_HGSS_CASINO
+#define MUS_CASINO_PLUS_1           561 // MUS_CASINO_PLUS_1
+#define MUS_CASINO_PLUS_2           562 // MUS_CASINO_PLUS_2
+#define MUS_CASINO_PLUS_3           563 // MUS_CASINO_PLUS_3
+#define MUS_CASINO_PLUS_4           564 // MUS_CASINO_PLUS_4
+#define MUS_CASINO_PLUS_5           565 // MUS_CASINO_PLUS_5
+#define MUS_CASINO_PLUS_6           566 // MUS_CASINO_PLUS_6
+#define MUS_CASINO_PLUS_7           567 // MUS_CASINO_PLUS_7
+#define MUS_CASINO_PLUS_8           568 // MUS_CASINO_PLUS_8
+#define MUS_CASINO_PLUS_9           569 // MUS_CASINO_PLUS_9
+#define MUS_CASINO_PLUS_GACHA       570 // MUS_CASINO_PLUS_GACHA
+#define END_MUS                     MUS_CASINO_PLUS_GACHA
 
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.

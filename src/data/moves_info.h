@@ -17569,12 +17569,12 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_SizzlySlide,
     },
 
-    [MOVE_ES_PERCEPTION] =
+    [MOVE_ESP] =
     {
-        .name = COMPOUND_STRING("ES Perception"),
+        .name = COMPOUND_STRING("ESP"),
         .description = COMPOUND_STRING(
-            "Telekinetic force that sets\n"
-            "wall, lowering Sp. Atk damage."),
+            "Telekinetic force that\n"
+            "damages and sets screen."),
         .effect = EFFECT_TWO_TURNS_ATTACK,
         .power = 100,
         .type = TYPE_PSYCHIC,

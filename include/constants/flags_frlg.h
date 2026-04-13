@@ -158,8 +158,8 @@
 #define FLAG_NUZLOCKEHC                                    0x0B5
 #define FLAG_NUZLOCKEBAN                                   0x0B6
 #define FLAG_HIDE_MEW_ON_ROUTE1                            0x0B7
-#define FLAG_0x0B8               0x0B8
-#define FLAG_0x0B9               0x0B9
+#define FLAG_DERBYNICKNAME               0x0B8
+#define FLAG_DERBYRESET               0x0B9
 #define FLAG_0x0BA               0x0BA
 #define FLAG_0x0BB               0x0BB
 #define FLAG_0x0BC               0x0BC

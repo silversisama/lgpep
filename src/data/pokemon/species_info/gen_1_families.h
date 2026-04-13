@@ -18067,7 +18067,6 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
                             #endif
                             #if P_GEN_2_CROSS_EVOS
                                 ,{EVO_ITEM, ITEM_SHINY_STONE, SPECIES_ESPEON},
-                                {EVO_LEVEL, 0, SPECIES_UMBREON, CONDITIONS({IF_MIN_FRIENDSHIP, FRIENDSHIP_EVO_THRESHOLD}, {IF_TIME, TIME_NIGHT})}
                                 {EVO_ITEM, ITEM_DUSK_STONE, SPECIES_UMBREON}
                                 #endif
                             #if P_GEN_4_CROSS_EVOS
