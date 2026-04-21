@@ -407,4 +407,8 @@ const u16 gMetatileAttributes_PokemonLeague[] = INCBIN_U16("data/tilesets/second
 const u16 gMetatiles_HallOfFame[] = INCBIN_U16("data/tilesets/secondary/hall_of_fame_frlg/metatiles.bin");
 const u16 gMetatileAttributes_HallOfFame[] = INCBIN_U16("data/tilesets/secondary/hall_of_fame_frlg/metatile_attributes.bin");
 
+
+const u16 gMetatiles_NewGameCorner[] = INCBIN_U16("data/tilesets/secondary/new_game_corner/metatiles.bin");
+const u16 gMetatileAttributes_NewGameCorner[] = INCBIN_U16("data/tilesets/secondary/new_game_corner/metatile_attributes.bin");
+
 #endif // IS_FRLG

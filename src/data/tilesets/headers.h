@@ -1540,4 +1540,17 @@ const struct Tileset gTileset_HallOfFame =
     .callback = NULL,
 };
 
+
+const struct Tileset gTileset_NewGameCorner =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_NewGameCorner,
+    .palettes = gTilesetPalettes_NewGameCorner,
+    .metatiles = gMetatiles_NewGameCorner,
+    .metatileAttributes = gMetatileAttributes_NewGameCorner,
+    .callback = NULL,
+};
+
+
 #endif // IS_FRLG

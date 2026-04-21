@@ -3047,4 +3047,25 @@ const u16 ALIGNED(4) gTilesetPalettes_General_Frlg[][16] =
 
 const u32 gTilesetTiles_General_Frlg[] = INCBIN_U32("data/tilesets/primary/general_frlg/tiles.4bpp.smol");
 
+
+const u16 gTilesetPalettes_NewGameCorner[][16] =
+{
+    INCBIN_U16("data/tilesets/secondary/new_game_corner/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/new_game_corner/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/new_game_corner/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/new_game_corner/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/new_game_corner/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/new_game_corner/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/new_game_corner/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/new_game_corner/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/new_game_corner/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/new_game_corner/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/new_game_corner/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/new_game_corner/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/new_game_corner/palettes/12.gbapal"),
+};
+
+const u32 gTilesetTiles_NewGameCorner[] = INCBIN_U32("data/tilesets/secondary/new_game_corner/tiles.4bpp.smol");
+
+
 #endif // IS_FRLG
