@@ -352,7 +352,7 @@ void StartWildBattleWithOWE(void)
 static bool32 CreateEnemyPartyOWE(u32 *speciesId, u32 *level, u32 *indexRoamerOutbreak, s32 x, s32 y)
 {
     const struct WildPokemonInfo *wildMonInfo;
-    enum WildPokemonArea wildArea;
+    enum WildArea wildArea;
     enum TimeOfDay timeOfDay;
     u32 headerId = GetCurrentMapWildMonHeaderId();
     u32 metatileBehavior = MapGridGetMetatileBehaviorAt(x, y);
@@ -537,7 +537,7 @@ static bool32 StartWildBattleWithOWE_CheckMassOutbreak(u32 indexRoamerOutbreak, 
 
 static bool32 StartWildBattleWithOWE_CheckDoubleBattle(struct ObjectEvent *owe, u32 headerId)
 {
-    enum WildPokemonArea wildArea;
+    enum WildArea wildArea;
     enum TimeOfDay timeOfDay;
     const struct WildPokemonInfo *wildMonInfo;
     u32 metatileBehavior = MapGridGetMetatileBehaviorAt(owe->currentCoords.x, owe->currentCoords.y);

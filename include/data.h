@@ -130,6 +130,7 @@ struct Trainer
     u8 poolRuleIndex;
     u8 poolPickIndex;
     u8 poolPruneIndex;
+    bool8 isBossTrainer:1;
     u16 overrideTrainer;
     enum TrainerPicID trainerBackPic;
 };
@@ -348,5 +349,15 @@ static inline const u64 GetTrainerAIFlagsFromId(u16 trainerId)
 {
     return GetTrainerStructFromId(trainerId)->aiFlags;
 }
+
+static inline const bool32 IsBossTrainerBattle(u16 trainerId)
+{
+    u32 sanitizedTrainerId = SanitizeTrainerId(trainerId);
+    enum DifficultyLevel difficulty = GetTrainerDifficultyLevel(sanitizedTrainerId);
+
+    return gTrainers[difficulty][sanitizedTrainerId].isBossTrainer;
+}
+
+
 
 #endif // GUARD_DATA_H

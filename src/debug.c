@@ -74,6 +74,7 @@
 #include "vs_seeker.h"
 #include "load_save.h"
 #include "battle_partner.h"
+#include "randomizer.h"
 
 enum FollowerNPCCreateDebugMenu
 {
@@ -3084,7 +3085,7 @@ static void DebugAction_Give_Pokemon_SelectShiny(u8 taskId)
 
 static void Debug_Display_Ability(u32 abilityNum, u32 digit, u8 windowId)//(u32 natureId, u32 digit, u8 windowId)
 {
-    enum Ability abilityId = GetAbilityBySpecies(sDebugMonData->species, abilityNum);
+    enum Ability abilityId = GetAbilityBySpecies(sDebugMonData->species, abilityNum, FALSE);
     StringCopy(gStringVar2, gText_DigitIndicator[digit]);
     ConvertIntToDecimalStringN(gStringVar3, abilityNum, STR_CONV_MODE_LEFT_ALIGN, 2);
     StringCopyPadded(gStringVar3, gStringVar3, CHAR_SPACE, 15);
@@ -4699,9 +4700,9 @@ static void DebugAction_Party_HealParty(u8 taskId)
 void DebugNative_GetAbilityNames(void)
 {
     u32 species = GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_SPECIES);
-    StringCopy(gStringVar1, gAbilitiesInfo[GetAbilityBySpecies(species, 0)].name);
-    StringCopy(gStringVar2, gAbilitiesInfo[GetAbilityBySpecies(species, 1)].name);
-    StringCopy(gStringVar3, gAbilitiesInfo[GetAbilityBySpecies(species, 2)].name);
+    StringCopy(gStringVar1, gAbilitiesInfo[GetAbilityBySpecies(species, 0, FALSE)].name);
+    StringCopy(gStringVar2, gAbilitiesInfo[GetAbilityBySpecies(species, 1, FALSE)].name);
+    StringCopy(gStringVar3, gAbilitiesInfo[GetAbilityBySpecies(species, 2, FALSE)].name);
 }
 
 #define tPartyId               data[5]
@@ -4910,7 +4911,7 @@ const struct Trainer* GetDebugAiTrainer(void)
 static void DebugAction_Party_SetParty(u8 taskId)
 {
     ZeroPlayerPartyMons();
-    CreateNPCTrainerPartyFromTrainer(gPlayerParty, &sDebugTrainers[DIFFICULTY_NORMAL][DEBUG_TRAINER_PLAYER], TRUE, BATTLE_TYPE_TRAINER);
+    CreateNPCTrainerPartyFromTrainer(gPlayerParty, &sDebugTrainers[DIFFICULTY_NORMAL][DEBUG_TRAINER_PLAYER], TRUE, BATTLE_TYPE_TRAINER, gSpecialVar_0x8004);
     ScriptContext_Enable();
     Debug_DestroyMenu_Full(taskId);
 }
@@ -4919,8 +4920,8 @@ static void DebugAction_Party_BattleSingle(u8 taskId)
 {
     ZeroPlayerPartyMons();
     ZeroEnemyPartyMons();
-    CreateNPCTrainerPartyFromTrainer(gPlayerParty, &sDebugTrainers[DIFFICULTY_NORMAL][DEBUG_TRAINER_PLAYER], TRUE, BATTLE_TYPE_TRAINER);
-    CreateNPCTrainerPartyFromTrainer(gEnemyParty, GetDebugAiTrainer(), FALSE, BATTLE_TYPE_TRAINER);
+    CreateNPCTrainerPartyFromTrainer(gPlayerParty, &sDebugTrainers[DIFFICULTY_NORMAL][DEBUG_TRAINER_PLAYER], TRUE, BATTLE_TYPE_TRAINER, gSpecialVar_0x8004);
+    CreateNPCTrainerPartyFromTrainer(gEnemyParty, GetDebugAiTrainer(), FALSE, BATTLE_TYPE_TRAINER, 0);
 
     gBattleTypeFlags = BATTLE_TYPE_TRAINER;
     if (sDebugTrainers[DIFFICULTY_NORMAL][DEBUG_TRAINER_AI].battleType == TRAINER_BATTLE_TYPE_DOUBLES)

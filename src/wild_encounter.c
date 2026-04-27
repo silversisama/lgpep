@@ -30,6 +30,7 @@
 #include "constants/layouts.h"
 #include "constants/weather.h"
 #include "constants/pokemon.h"
+#include "randomizer.h"
 
 // Global variable to track if current wild Pokemon is catchable in Nuzlocke
 static bool8 gWildPokemonIsCatchableInNuzlocke = FALSE;
@@ -56,7 +57,7 @@ static u16 FeebasRandom(void);
 static void FeebasSeedRng(u16 seed);
 static void ApplyFluteEncounterRateMod(u32 *encRate);
 static void ApplyCleanseTagEncounterRateMod(u32 *encRate);
-static u8 GetMaxLevelOfSpeciesInWildTable(const struct WildPokemon *wildMon, u16 species, enum WildPokemonArea area);
+static u8 GetMaxLevelOfSpeciesInWildTable(const struct WildPokemon *wildMon, u16 species, enum WildArea area);
 #ifdef BUGFIX
 static bool8 TryGetAbilityInfluencedWildMonIndex(const struct WildPokemon *wildMon, enum Type type, enum Ability ability, u8 *monIndex, u32 size);
 #else
@@ -330,7 +331,7 @@ static u32 ChooseWildMonIndex_Fishing(u8 rod)
     return wildMonIndex;
 }
 
-u8 ChooseWildMonLevel(const struct WildPokemon *wildPokemon, u8 wildMonIndex, enum WildPokemonArea area)
+u8 ChooseWildMonLevel(const struct WildPokemon *wildPokemon, u8 wildMonIndex, enum WildArea area)
 {
     u8 min;
     u8 max;
@@ -409,7 +410,7 @@ u16 GetCurrentMapWildMonHeaderId(void)
     return HEADER_NONE;
 }
 
-enum TimeOfDay GetTimeOfDayForEncounters(u32 headerId, enum WildPokemonArea area)
+enum TimeOfDay GetTimeOfDayForEncounters(u32 headerId, enum WildArea area)
 {
     const struct WildPokemonInfo *wildMonInfo;
     enum TimeOfDay timeOfDay = GetTimeOfDay();
@@ -485,11 +486,12 @@ void CreateWildMon(u16 species, u8 level)
 #define TRY_GET_ABILITY_INFLUENCED_WILD_MON_INDEX(wildPokemon, type, ability, ptr, count) TryGetAbilityInfluencedWildMonIndex(wildPokemon, type, ability, ptr)
 #endif
 
-bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, enum WildPokemonArea area, u8 flags)
+bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, enum WildArea area, u8 flags)
 {
     u8 wildMonIndex = 0;
     u8 level;
-
+    u16 species;
+    
     switch (area)
     {
     case WILD_AREA_LAND:
@@ -539,7 +541,16 @@ bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, enum WildPok
     if (gMapHeader.mapLayoutId != LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS && flags & WILD_CHECK_KEEN_EYE && !IsAbilityAllowingEncounter(level))
         return FALSE;
 
-    CreateWildMon(wildMonInfo->wildPokemon[wildMonIndex].species, level);
+    species = wildMonInfo->wildPokemon[wildMonIndex].species;
+    #if RANDOMIZER_AVAILABLE == TRUE
+        species = RandomizeWildEncounter(
+            species,
+            gSaveBlock1Ptr->location.mapNum,
+            gSaveBlock1Ptr->location.mapGroup,
+            area, wildMonIndex);
+    #endif
+
+    CreateWildMon(species, level);
     return TRUE;
 }
 
@@ -550,6 +561,13 @@ static u16 GenerateFishingWildMon(const struct WildPokemonInfo *wildMonInfo, u8 
     u8 level = ChooseWildMonLevel(wildMonInfo->wildPokemon, wildMonIndex, WILD_AREA_FISHING);
 
     UpdateChainFishingStreak();
+    #if RANDOMIZER_AVAILABLE == TRUE
+        wildMonSpecies = RandomizeWildEncounter(
+            wildMonSpecies,
+            gSaveBlock1Ptr->location.mapNum,
+            gSaveBlock1Ptr->location.mapGroup,
+            WILD_AREA_FISHING, wildMonIndex);
+    #endif
     CreateWildMon(wildMonSpecies, level);
     return wildMonSpecies;
 }
@@ -960,7 +978,8 @@ void FishingWildEncounter(u8 rod)
 
 u16 GetLocalWildMon(bool8 *isWaterMon)
 {
-    u32 headerId;
+    u32 headerId, species;
+    u8 index;
     enum TimeOfDay timeOfDay;
     const struct WildPokemonInfo *landMonsInfo;
     const struct WildPokemonInfo *waterMonsInfo;
@@ -981,23 +1000,43 @@ u16 GetLocalWildMon(bool8 *isWaterMon)
         return SPECIES_NONE;
     // Land Pokémon
     else if (landMonsInfo != NULL && waterMonsInfo == NULL)
-        return landMonsInfo->wildPokemon[ChooseWildMonIndex_Land()].species;
+    {
+        index = ChooseWildMonIndex_Land();
+        species = landMonsInfo->wildPokemon[index].species;
+    }
     // Water Pokémon
     else if (landMonsInfo == NULL && waterMonsInfo != NULL)
     {
         *isWaterMon = TRUE;
-        return waterMonsInfo->wildPokemon[ChooseWildMonIndex_Water()].species;
+        index = ChooseWildMonIndex_Water();
+        species = waterMonsInfo->wildPokemon[index].species;
     }
     // Either land or water Pokémon
-    if ((Random() % 100) < 80)
+    else if ((Random() % 100) < 80)
     {
-        return landMonsInfo->wildPokemon[ChooseWildMonIndex_Land()].species;
+        index = ChooseWildMonIndex_Land();
+        species = landMonsInfo->wildPokemon[index].species;
     }
     else
     {
         *isWaterMon = TRUE;
-        return waterMonsInfo->wildPokemon[ChooseWildMonIndex_Water()].species;
+        index = ChooseWildMonIndex_Water();
+        species = waterMonsInfo->wildPokemon[index].species;
     }
+    #if RANDOMIZER_AVAILABLE == TRUE
+    {
+        enum WildArea area;
+        if (*isWaterMon)
+            area = WILD_AREA_WATER;
+        else
+            area = WILD_AREA_LAND;
+        species = RandomizeWildEncounter(
+            species, gWildMonHeaders[headerId].mapNum,
+            gWildMonHeaders[headerId].mapGroup, area, index);
+    }
+    #endif
+
+    return species;
 }
 
 u16 GetLocalWaterMon(void)
@@ -1012,7 +1051,20 @@ u16 GetLocalWaterMon(void)
         const struct WildPokemonInfo *waterMonsInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay].waterMonsInfo;
 
         if (waterMonsInfo)
-            return waterMonsInfo->wildPokemon[ChooseWildMonIndex_Water()].species;
+        {
+            u8 index;
+            u16 species;
+            index = ChooseWildMonIndex_Water();
+            species = waterMonsInfo->wildPokemon[index].species;
+            #if RANDOMIZER_AVAILABLE == TRUE
+                species = RandomizeWildEncounter(
+                    species, gWildMonHeaders[headerId].mapNum,
+                    gWildMonHeaders[headerId].mapGroup, WILD_AREA_WATER,
+                    index);
+            #endif
+
+            return species;
+        }
     }
     return SPECIES_NONE;
 }
@@ -1114,7 +1166,7 @@ static bool8 TryGetRandomWildMonIndexByType(const struct WildPokemon *wildMon, e
 
 #include "data.h"
 
-static u8 GetMaxLevelOfSpeciesInWildTable(const struct WildPokemon *wildMon, u16 species, enum WildPokemonArea area)
+static u8 GetMaxLevelOfSpeciesInWildTable(const struct WildPokemon *wildMon, u16 species, enum WildArea area)
 {
     u8 i, maxLevel = 0, numMon = 0;
 
@@ -1129,8 +1181,10 @@ static u8 GetMaxLevelOfSpeciesInWildTable(const struct WildPokemon *wildMon, u16
     case WILD_AREA_ROCKS:
         numMon = ROCK_WILD_COUNT;
         break;
-    default:
     case WILD_AREA_FISHING:
+        numMon = FISH_WILD_COUNT;
+        break;
+    default:
     case WILD_AREA_HIDDEN:
         break;
     }

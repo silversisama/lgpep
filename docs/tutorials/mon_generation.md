@@ -148,7 +148,7 @@ void CreateMon(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 hasFix
 void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId);
 ```
 `CreateMon` and `CreateBoxMon` now have different arguments and do less things than their 1.14 counterparts. If you have code that used those functions, we recommend you use these legacy version of `CreateMon` and `CreateBoxMon`:
-```c
+```c 
 void CreateMonLegacy(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId)
 {
     u32 personality = hasFixedPersonality ? fixedPersonality : Random32();

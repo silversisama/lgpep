@@ -7,7 +7,7 @@
 
 #define HEADER_NONE 0xFFFF
 
-enum WildPokemonArea {
+enum WildArea {
     WILD_AREA_LAND,
     WILD_AREA_WATER,
     WILD_AREA_ROCKS,
@@ -53,7 +53,7 @@ extern bool8 gIsFishingEncounter;
 extern bool8 gIsSurfingEncounter;
 extern u8 gChainFishingDexNavStreak;
 bool8 IsWildPokemonCatchableInNuzlocke(void);
-u8 ChooseWildMonLevel(const struct WildPokemon *wildPokemon, u8 wildMonIndex, enum WildPokemonArea area);
+u8 ChooseWildMonLevel(const struct WildPokemon *wildPokemon, u8 wildMonIndex, enum WildArea area);
 void DisableWildEncounters(bool8 disabled);
 bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior);
 bool8 SweetScentWildEncounter(void);
@@ -68,7 +68,7 @@ bool8 TryDoDoubleWildBattle(void);
 bool8 StandardWildEncounter_Debug(void);
 u32 CalculateChainFishingShinyRolls(void);
 void CreateWildMon(u16 species, u8 level);
-bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, enum WildPokemonArea area, u8 flags);
+bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, enum WildArea area, u8 flags);
 bool8 SetUpMassOutbreakEncounter(u8 flags);
 bool8 DoMassOutbreakEncounterTest(void);
 bool8 AreLegendariesInSootopolisPreventingEncounters(void);
@@ -79,6 +79,6 @@ u32 ChooseWildMonIndex_Water(void);
 u32 ChooseWildMonIndex_Rocks(void);
 u32 ChooseHiddenMonIndex(void);
 bool32 MapHasNoEncounterData(void);
-enum TimeOfDay GetTimeOfDayForEncounters(u32 headerId, enum WildPokemonArea area);
+enum TimeOfDay GetTimeOfDayForEncounters(u32 headerId, enum WildArea area);
 
 #endif // GUARD_WILD_ENCOUNTER_H

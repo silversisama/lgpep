@@ -54,6 +54,7 @@
 #include "follower_npc.h"
 #include "main_menu.h"
 #include "constants/flags.h"
+#include "randomizer.h"
 
 extern const u8 EventScript_ResetAllMapFlags[];
 extern const u8 EventScript_ResetAllMapFlagsFrlg[];
@@ -240,7 +241,10 @@ void NewGameInitData(void)
     SetCurrentDifficultyLevel(DIFFICULTY_NORMAL);
     ResetItemFlags();
     ResetDexNav();
-    ClearFollowerNPCData();   
+    ClearFollowerNPCData(); 
+    #if (RANDOMIZER_AVAILABLE == TRUE) && (RANDOMIZER_DYNAMIC_SPECIES == TRUE)
+        PreloadRandomizationTables();
+    #endif
     nuzlockePrev ? FlagSet(FLAG_NUZLOCKE) : FlagClear(FLAG_NUZLOCKE);
     nuzlockeHCPrev ? FlagSet(FLAG_NUZLOCKEHC) : FlagClear(FLAG_NUZLOCKEHC);
 }
