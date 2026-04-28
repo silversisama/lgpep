@@ -165,7 +165,7 @@
 #define FLAG_RANDOMIZER_TRAINER_MON                        0x0BC
 #define FLAG_RANDOMIZER_FIXED_MON                          0x0BD
 #define FLAG_RANDOMIZER_STARTER_AND_GIFT_MON               0x0BE
-#define FLAG_RANDOMIZER_ABILITIES                          0x0BF
+#define FLAG_RANDOMIZER_ABILITIES                          0x0BF 
 #define FLAG_RANDOMIZER_EGG_MON                            0x0C0
 #define FLAG_0x0C1               0x0C1
 #define FLAG_0x0C2               0x0C2

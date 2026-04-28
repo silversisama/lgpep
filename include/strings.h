@@ -2237,5 +2237,9 @@ extern const u8 gText_Boy[];
 extern const u8 gText_Girl[];
 extern const u8 gText_BallsCannotBeUsedNuz[];
 extern const u8 gText_TrainerCardNuzlockePokedex[];
-
+extern const u8 gText_Autorun[];
+extern const u8 gText_Randompoke[];
+extern const u8 gText_Randomitem[];
+extern const u8 gText_Randomabil[];
+extern const u8 gText_Randomtrainer[];
 #endif // GUARD_STRINGS_H

@@ -1248,4 +1248,8 @@ const u8 gText_BattleSpeed1x[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}1x");
 const u8 gText_BattleSpeed2x[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}2x");
 const u8 gText_BattleSpeed3x[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}3x");
 const u8 gText_BattleSpeed4x[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}4x");
-
+const u8 gText_Autorun[] = _("AUTORUN");
+const u8 gText_Randompoke[] = _("RNDM POKEMON");
+const u8 gText_Randomitem[] = _("RNDM ITEMS");
+const u8 gText_Randomabil[] = _("RNDM ABILITIES");
+const u8 gText_Randomtrainer[] = _("RNDM TRAINERS");
