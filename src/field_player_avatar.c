@@ -919,6 +919,7 @@ static void PlayerNotOnBikeMoving(enum Direction direction, u16 heldKeys)
     }
 
     if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER)
+     && ((heldKeys & B_BUTTON) || gSaveBlock2Ptr->optionsAutoRun)  // B button OR autorun
      && (heldKeys & B_BUTTON)
      && FlagGet(FLAG_SYS_B_DASH)
      && IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) == 0
