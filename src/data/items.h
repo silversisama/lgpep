@@ -16004,6 +16004,134 @@ const struct ItemInfo gItemsInfo[] =
         .iconPic = gItemIcon_PokeshiDoll,
         .iconPalette = gItemIconPalette_PokeshiDoll,
     },
+
+     [ITEM_CUT_TOOL] =
+    {
+        .name = ITEM_NAME("Flip Phone (Cut)"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "A handy phone that\n"
+            "calls the captain\n"
+            "to cut trees/grass."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_Cut,
+        .iconPic = gItemIcon_QuestionMark,
+        .iconPalette = gItemIconPalette_QuestionMark,
+    },
+
+    [ITEM_FLY_TOOL] =
+    {
+        .name = ITEM_NAME("Flip Phone (Fly)"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "A handy phone that\n"
+            "calls that one girl\n"
+            "to fly to places."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_Fly,
+        .iconPic = gItemIcon_QuestionMark,
+        .iconPalette = gItemIconPalette_QuestionMark,
+    },
+
+    [ITEM_SURF_TOOL] =
+    {
+        .name = ITEM_NAME("Flip Phone (Surf)"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "A handy phone that\n"
+            "calls the Lapras\n"
+            "to surf across water."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_Surf,
+        .iconPic = gItemIcon_QuestionMark,
+        .iconPalette = gItemIconPalette_QuestionMark,
+    },
+
+    [ITEM_STRENGTH_TOOL] =
+    {
+        .name = ITEM_NAME("Flip Phone (Strength)"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "A handy phone that\n"
+            "calls the warden\n"
+            "to move boulders."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_Strength,
+        .iconPic = gItemIcon_QuestionMark,
+        .iconPalette = gItemIconPalette_QuestionMark,
+    },
+
+    [ITEM_FLASH_TOOL] =
+    {
+        .name = ITEM_NAME("Flip Phone (Flash)"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "A handy phone that\n"
+            "calls the nerd to\n"
+            "brighten caves."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_Flash,
+        .iconPic = gItemIcon_QuestionMark,
+        .iconPalette = gItemIconPalette_QuestionMark,
+    },
+
+    [ITEM_ROCK_SMASH_TOOL] =
+    {
+        .name = ITEM_NAME("Flip Phone (Rock Smash)"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "A handy phone that\n"
+            "calls the old man\n"
+            "to smash rocks."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_RockSmash,
+        .iconPic = gItemIcon_QuestionMark,
+        .iconPalette = gItemIconPalette_QuestionMark,
+    },
+
+    [ITEM_WATERFALL_TOOL] =
+    {
+        .name = ITEM_NAME("Flip Phone (Waterfall)"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "A handy phone that\n"
+            "calls the surfer to\n"
+            "ascend waterfalls."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_Waterfall,
+        .iconPic = gItemIcon_QuestionMark,
+        .iconPalette = gItemIconPalette_QuestionMark,
+    },
+
+    [ITEM_DIVE_TOOL] =
+    {
+        .name = ITEM_NAME("Flip Phone (Dive)"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "A handy phone that\n"
+            "calls the diver to\n"
+            "explore the ocean floor."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_Dive,
+        .iconPic = gItemIcon_QuestionMark,
+        .iconPalette = gItemIconPalette_QuestionMark,
+    },
 };
 
 #undef ITEM_NAME
