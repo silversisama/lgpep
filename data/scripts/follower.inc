@@ -69,7 +69,7 @@ FollowerShiverVerticalMovement:
 	unlock_facing_direction
 	step_end
 
-FollowerShiverHorizontalMovement:
+FollowerShiverHorizontalMovement::
 	lock_facing_direction
 	slide_up
 	slide_down
@@ -78,7 +78,7 @@ FollowerShiverHorizontalMovement:
 	unlock_facing_direction
 	step_end
 
-FollowerNostalgiaMovement:
+FollowerNostalgiaMovement::
 	face_away_player
 	lock_facing_direction
 	jump_in_place_down
@@ -91,7 +91,7 @@ FollowerNostalgiaMovement:
 	unlock_facing_direction
 	step_end
 
-FollowerSkippingMovement:
+FollowerSkippingMovement::
 	lock_facing_direction
 	jump_in_place_down
 	delay_4
@@ -99,7 +99,7 @@ FollowerSkippingMovement:
 	unlock_facing_direction
 	step_end
 
-FollowerJumpOnPlayerNorth:
+FollowerJumpOnPlayerNorth::
 	jump_up
 	delay_4
 	lock_facing_direction
@@ -107,7 +107,7 @@ FollowerJumpOnPlayerNorth:
 	unlock_facing_direction
 	step_end
 
-FollowerJumpOnPlayerSouth:
+FollowerJumpOnPlayerSouth::
 	jump_down
 	delay_4
 	lock_facing_direction
@@ -115,7 +115,7 @@ FollowerJumpOnPlayerSouth:
 	unlock_facing_direction
 	step_end
 
-FollowerJumpOnPlayerEast:
+FollowerJumpOnPlayerEast::
 	jump_right
 	delay_4
 	lock_facing_direction
@@ -123,7 +123,7 @@ FollowerJumpOnPlayerEast:
 	unlock_facing_direction
 	step_end
 
-FollowerJumpOnPlayerWest:
+FollowerJumpOnPlayerWest::
 	jump_left
 	delay_4
 	lock_facing_direction
@@ -131,7 +131,23 @@ FollowerJumpOnPlayerWest:
 	unlock_facing_direction
 	step_end
 
-FollowerCuddlingNorth:
+                                      
+@ Added for scavenging
+EventScript_FollowerFoundItem::
+    bufferitemname 1, VAR_FOLLOWER_IS_SCAVENGE    
+    message gText_ScavengeDiscovery        
+    waitmessage                             
+    waitbuttonpress                       
+    waitmovement OBJ_EVENT_ID_FOLLOWER    
+    message 0x0                           
+    waitmessage                           
+    waitbuttonpress                       
+    giveitem VAR_FOLLOWER_IS_SCAVENGE        
+    clearflag FLAG_FOLLOWER_ITEM     
+    setvar VAR_FOLLOWER_IS_SCAVENGE, 0       
+    return                                                                                                                                                     
+
+FollowerCuddlingNorth::
 	face_left
 	lock_facing_direction
 	walk_up
@@ -142,7 +158,7 @@ FollowerCuddlingNorth:
 	face_player
 	step_end
 
-FollowerCuddlingSouth:
+FollowerCuddlingSouth::
 	face_right
 	lock_facing_direction
 	walk_down
@@ -153,7 +169,7 @@ FollowerCuddlingSouth:
 	face_player
 	step_end
 
-FollowerCuddlingEast:
+FollowerCuddlingEast::
 	face_down
 	lock_facing_direction
 	walk_right
@@ -164,7 +180,7 @@ FollowerCuddlingEast:
 	face_player
 	step_end
 
-FollowerCuddlingWest:
+FollowerCuddlingWest::
 	face_down
 	lock_facing_direction
 	walk_left
@@ -293,7 +309,7 @@ FollowerLookAwayPokeG:
 	unlock_facing_direction
 	step_end
 
-FollowerPokeGround:
+FollowerPokeGround::
 	lock_facing_direction
 	walk_in_place_down
 	walk_in_place_down
@@ -301,7 +317,7 @@ FollowerPokeGround:
 	unlock_facing_direction
 	step_end
 
-FollowerStartled:
+FollowerStartled::
 	face_away_player
 	lock_facing_direction
 	jump_in_place_down
@@ -309,7 +325,7 @@ FollowerStartled:
 	face_player
 	step_end
 
-FollowerHopFast:
+FollowerHopFast::
 	jump_in_place_up
 	jump_in_place_down
 	jump_in_place_left
@@ -317,7 +333,7 @@ FollowerHopFast:
 	face_player
 	step_end
 
-FollowerDizzy:
+FollowerDizzy::
 	walk_in_place_left
 	walk_in_place_fast_right
 	walk_in_place_slow_up
@@ -326,7 +342,7 @@ FollowerDizzy:
 	face_away_player
 	step_end
 
-FollowerLookAroundScared:
+FollowerLookAroundScared::
 	face_up
 	delay_16
 	face_down
@@ -346,7 +362,7 @@ FollowerLookAroundScared:
 	face_player
 	step_end
 
-FollowerDance:
+FollowerDance::
 	lock_facing_direction
 	jump_in_place_up
 	unlock_facing_direction

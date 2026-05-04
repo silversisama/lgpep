@@ -2,6 +2,7 @@
 #define GUARD_OVERWORLD_H
 
 #include "constants/map_types.h"
+#include "config/follower_scavenge.h"
 
 #define LINK_KEY_CODE_NULL 0x00
 #define LINK_KEY_CODE_EMPTY 0x11

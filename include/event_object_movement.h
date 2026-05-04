@@ -280,6 +280,7 @@ bool8 AreElevationsCompatible(u8, u8);
 enum Direction DetermineObjectEventDirectionFromObject(struct ObjectEvent *objectOne, struct ObjectEvent *objectTwo);
 void ObjectEventsTurnToEachOther(struct ObjectEvent *objectOne, struct ObjectEvent *objectTwo);
 void UpdateObjectEventCoords(struct ObjectEvent *objectEvent, s16 dx, s16 dy);
+void FollowerPlayEmote(struct ObjectEvent *followerObj, u8 emotion); 
 
 void MovementType_None(struct Sprite *sprite);
 void MovementType_LookAround(struct Sprite *sprite);

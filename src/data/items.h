@@ -16007,7 +16007,7 @@ const struct ItemInfo gItemsInfo[] =
 
      [ITEM_CUT_TOOL] =
     {
-        .name = ITEM_NAME("Flip Phone (Cut)"),
+        .name = ITEM_NAME("Flip Ph. Cut"),
         .price = 0,
         .description = COMPOUND_STRING(
             "A handy phone that\n"
@@ -16023,7 +16023,7 @@ const struct ItemInfo gItemsInfo[] =
 
     [ITEM_FLY_TOOL] =
     {
-        .name = ITEM_NAME("Flip Phone (Fly)"),
+        .name = ITEM_NAME("Flip Ph. Fly"),
         .price = 0,
         .description = COMPOUND_STRING(
             "A handy phone that\n"
@@ -16039,7 +16039,7 @@ const struct ItemInfo gItemsInfo[] =
 
     [ITEM_SURF_TOOL] =
     {
-        .name = ITEM_NAME("Flip Phone (Surf)"),
+        .name = ITEM_NAME("Flip Ph. Surf"),
         .price = 0,
         .description = COMPOUND_STRING(
             "A handy phone that\n"
@@ -16055,7 +16055,7 @@ const struct ItemInfo gItemsInfo[] =
 
     [ITEM_STRENGTH_TOOL] =
     {
-        .name = ITEM_NAME("Flip Phone (Strength)"),
+        .name = ITEM_NAME("Flip Ph. Str"),
         .price = 0,
         .description = COMPOUND_STRING(
             "A handy phone that\n"
@@ -16071,7 +16071,7 @@ const struct ItemInfo gItemsInfo[] =
 
     [ITEM_FLASH_TOOL] =
     {
-        .name = ITEM_NAME("Flip Phone (Flash)"),
+        .name = ITEM_NAME("Flip Ph. Flash"),
         .price = 0,
         .description = COMPOUND_STRING(
             "A handy phone that\n"
@@ -16087,7 +16087,7 @@ const struct ItemInfo gItemsInfo[] =
 
     [ITEM_ROCK_SMASH_TOOL] =
     {
-        .name = ITEM_NAME("Flip Phone (Rock Smash)"),
+        .name = ITEM_NAME("Flip Ph. RSmsh"),
         .price = 0,
         .description = COMPOUND_STRING(
             "A handy phone that\n"
@@ -16103,7 +16103,7 @@ const struct ItemInfo gItemsInfo[] =
 
     [ITEM_WATERFALL_TOOL] =
     {
-        .name = ITEM_NAME("Flip Phone (Waterfall)"),
+        .name = ITEM_NAME("Flip Ph. Wtrfl)"),
         .price = 0,
         .description = COMPOUND_STRING(
             "A handy phone that\n"
@@ -16119,7 +16119,7 @@ const struct ItemInfo gItemsInfo[] =
 
     [ITEM_DIVE_TOOL] =
     {
-        .name = ITEM_NAME("Flip Phone (Dive)"),
+        .name = ITEM_NAME("Flip Ph. Dive"),
         .price = 0,
         .description = COMPOUND_STRING(
             "A handy phone that\n"

@@ -18,6 +18,7 @@
 #include "field_player_avatar.h"
 #include "field_weather.h"
 #include "fieldmap.h"
+#include "follower_scavenge.h"
 #include "follower_npc.h"
 #include "follower_helper.h"
 #include "gpu_regs.h"
@@ -2471,6 +2472,16 @@ static void ObjectEventEmote(struct ObjectEvent *objEvent, u8 emotion)
     gFieldEffectArguments[7] = emotion;
     FieldEffectStart(FLDEFF_EMOTE);
 }
+                     
+//added for scavenging
+void FollowerPlayEmote(struct ObjectEvent *followerObj, u8 emotion)  
+{                                                                  
+    if (followerObj != NULL)                      
+    {                       
+        FieldEffectActiveListRemove(FLDEFF_EMOTE);   
+        ObjectEventEmote(followerObj, emotion);   
+    }         
+}   
 
 // Find and return direction of metatile behavior within distance
 static enum Direction FindMetatileBehaviorWithinRange(s32 x, s32 y, u32 mb, u8 distance)
@@ -2626,6 +2637,14 @@ void GetFollowerAction(struct ScriptContext *ctx) // Essentially a big switch fo
     if (mon == NULL) // failsafe
     {
         ScriptCall(ctx, EventScript_FollowerLovesYou);
+        return;
+    }
+    // If follower holding an item, that takes priority
+    if (SCAVENGE_ENABLED && FlagGet(FLAG_FOLLOWER_ITEM))
+    {
+        PrepareFollowerScavengeScript(ctx);
+        ScriptJump(ctx, EventScript_FollowerEnd);
+        ScriptCall(ctx, EventScript_FollowerFoundItem);
         return;
     }
     // Set the script to the very end; we'll be calling another script dynamically
@@ -12263,7 +12282,7 @@ bool8 MovementType_OverworldWildEncounter_ApproachPlayer_Step11(struct ObjectEve
     objectEvent->singleMovementActive = TRUE;
     sprite->sTypeFuncId = 12;
     return TRUE;
-}
+}   
 
 movement_type_def(MovementType_OverworldWildEncounter_Despawn, gMovementTypeFuncs_Despawn_OverworldWildEncounter)
 
