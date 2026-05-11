@@ -14,7 +14,7 @@ def find_close_paren(string, index):
     while not string[index] == ")":
         index += 1
     return index
-
+ 
 def update_function(fileInput):
     fileTest = Path(fileInput)
     if not fileTest.is_file():
