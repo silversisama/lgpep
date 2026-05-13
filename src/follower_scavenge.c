@@ -154,7 +154,29 @@ static const struct ScavengeItem sItem_HeartScale = { .itemId = ITEM_HEART_SCALE
 static const struct ScavengeItem sItem_Pearl      = { .itemId = ITEM_PEARL };
 static const struct ScavengeItem sItem_Stardust   = { .itemId = ITEM_STARDUST };
 static const struct ScavengeItem sItem_Repel = { .itemId = ITEM_REPEL };
-
+static const struct ScavengeItem sItem_HardStone = { .itemId = ITEM_HARD_STONE };
+static const struct ScavengeItem sItem_Iron      = { .itemId = ITEM_IRON };
+static const struct ScavengeItem sItem_Revive    = { .itemId = ITEM_REVIVE };
+static const struct ScavengeItem sItem_ShoalShell  = { .itemId = ITEM_SHOAL_SHELL };
+static const struct ScavengeItem sItem_PersimBerry  = { .itemId = ITEM_PERSIM_BERRY };
+static const struct ScavengeItem sItem_RawstBerry   = { .itemId = ITEM_RAWST_BERRY };
+static const struct ScavengeItem sItem_StarPiece    = { .itemId = ITEM_STAR_PIECE };
+static const struct ScavengeItem sItem_BigPearl     = { .itemId = ITEM_BIG_PEARL };
+static const struct ScavengeItem sItem_DeepSeaScale = { .itemId = ITEM_DEEP_SEA_SCALE };
+static const struct ScavengeItem sItem_Nugget        = { .itemId = ITEM_NUGGET };
+static const struct ScavengeItem sItem_RevivalHerb  = { .itemId = ITEM_REVIVAL_HERB };
+static const struct ScavengeItem sItem_MoonStone    = { .itemId = ITEM_MOON_STONE };
+static const struct ScavengeItem sItem_BigMushroom    = { .itemId = ITEM_BIG_MUSHROOM };
+static const struct ScavengeItem sItem_BigRoot    = { .itemId = ITEM_BIG_ROOT };
+static const struct ScavengeItem sItem_ChestoBerry  = { .itemId = ITEM_CHESTO_BERRY };
+static const struct ScavengeItem sItem_AspearBerry  = { .itemId = ITEM_ASPEAR_BERRY };
+static const struct ScavengeItem sItem_SunStone     = { .itemId = ITEM_SUN_STONE };
+static const struct ScavengeItem sItem_LeafStone    = { .itemId = ITEM_LEAF_STONE };
+static const struct ScavengeItem sItem_PokeBall     = { .itemId = ITEM_POKE_BALL };
+static const struct ScavengeItem sItem_PokeDoll     = { .itemId = ITEM_POKE_DOLL };
+static const struct ScavengeItem sItem_SuperPotion  = { .itemId = ITEM_SUPER_POTION };
+static const struct ScavengeItem sItem_RepeatBall   = { .itemId = ITEM_REPEAT_BALL };
+static const struct ScavengeItem sItem_RareCandy    = { .itemId = ITEM_RARE_CANDY };
 
 //Special Items
 //As you can see, you can add more or less detail for more specialized items
@@ -171,6 +193,7 @@ static const struct ScavengeItem sItem_DuskStone =
     .selfMessage       = (const u8[])_("Does {STR_VAR_1} want to evolve?$"),
     .associatedMessage = (const u8[])_("Has {STR_VAR_1} been carrying\nit thinking of {STR_VAR_3}?$"),
 };
+
 static const struct ScavengeItem sItem_StickyBarb =
 {
     .itemId            = ITEM_STICKY_BARB,
@@ -179,11 +202,19 @@ static const struct ScavengeItem sItem_StickyBarb =
     .foundMessage      = (const u8[])_("{STR_VAR_1} seems grateful you\n took the {STR_VAR_2} away.$"),
 };
 
+static const struct ScavengeItem sItem_FlameOrb =
+{
+    .itemId            = ITEM_FLAME_ORB,
+    .emote             = SCAVENGE_EMOTE(FOLLOWER_EMOTION_SURPRISE),
+    .movement          = SCAVENGE_MOVEMENT_SHIVER_H,
+    .foundMessage      = (const u8[])_("{STR_VAR_1} seems grateful you\n took the hot {STR_VAR_2}.$"),
+};
+
 static const struct ScavengePool sPool_Forest =
 {
     .common   = TIER(&sItem_TinyMushroom, &sItem_Antidote, &sItem_PechaBerry, &sItem_CheriBerry, &sItem_OranBerry),
     .uncommon = TIER(&sItem_SitrusBerry, &sItem_IapapaBerry),
-    .rare     = TIER(&sItem_StickyBarb, &sItem_DuskStone),
+    .rare     = TIER(&sItem_StickyBarb, &sItem_BigMushroom),
 };
 
 
@@ -191,20 +222,19 @@ static const struct ScavengePool sPool_Forest =
 
 static const struct ScavengePool sPool_Beach =
 {
-    .common = TIER(&sItem_HeartScale, &sItem_Pearl),
-    .rare   = TIER(&sItem_Stardust),
+    .common   = TIER(&sItem_ShoalShell, &sItem_Antidote, &sItem_OranBerry, &sItem_PersimBerry, &sItem_RawstBerry),
+    .uncommon = TIER(&sItem_Pearl, &sItem_StarPiece),
+    .rare     = TIER(&sItem_BigPearl, &sItem_DeepSeaScale),
 };
 
 // Cave pool
-static const struct ScavengeItem sItem_HardStone = { .itemId = ITEM_HARD_STONE };
-static const struct ScavengeItem sItem_Iron      = { .itemId = ITEM_IRON };
-static const struct ScavengeItem sItem_Revive    = { .itemId = ITEM_REVIVE };
+
 
 static const struct ScavengePool sPool_Cave =
 {
-    .common   = TIER(&sItem_HardStone, &sItem_Iron),
-    .uncommon = TIER(&sItem_Revive),
-    //if no rare tier is defined, it should in theory always roll a common or uncommon
+    .common   = TIER(&sItem_Repel, &sItem_Antidote, &sItem_BigRoot, &sItem_Potion, &sItem_RevivalHerb),
+    .uncommon = TIER(&sItem_BigMushroom, &sItem_HardStone),
+    .rare     = TIER(&sItem_MoonStone, &sItem_Nugget),
 };
 
 
@@ -213,7 +243,9 @@ static const struct ScavengePool sPool_Cave =
 
 static const struct ScavengePool sPool_Plains =
 {
-    .common = TIER(&sItem_Potion, &sItem_Antidote, &sItem_Repel, &sItem_OranBerry),
+    .common   = TIER(&sItem_OranBerry, &sItem_ChestoBerry, &sItem_AspearBerry, &sItem_Antidote, &sItem_Potion),
+    .uncommon = TIER(&sItem_SunStone, &sItem_CheriBerry),
+    .rare     = TIER(&sItem_LeafStone, &sItem_FlameOrb),
 };
 
 
@@ -221,7 +253,9 @@ static const struct ScavengePool sPool_Plains =
 
 static const struct ScavengePool sPool_Generic =
 {
-    .common = TIER(&sItem_Potion, &sItem_Antidote, &sItem_OranBerry),
+    .common   = TIER(&sItem_Potion, &sItem_Antidote, &sItem_PokeBall, &sItem_OranBerry),
+    .uncommon = TIER(&sItem_SuperPotion, &sItem_RepeatBall),
+    .rare     = TIER(&sItem_Nugget, &sItem_RareCandy),
 };
 
 
@@ -232,35 +266,128 @@ static const struct ScavengePool sPool_Generic =
 static const struct ScavengeEntry sScavengeTable[] =
 {
     // --- Forest / wooded routes ---
-    { MAP_GROUP(MAP_ROUTE101), MAP_NUM(MAP_ROUTE101), &sPool_Forest },
-    { MAP_GROUP(MAP_ROUTE102), MAP_NUM(MAP_ROUTE102), &sPool_Forest },
-    { MAP_GROUP(MAP_ROUTE104), MAP_NUM(MAP_ROUTE104), &sPool_Forest },
-    { MAP_GROUP(MAP_ROUTE119), MAP_NUM(MAP_ROUTE119), &sPool_Forest },
-    { MAP_GROUP(MAP_ROUTE121), MAP_NUM(MAP_ROUTE121), &sPool_Forest },
+    { MAP_GROUP(MAP_VIRIDIAN_FOREST), MAP_NUM(MAP_VIRIDIAN_FOREST), &sPool_Forest },
+    { MAP_GROUP(MAP_THREE_ISLAND_BERRY_FOREST), MAP_NUM(MAP_THREE_ISLAND_BERRY_FOREST), &sPool_Forest },
+    { MAP_GROUP(MAP_ROUTE1), MAP_NUM(MAP_ROUTE1), &sPool_Forest },
+    { MAP_GROUP(MAP_ROUTE2), MAP_NUM(MAP_ROUTE2), &sPool_Forest },
+    { MAP_GROUP(MAP_ROUTE5), MAP_NUM(MAP_ROUTE5), &sPool_Forest },
+    { MAP_GROUP(MAP_ROUTE6), MAP_NUM(MAP_ROUTE6), &sPool_Forest },
+    { MAP_GROUP(MAP_ROUTE7), MAP_NUM(MAP_ROUTE7), &sPool_Forest },
+    { MAP_GROUP(MAP_ROUTE15), MAP_NUM(MAP_ROUTE15), &sPool_Forest },
+    { MAP_GROUP(MAP_ROUTE16), MAP_NUM(MAP_ROUTE16), &sPool_Forest },
 
     // --- Beach / coastal routes ---
-    { MAP_GROUP(MAP_ROUTE103), MAP_NUM(MAP_ROUTE103), &sPool_Beach },
-    { MAP_GROUP(MAP_ROUTE105), MAP_NUM(MAP_ROUTE105), &sPool_Beach },
-    { MAP_GROUP(MAP_ROUTE106), MAP_NUM(MAP_ROUTE106), &sPool_Beach },
-    { MAP_GROUP(MAP_ROUTE107), MAP_NUM(MAP_ROUTE107), &sPool_Beach },
-    { MAP_GROUP(MAP_ROUTE108), MAP_NUM(MAP_ROUTE108), &sPool_Beach },
-    { MAP_GROUP(MAP_ROUTE109), MAP_NUM(MAP_ROUTE109), &sPool_Beach },
+    { MAP_GROUP(MAP_SSANNE_EXTERIOR), MAP_NUM(MAP_SSANNE_EXTERIOR), &sPool_Beach },
+    { MAP_GROUP(MAP_ONE_ISLAND_TREASURE_BEACH), MAP_NUM(MAP_ONE_ISLAND_TREASURE_BEACH), &sPool_Beach },
+    { MAP_GROUP(MAP_TWO_ISLAND_CAPE_BRINK), MAP_NUM(MAP_TWO_ISLAND_CAPE_BRINK), &sPool_Beach },
+    { MAP_GROUP(MAP_THREE_ISLAND_PORT), MAP_NUM(MAP_THREE_ISLAND_PORT), &sPool_Beach },
+    { MAP_GROUP(MAP_FIVE_ISLAND_RESORT_GORGEOUS), MAP_NUM(MAP_FIVE_ISLAND_RESORT_GORGEOUS), &sPool_Beach },
+    { MAP_GROUP(MAP_FIVE_ISLAND_WATER_LABYRINTH), MAP_NUM(MAP_FIVE_ISLAND_WATER_LABYRINTH), &sPool_Beach },
+    { MAP_GROUP(MAP_SIX_ISLAND_OUTCAST_ISLAND), MAP_NUM(MAP_SIX_ISLAND_OUTCAST_ISLAND), &sPool_Beach },
+    { MAP_GROUP(MAP_SIX_ISLAND_GREEN_PATH), MAP_NUM(MAP_SIX_ISLAND_GREEN_PATH), &sPool_Beach },
+    { MAP_GROUP(MAP_ROUTE11), MAP_NUM(MAP_ROUTE11), &sPool_Beach },
+    { MAP_GROUP(MAP_SEVEN_ISLAND_TRAINER_TOWER), MAP_NUM(MAP_SEVEN_ISLAND_TRAINER_TOWER), &sPool_Beach },
+    { MAP_GROUP(MAP_ROUTE11), MAP_NUM(MAP_ROUTE11), &sPool_Beach },
+    { MAP_GROUP(MAP_ROUTE13), MAP_NUM(MAP_ROUTE13), &sPool_Beach },
+    { MAP_GROUP(MAP_ROUTE14), MAP_NUM(MAP_ROUTE14), &sPool_Beach },
+    { MAP_GROUP(MAP_ROUTE18), MAP_NUM(MAP_ROUTE18), &sPool_Beach },
+    { MAP_GROUP(MAP_ROUTE19), MAP_NUM(MAP_ROUTE19), &sPool_Beach },
+    { MAP_GROUP(MAP_ROUTE20), MAP_NUM(MAP_ROUTE20), &sPool_Beach },
+    { MAP_GROUP(MAP_ROUTE21_NORTH), MAP_NUM(MAP_ROUTE21_NORTH), &sPool_Beach },
+    { MAP_GROUP(MAP_ROUTE21_SOUTH), MAP_NUM(MAP_ROUTE21_SOUTH), &sPool_Beach },
+    { MAP_GROUP(MAP_CINNABAR_ISLAND), MAP_NUM(MAP_CINNABAR_ISLAND), &sPool_Beach },
+    { MAP_GROUP(MAP_ONE_ISLAND), MAP_NUM(MAP_ONE_ISLAND), &sPool_Beach },
+    { MAP_GROUP(MAP_FOUR_ISLAND), MAP_NUM(MAP_FOUR_ISLAND), &sPool_Beach },
+    { MAP_GROUP(MAP_FIVE_ISLAND), MAP_NUM(MAP_FIVE_ISLAND), &sPool_Beach },
+    { MAP_GROUP(MAP_FOUR_ISLAND), MAP_NUM(MAP_FOUR_ISLAND), &sPool_Beach },
+    { MAP_GROUP(MAP_FOUR_ISLAND), MAP_NUM(MAP_FOUR_ISLAND), &sPool_Beach },
 
     // --- Cave / underground ---
-    { MAP_GROUP(MAP_GRANITE_CAVE_1F),  MAP_NUM(MAP_GRANITE_CAVE_1F),  &sPool_Cave },
-    { MAP_GROUP(MAP_GRANITE_CAVE_B1F), MAP_NUM(MAP_GRANITE_CAVE_B1F), &sPool_Cave },
-    { MAP_GROUP(MAP_GRANITE_CAVE_B2F), MAP_NUM(MAP_GRANITE_CAVE_B2F), &sPool_Cave },
-    { MAP_GROUP(MAP_VICTORY_ROAD_1F),  MAP_NUM(MAP_VICTORY_ROAD_1F),  &sPool_Cave },
-    { MAP_GROUP(MAP_VICTORY_ROAD_B1F), MAP_NUM(MAP_VICTORY_ROAD_B1F), &sPool_Cave },
-    { MAP_GROUP(MAP_VICTORY_ROAD_B2F), MAP_NUM(MAP_VICTORY_ROAD_B2F), &sPool_Cave },
+    { MAP_GROUP(MAP_MT_MOON_1F),  MAP_NUM(MAP_MT_MOON_1F),  &sPool_Cave },
+    { MAP_GROUP(MAP_MT_MOON_B1F), MAP_NUM(MAP_MT_MOON_B1F), &sPool_Cave },
+    { MAP_GROUP(MAP_MT_MOON_B2F), MAP_NUM(MAP_MT_MOON_B2F), &sPool_Cave },
+    { MAP_GROUP(MAP_DIGLETTS_CAVE_B1F),  MAP_NUM(MAP_DIGLETTS_CAVE_B1F),  &sPool_Cave },
+    { MAP_GROUP(MAP_VICTORY_ROAD_1F_FRLG), MAP_NUM(MAP_VICTORY_ROAD_1F_FRLG), &sPool_Cave },
+    { MAP_GROUP(MAP_VICTORY_ROAD_2F), MAP_NUM(MAP_VICTORY_ROAD_2F), &sPool_Cave },
+    { MAP_GROUP(MAP_VICTORY_ROAD_3F), MAP_NUM(MAP_VICTORY_ROAD_3F), &sPool_Cave },
+    { MAP_GROUP(MAP_POKEMON_MANSION_1F), MAP_NUM(MAP_POKEMON_MANSION_1F), &sPool_Cave },
+    { MAP_GROUP(MAP_POKEMON_MANSION_2F), MAP_NUM(MAP_POKEMON_MANSION_2F), &sPool_Cave },
+    { MAP_GROUP(MAP_POKEMON_MANSION_3F), MAP_NUM(MAP_POKEMON_MANSION_3F), &sPool_Cave },
+    { MAP_GROUP(MAP_POKEMON_MANSION_B1F), MAP_NUM(MAP_POKEMON_MANSION_B1F), &sPool_Cave },
+    { MAP_GROUP(MAP_CERULEAN_CAVE_1F), MAP_NUM(MAP_CERULEAN_CAVE_1F), &sPool_Cave },
+    { MAP_GROUP(MAP_CERULEAN_CAVE_2F), MAP_NUM(MAP_CERULEAN_CAVE_2F), &sPool_Cave },
+    { MAP_GROUP(MAP_CERULEAN_CAVE_B1F), MAP_NUM(MAP_CERULEAN_CAVE_B1F), &sPool_Cave },
+    { MAP_GROUP(MAP_ROCK_TUNNEL_1F), MAP_NUM(MAP_ROCK_TUNNEL_1F), &sPool_Cave },
+    { MAP_GROUP(MAP_ROCK_TUNNEL_B1F), MAP_NUM(MAP_ROCK_TUNNEL_B1F), &sPool_Cave },
+    { MAP_GROUP(MAP_SEAFOAM_ISLANDS_1F), MAP_NUM(MAP_SEAFOAM_ISLANDS_1F), &sPool_Cave },
+    { MAP_GROUP(MAP_SEAFOAM_ISLANDS_B2F), MAP_NUM(MAP_SEAFOAM_ISLANDS_B2F), &sPool_Cave },
+    { MAP_GROUP(MAP_SEAFOAM_ISLANDS_B3F), MAP_NUM(MAP_SEAFOAM_ISLANDS_B3F), &sPool_Cave },
+    { MAP_GROUP(MAP_SEAFOAM_ISLANDS_B4F), MAP_NUM(MAP_SEAFOAM_ISLANDS_B4F), &sPool_Cave },
+    { MAP_GROUP(MAP_MT_EMBER_EXTERIOR), MAP_NUM(MAP_MT_EMBER_EXTERIOR), &sPool_Cave },
+    { MAP_GROUP(MAP_MT_EMBER_SUMMIT_PATH_1F), MAP_NUM(MAP_MT_EMBER_SUMMIT_PATH_1F), &sPool_Cave },
+    { MAP_GROUP(MAP_MT_EMBER_SUMMIT_PATH_2F), MAP_NUM(MAP_MT_EMBER_SUMMIT_PATH_2F), &sPool_Cave },
+    { MAP_GROUP(MAP_MT_EMBER_SUMMIT_PATH_3F), MAP_NUM(MAP_MT_EMBER_SUMMIT_PATH_3F), &sPool_Cave },
+    { MAP_GROUP(MAP_MT_EMBER_RUBY_PATH_1F), MAP_NUM(MAP_MT_EMBER_RUBY_PATH_1F), &sPool_Cave },
+    { MAP_GROUP(MAP_MT_EMBER_RUBY_PATH_B1F), MAP_NUM(MAP_MT_EMBER_RUBY_PATH_B1F), &sPool_Cave },
+    { MAP_GROUP(MAP_MT_EMBER_RUBY_PATH_B2F), MAP_NUM(MAP_MT_EMBER_RUBY_PATH_B2F), &sPool_Cave },
+    { MAP_GROUP(MAP_MT_EMBER_RUBY_PATH_B3F), MAP_NUM(MAP_MT_EMBER_RUBY_PATH_B3F), &sPool_Cave },
+    { MAP_GROUP(MAP_MT_EMBER_RUBY_PATH_B1F_STAIRS), MAP_NUM(MAP_MT_EMBER_RUBY_PATH_B1F_STAIRS), &sPool_Cave },
+    { MAP_GROUP(MAP_MT_EMBER_RUBY_PATH_B2F_STAIRS), MAP_NUM(MAP_MT_EMBER_RUBY_PATH_B2F_STAIRS), &sPool_Cave },
+    { MAP_GROUP(MAP_FOUR_ISLAND_ICEFALL_CAVE_ENTRANCE), MAP_NUM(MAP_FOUR_ISLAND_ICEFALL_CAVE_ENTRANCE), &sPool_Cave },
+    { MAP_GROUP(MAP_FOUR_ISLAND_ICEFALL_CAVE_1F), MAP_NUM(MAP_FOUR_ISLAND_ICEFALL_CAVE_1F), &sPool_Cave },
+    { MAP_GROUP(MAP_FOUR_ISLAND_ICEFALL_CAVE_B1F), MAP_NUM(MAP_FOUR_ISLAND_ICEFALL_CAVE_B1F), &sPool_Cave },
+    { MAP_GROUP(MAP_FOUR_ISLAND_ICEFALL_CAVE_BACK), MAP_NUM(MAP_FOUR_ISLAND_ICEFALL_CAVE_BACK), &sPool_Cave },
+    { MAP_GROUP(MAP_FIVE_ISLAND_LOST_CAVE_ROOM1), MAP_NUM(MAP_FIVE_ISLAND_LOST_CAVE_ROOM1), &sPool_Cave },
+    { MAP_GROUP(MAP_FIVE_ISLAND_LOST_CAVE_ROOM2), MAP_NUM(MAP_FIVE_ISLAND_LOST_CAVE_ROOM2), &sPool_Cave },
+    { MAP_GROUP(MAP_FIVE_ISLAND_LOST_CAVE_ROOM3), MAP_NUM(MAP_FIVE_ISLAND_LOST_CAVE_ROOM3), &sPool_Cave },
+    { MAP_GROUP(MAP_FIVE_ISLAND_LOST_CAVE_ROOM4), MAP_NUM(MAP_FIVE_ISLAND_LOST_CAVE_ROOM4), &sPool_Cave },
+    { MAP_GROUP(MAP_FIVE_ISLAND_LOST_CAVE_ROOM5), MAP_NUM(MAP_FIVE_ISLAND_LOST_CAVE_ROOM5), &sPool_Cave },
+    { MAP_GROUP(MAP_FIVE_ISLAND_LOST_CAVE_ROOM6), MAP_NUM(MAP_FIVE_ISLAND_LOST_CAVE_ROOM6), &sPool_Cave },
+    { MAP_GROUP(MAP_FIVE_ISLAND_LOST_CAVE_ROOM7), MAP_NUM(MAP_FIVE_ISLAND_LOST_CAVE_ROOM7), &sPool_Cave },
+    { MAP_GROUP(MAP_FIVE_ISLAND_LOST_CAVE_ROOM8), MAP_NUM(MAP_FIVE_ISLAND_LOST_CAVE_ROOM8), &sPool_Cave },
+    { MAP_GROUP(MAP_FIVE_ISLAND_LOST_CAVE_ROOM9), MAP_NUM(MAP_FIVE_ISLAND_LOST_CAVE_ROOM9), &sPool_Cave },
+    { MAP_GROUP(MAP_FIVE_ISLAND_LOST_CAVE_ROOM10), MAP_NUM(MAP_FIVE_ISLAND_LOST_CAVE_ROOM10), &sPool_Cave },
+    { MAP_GROUP(MAP_FIVE_ISLAND_LOST_CAVE_ROOM11), MAP_NUM(MAP_FIVE_ISLAND_LOST_CAVE_ROOM11), &sPool_Cave },
+    { MAP_GROUP(MAP_FIVE_ISLAND_LOST_CAVE_ROOM12), MAP_NUM(MAP_FIVE_ISLAND_LOST_CAVE_ROOM12), &sPool_Cave },
+    { MAP_GROUP(MAP_FIVE_ISLAND_LOST_CAVE_ROOM13), MAP_NUM(MAP_FIVE_ISLAND_LOST_CAVE_ROOM13), &sPool_Cave },
+    { MAP_GROUP(MAP_FIVE_ISLAND_LOST_CAVE_ROOM14), MAP_NUM(MAP_FIVE_ISLAND_LOST_CAVE_ROOM14), &sPool_Cave },
+    { MAP_GROUP(MAP_SEVEN_ISLAND_SEVAULT_CANYON_ENTRANCE), MAP_NUM(MAP_SEVEN_ISLAND_SEVAULT_CANYON_ENTRANCE), &sPool_Cave },
+    { MAP_GROUP(MAP_SEVEN_ISLAND_SEVAULT_CANYON), MAP_NUM(MAP_SEVEN_ISLAND_SEVAULT_CANYON), &sPool_Cave },
+    { MAP_GROUP(MAP_SEVEN_ISLAND_TANOBY_RUINS), MAP_NUM(MAP_SEVEN_ISLAND_TANOBY_RUINS), &sPool_Cave },
+    { MAP_GROUP(MAP_ROUTE9), MAP_NUM(MAP_ROUTE9), &sPool_Cave },
+    { MAP_GROUP(MAP_ROUTE3), MAP_NUM(MAP_ROUTE3), &sPool_Cave },
+    { MAP_GROUP(MAP_ROUTE10), MAP_NUM(MAP_ROUTE10), &sPool_Cave },
+    { MAP_GROUP(MAP_ROUTE22), MAP_NUM(MAP_ROUTE22), &sPool_Cave },
+    { MAP_GROUP(MAP_ROUTE24), MAP_NUM(MAP_ROUTE24), &sPool_Cave },
+    { MAP_GROUP(MAP_ROUTE25), MAP_NUM(MAP_ROUTE25), &sPool_Cave },
+    { MAP_GROUP(MAP_SIX_ISLAND_ALTERING_CAVE), MAP_NUM(MAP_SIX_ISLAND_ALTERING_CAVE), &sPool_Cave },
 
     // --- Plains / open routes ---
-    { MAP_GROUP(MAP_ROUTE110), MAP_NUM(MAP_ROUTE110), &sPool_Plains },
-    { MAP_GROUP(MAP_ROUTE111), MAP_NUM(MAP_ROUTE111), &sPool_Plains },
-    { MAP_GROUP(MAP_ROUTE113), MAP_NUM(MAP_ROUTE113), &sPool_Plains },
-    { MAP_GROUP(MAP_ROUTE117), MAP_NUM(MAP_ROUTE117), &sPool_Plains },
+    { MAP_GROUP(MAP_SAFARI_ZONE_CENTER), MAP_NUM(MAP_SAFARI_ZONE_CENTER), &sPool_Plains },
+    { MAP_GROUP(MAP_SAFARI_ZONE_EAST), MAP_NUM(MAP_SAFARI_ZONE_EAST), &sPool_Plains },
+    { MAP_GROUP(MAP_SAFARI_ZONE_NORTH_FRLG), MAP_NUM(MAP_SAFARI_ZONE_NORTH_FRLG), &sPool_Plains },
+    { MAP_GROUP(MAP_SAFARI_ZONE_WEST), MAP_NUM(MAP_SAFARI_ZONE_WEST), &sPool_Plains },
+    { MAP_GROUP(MAP_SIX_ISLAND_PATTERN_BUSH), MAP_NUM(MAP_SIX_ISLAND_PATTERN_BUSH), &sPool_Plains },
+    { MAP_GROUP(MAP_ONE_ISLAND_KINDLE_ROAD), MAP_NUM(MAP_ONE_ISLAND_KINDLE_ROAD), &sPool_Plains },
+    { MAP_GROUP(MAP_THREE_ISLAND_BOND_BRIDGE), MAP_NUM(MAP_THREE_ISLAND_BOND_BRIDGE), &sPool_Plains },
+    { MAP_GROUP(MAP_FIVE_ISLAND_MEADOW), MAP_NUM(MAP_FIVE_ISLAND_MEADOW), &sPool_Plains },
+    { MAP_GROUP(MAP_FIVE_ISLAND_MEMORIAL_PILLAR), MAP_NUM(MAP_FIVE_ISLAND_MEMORIAL_PILLAR), &sPool_Plains },
+    { MAP_GROUP(MAP_SIX_ISLAND_RUIN_VALLEY), MAP_NUM(MAP_SIX_ISLAND_RUIN_VALLEY), &sPool_Plains },
+    { MAP_GROUP(MAP_ROUTE4), MAP_NUM(MAP_ROUTE4), &sPool_Plains },
+    { MAP_GROUP(MAP_ROUTE8), MAP_NUM(MAP_ROUTE8), &sPool_Plains },
+    { MAP_GROUP(MAP_ROUTE11), MAP_NUM(MAP_ROUTE11), &sPool_Plains },
+    { MAP_GROUP(MAP_ROUTE17), MAP_NUM(MAP_ROUTE17), &sPool_Plains },
+    { MAP_GROUP(MAP_ROUTE11), MAP_NUM(MAP_ROUTE11), &sPool_Plains },
 
     // Sentinel / fallback
+    { MAP_GROUP(MAP_PALLET_TOWN), MAP_NUM(MAP_PALLET_TOWN), &sPool_Generic },
+    { MAP_GROUP(MAP_VIRIDIAN_CITY), MAP_NUM(MAP_VIRIDIAN_CITY), &sPool_Generic },
+    { MAP_GROUP(MAP_CERULEAN_CITY), MAP_NUM(MAP_CERULEAN_CITY), &sPool_Generic },
+    { MAP_GROUP(MAP_VERMILION_CITY), MAP_NUM(MAP_VERMILION_CITY), &sPool_Generic },
+    { MAP_GROUP(MAP_CELADON_CITY), MAP_NUM(MAP_CELADON_CITY), &sPool_Generic },
+    { MAP_GROUP(MAP_FUCHSIA_CITY), MAP_NUM(MAP_FUCHSIA_CITY), &sPool_Generic },
+    { MAP_GROUP(MAP_LAVENDER_TOWN), MAP_NUM(MAP_LAVENDER_TOWN), &sPool_Generic },
+    { MAP_GROUP(MAP_INDIGO_PLATEAU_EXTERIOR), MAP_NUM(MAP_INDIGO_PLATEAU_EXTERIOR), &sPool_Generic },
     { 0xFF, 0xFF, &sPool_Generic },
 };
 
