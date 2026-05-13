@@ -54,6 +54,7 @@
 #include "constants/songs.h"
 #include "region_map.h"
 #include "field_move.h"
+#include "boss_battle.h"
 #include "field_control_avatar.h"
 
 
@@ -1176,6 +1177,8 @@ static u32 GetBallThrowableState(void)
         return BALL_THROW_UNABLE_TWO_MONS;
     else if (IsPlayerPartyAndPokemonStorageFull() == TRUE)
         return BALL_THROW_UNABLE_NO_ROOM;
+    else if (IsBossBattleActive())
+        return BALL_THROW_UNABLE_LEGENDARY;
     else if (GetConfig(B_SEMI_INVULNERABLE_CATCH) >= GEN_4 &&  IsSemiInvulnerable(GetCatchingBattler(), CHECK_ALL))
         return BALL_THROW_UNABLE_SEMI_INVULNERABLE;
     else if (FlagGet(B_FLAG_NO_CATCHING) || !IsAllowedToUseBag())
@@ -1245,6 +1248,12 @@ void ItemUseInBattle_PokeBall(u8 taskId)
             DisplayItemMessage(taskId, FONT_NORMAL, gText_BoxFull, CloseItemMessage);
         else
             DisplayItemMessageInBattlePyramid(taskId, gText_BoxFull, Task_CloseBattlePyramidBagMessage);
+        break;
+    case BALL_THROW_UNABLE_LEGENDARY:
+        if (CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)
+            DisplayItemMessage(taskId, FONT_NORMAL, gText_BallsCannotBeUsedLegendary, CloseItemMessage);
+        else
+            DisplayItemMessageInBattlePyramid(taskId, gText_BallsCannotBeUsedLegendary, Task_CloseBattlePyramidBagMessage);
         break;
     case BALL_THROW_UNABLE_SEMI_INVULNERABLE:
         if (CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)
@@ -1368,6 +1377,10 @@ bool32 CannotUseItemsInBattle(enum Item itemId, struct Pokemon *mon)
             break;
         case BALL_THROW_UNABLE_NO_ROOM:
             failStr = gText_BoxFull;
+            cannotUse = TRUE;
+            break;
+        case BALL_THROW_UNABLE_LEGENDARY:
+            failStr = gText_BallsCannotBeUsedLegendary;
             cannotUse = TRUE;
             break;
         case BALL_THROW_UNABLE_SEMI_INVULNERABLE:

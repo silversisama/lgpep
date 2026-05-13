@@ -1939,6 +1939,7 @@ void CB2_NewGame(void)
     else
         gFieldCallback = ExecuteTruckSequence;
     gFieldCallback2 = NULL;
+    FlagSet(FLAG_SYS_B_DASH);
     DoMapLoadLoop(&gMain.state);
     SetFieldVBlankCallback();
     SetMainCallback1(CB1_Overworld);

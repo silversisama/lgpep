@@ -35,7 +35,7 @@ PowerPlant_EventScript_ShowElectrode2::
 PowerPlant_EventScript_Zapdos::
 	lock
 	faceplayer
-	setwildbattle SPECIES_ZAPDOS, 50
+	setbossbattle SPECIES_ZAPDOS, 50
 	waitse
 	playmoncry SPECIES_ZAPDOS, CRY_MODE_ENCOUNTER
 	message Text_Gyaoo

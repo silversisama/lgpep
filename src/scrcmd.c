@@ -65,6 +65,7 @@
 #include "constants/event_objects.h"
 #include "constants/map_types.h"
 #include "randomizer.h"
+#include "boss_battle.h"
 
 
 typedef u16 (*SpecialFunc)(void);
@@ -2606,6 +2607,26 @@ bool8 ScrCmd_setwildbattle(struct ScriptContext *ctx)
         CreateScriptedDoubleWildMon(species, level, item, species2, level2, item2);
         sIsScriptedWildDouble = TRUE;
     }
+
+    return FALSE;
+} 
+
+bool8 ScrCmd_setbossbattle(struct ScriptContext *ctx)
+{
+    u16 species    = ScriptReadHalfword(ctx);
+    u8  level      = ScriptReadByte(ctx);
+    enum Item item = ScriptReadHalfword(ctx);
+
+    Script_RequestEffects(SCREFF_V1);
+
+    #if RANDOMIZER_AVAILABLE == TRUE
+        u8 mapNum  = gSaveBlock1Ptr->location.mapNum;
+        u8 mapGroup = gSaveBlock1Ptr->location.mapGroup;
+        u8 localId  = gObjectEvents[gSelectedObjectEvent].localId;
+        species     = RandomizeFixedEncounterMon(species, mapNum, mapGroup, localId);
+    #endif
+
+    CreateScriptedBossMon(species, level, item);
 
     return FALSE;
 }

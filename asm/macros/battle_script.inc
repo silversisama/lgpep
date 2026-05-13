@@ -2205,7 +2205,7 @@
 	@ \animation parameters
 	ANIM_OFF = FALSE
 	ANIM_ON = TRUE
-
+ 
 	setstatchanger \stat, \amount, \mode
 	.if \animation == FALSE
 		setbyte sSTAT_ANIM_PLAYED, TRUE

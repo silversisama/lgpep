@@ -61,6 +61,7 @@
 #include "battle_anim.h"
 #include "pokedex.h"
 #include "caps.h"
+#include "boss_battle.h"
 
 enum TransitionType
 {
@@ -556,7 +557,7 @@ void BattleSetup_StartLegendaryBattle(void)
 {
     LockPlayerFieldControls();
     gMain.savedCallback = CB2_EndScriptedWildBattle;
-    gBattleTypeFlags = BATTLE_TYPE_LEGENDARY;
+    gBattleTypeFlags = BATTLE_TYPE_LEGENDARY | (gBattleTypeFlags & BATTLE_TYPE_BOSS);
 
     switch (GetMonData(&gEnemyParty[0], MON_DATA_SPECIES))
     {

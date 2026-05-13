@@ -242,7 +242,7 @@ static void ReadAllCurrentSettings(u8 taskId)
     gTasks[taskId].tRandomItem = FlagGet(FLAG_RANDOMIZER_FIELD_ITEMS);
     gTasks[taskId].tRandomAbil = FlagGet(FLAG_RANDOMIZER_ABILITIES);
     gTasks[taskId].tRandomTrainer = FlagGet(FLAG_RANDOMIZER_TRAINER_MON);
-    gTasks[taskId].tAutorun = !(gSaveBlock2Ptr->optionsAutoRun);  // Inverted for UI display
+    gTasks[taskId].tAutorun = (gSaveBlock2Ptr->optionsAutoRun);  // Inverted for UI display
 }
 
 static void DrawOptionsPg1(u8 taskId)
@@ -617,7 +617,7 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsButtonMode = gTasks[taskId].tButtonMode;
     gSaveBlock2Ptr->optionsWindowFrameType = gTasks[taskId].tWindowFrameType;
     gSaveBlock2Ptr->optionsBattleSpeed = gTasks[taskId].tBattleSpeed;
-    gSaveBlock2Ptr->optionsAutoRun = !(gTasks[taskId].tAutorun);  // Inverted for storage
+    gSaveBlock2Ptr->optionsAutoRun = (gTasks[taskId].tAutorun);  // Inverted for storage
     if (gTasks[taskId].tRandomPoke == 0)
         FlagClear(FLAG_RANDOMIZER_WILD_MON);
     else
@@ -868,8 +868,8 @@ static void RandomPoke_DrawChoices(u8 selection)
     styles[0] = 0;
     styles[1] = 0;
     styles[selection] = 1;
-    DrawOptionMenuChoice(gText_BattleSceneOn, 104, YPOS_RANDOMPOKE, styles[0]);
-    DrawOptionMenuChoice(gText_BattleSceneOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleSceneOff, 198), YPOS_RANDOMPOKE, styles[1]);
+    DrawOptionMenuChoice(gText_BattleSceneOff, 104, YPOS_RANDOMPOKE, styles[0]);
+    DrawOptionMenuChoice(gText_BattleSceneOn, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleSceneOff, 198), YPOS_RANDOMPOKE, styles[1]);
 }
 
 static u8 RandomItem_ProcessInput(u8 selection)
@@ -889,8 +889,8 @@ static void RandomItem_DrawChoices(u8 selection)
     styles[0] = 0;
     styles[1] = 0;
     styles[selection] = 1;
-    DrawOptionMenuChoice(gText_BattleSceneOn, 104, YPOS_RANDOMITEM, styles[0]);
-    DrawOptionMenuChoice(gText_BattleSceneOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleSceneOff, 198), YPOS_RANDOMITEM, styles[1]);
+    DrawOptionMenuChoice(gText_BattleSceneOff, 104, YPOS_RANDOMITEM, styles[0]);
+    DrawOptionMenuChoice(gText_BattleSceneOn, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleSceneOff, 198), YPOS_RANDOMITEM, styles[1]);
 }
 
 static u8 RandomAbil_ProcessInput(u8 selection)
@@ -910,8 +910,8 @@ static void RandomAbil_DrawChoices(u8 selection)
     styles[0] = 0;
     styles[1] = 0;
     styles[selection] = 1;
-    DrawOptionMenuChoice(gText_BattleSceneOn, 104, YPOS_RANDOMABIL, styles[0]);
-    DrawOptionMenuChoice(gText_BattleSceneOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleSceneOff, 198), YPOS_RANDOMABIL, styles[1]);
+    DrawOptionMenuChoice(gText_BattleSceneOff, 104, YPOS_RANDOMABIL, styles[0]);
+    DrawOptionMenuChoice(gText_BattleSceneOn, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleSceneOff, 198), YPOS_RANDOMABIL, styles[1]);
 }
 
 static u8 RandomTrainer_ProcessInput(u8 selection)
@@ -931,8 +931,8 @@ static void RandomTrainer_DrawChoices(u8 selection)
     styles[0] = 0;
     styles[1] = 0;
     styles[selection] = 1;
-    DrawOptionMenuChoice(gText_BattleSceneOn, 104, YPOS_RANDOMTRAINER, styles[0]);
-    DrawOptionMenuChoice(gText_BattleSceneOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleSceneOff, 198), YPOS_RANDOMTRAINER, styles[1]);
+    DrawOptionMenuChoice(gText_BattleSceneOff, 104, YPOS_RANDOMTRAINER, styles[0]);
+    DrawOptionMenuChoice(gText_BattleSceneOn, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleSceneOff, 198), YPOS_RANDOMTRAINER, styles[1]);
 }
 
 static u8 FrameType_ProcessInput(u8 selection)

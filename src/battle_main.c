@@ -81,6 +81,7 @@
 #include "cable_club.h"
 #include "test/test_runner_battle.h"
 #include "randomizer.h"
+#include "boss_battle.h"
 
 extern const struct BgTemplate gBattleBgTemplates[];
 extern const struct WindowTemplate *const gBattleWindowTemplates[];
