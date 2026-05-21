@@ -168,7 +168,7 @@
 #define FLAG_RANDOMIZER_ABILITIES                          0x0BF 
 #define FLAG_RANDOMIZER_EGG_MON                            0x0C0
 #define FLAG_FOLLOWER_ITEM                                 0x0C1
-#define FLAG_0x0C2               0x0C2
+#define FLAG_HIDE_GIOVANNIVCITY                            0x0C2
 #define FLAG_0x0C3               0x0C3
 #define FLAG_0x0C4               0x0C4
 #define FLAG_0x0C5               0x0C5

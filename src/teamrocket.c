@@ -153,7 +153,7 @@ static void Task_TeamRocket_Intro(u8 taskId)
     switch(gTasks[taskId].data[3])
     {
     case 0:
-        Overworld_ChangeMusicTo(MUS_RG_TEACHY_TV_MENU);
+        Overworld_ChangeMusicTo(MUS_RG_ROCKETDUO);
         SetVBlankCallback(NULL);
         SetGpuReg(REG_OFFSET_DISPCNT, 0);
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);

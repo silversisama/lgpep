@@ -1500,7 +1500,7 @@ static u8 GetEncounterLevelFromMapData(u16 species, enum EncounterType environme
 
         for (i = 0; i < LAND_WILD_COUNT; i++)
         {
-            #if RANDOMIZER_AVAILABLE == TRUE
+            #if FLAG_RANDOMIZER_WILD_MON == TRUE 
                 speciesToCheck = RandomizeWildEncounter(
                     landMonsInfo->wildPokemon[i].species,
                     gWildMonHeaders[headerId].mapNum,
@@ -1525,7 +1525,7 @@ static u8 GetEncounterLevelFromMapData(u16 species, enum EncounterType environme
 
         for (i = 0; i < WATER_WILD_COUNT; i++)
         {
-            #if RANDOMIZER_AVAILABLE == TRUE
+            #if FLAG_RANDOMIZER_WILD_MON == TRUE
                 speciesToCheck = RandomizeWildEncounter(
                     waterMonsInfo->wildPokemon[i].species,
                     gWildMonHeaders[headerId].mapNum,
@@ -1730,7 +1730,7 @@ static bool8 CapturedAllLandMons(u32 headerId)
         for (i = 0; i < LAND_WILD_COUNT; ++i)
         {
             species = landMonsInfo->wildPokemon[i].species;
-            #if RANDOMIZER_AVAILABLE == TRUE
+            #if FLAG_RANDOMIZER_WILD_MON == TRUE
                 species = RandomizeWildEncounter(
                     species,
                     gWildMonHeaders[headerId].mapNum,
@@ -1772,7 +1772,7 @@ static bool8 CapturedAllWaterMons(u32 headerId)
         for (i = 0; i < WATER_WILD_COUNT; ++i)
         {
             species = waterMonsInfo->wildPokemon[i].species;
-            #if RANDOMIZER_AVAILABLE == TRUE
+            #if FLAG_RANDOMIZER_WILD_MON == TRUE
                 species = RandomizeWildEncounter(
                     species,
                     gWildMonHeaders[headerId].mapNum,
@@ -1967,7 +1967,7 @@ static void DexNavLoadEncounterData(void)
         for (i = 0; i < LAND_WILD_COUNT; i++)
         {
             species = landMonsInfo->wildPokemon[i].species;
-            #if RANDOMIZER_AVAILABLE == TRUE
+            #if FLAG_RANDOMIZER_WILD_MON == TRUE
                 species = RandomizeWildEncounter(
                     species,
                     gWildMonHeaders[headerId].mapNum,
@@ -1985,7 +1985,7 @@ static void DexNavLoadEncounterData(void)
         for (i = 0; i < WATER_WILD_COUNT; i++)
         {
             species = waterMonsInfo->wildPokemon[i].species;
-            #if RANDOMIZER_AVAILABLE == TRUE
+            #if FLAG_RANDOMIZER_WILD_MON == TRUE
                 species = RandomizeWildEncounter(
                     species,
                     gWildMonHeaders[headerId].mapNum,

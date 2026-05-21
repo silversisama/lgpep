@@ -305,5 +305,7 @@ gOakSpeech_Text_LetsGo::
 	.string "{PLAYER}!\p"
 	.string "Your very own POKéMON legend is\n"
 	.string "about to unfold!\p"
+	.string "If you want randomizer options,\n"
+	.string "please check the options menu!\p"	
 	.string "A world of dreams and adventures\n"
 	.string "with POKéMON awaits! Let's go!$"

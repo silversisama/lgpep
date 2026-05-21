@@ -20,6 +20,7 @@ struct PartyMenu
     s16 learnMoveState;  // data2, used only as a learn move state
 };
 
+
 #define DATA1_PARTY_MENU_FROM_FIELD -1
 
 extern struct PartyMenu gPartyMenu;

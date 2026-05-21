@@ -355,6 +355,7 @@ gSongTable::
 	song dummy_song_header, MUSIC_PLAYER_BGM, 0
 	song dummy_song_header, MUSIC_PLAYER_BGM, 0
 	song dummy_song_header, MUSIC_PLAYER_BGM, 0
+	song dummy_song_header, MUSIC_PLAYER_BGM, 0
 	song mus_littleroot_test, MUSIC_PLAYER_BGM, 0
 	song mus_gsc_route38, MUSIC_PLAYER_BGM, 0
 	song mus_caught, MUSIC_PLAYER_BGM, 0
@@ -575,6 +576,7 @@ gSongTable::
 	song mus_casino_plus_8, MUSIC_PLAYER_BGM, 0
 	song mus_casino_plus_9, MUSIC_PLAYER_BGM, 0
 	song mus_casino_plus_gacha, MUSIC_PLAYER_BGM, 0
+	song mus_rg_rocketduo, MUSIC_PLAYER_BGM, 0 
 	song ph_trap_blend, MUSIC_PLAYER_SE2, 2
 	song ph_trap_held, MUSIC_PLAYER_SE2, 2
 	song ph_trap_solo, MUSIC_PLAYER_SE2, 2
@@ -626,7 +628,6 @@ gSongTable::
 	song ph_nurse_blend, MUSIC_PLAYER_SE2, 2
 	song ph_nurse_held, MUSIC_PLAYER_SE2, 2
 	song ph_nurse_solo, MUSIC_PLAYER_SE2, 2
-	song mus_rg_rocketduo, MUSIC_PLAYER_BGM, 0 
 
 	.align 2
 dummy_song_header:

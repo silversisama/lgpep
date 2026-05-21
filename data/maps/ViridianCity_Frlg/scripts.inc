@@ -97,7 +97,6 @@ ViridianCity_EventScript_OldManGymLeaderReturned::
 ViridianCity_EventScript_TutorialOldMan::
 	lock
 	faceplayer
-	goto_if_set FLAG_BADGE01_GET, ViridianCity_EventScript_AskIfTeachyTVHelpful
 	goto_if_ge VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN, 2, ViridianCity_EventScript_TutorialCompleted
 	goto_if_eq VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN, 1, ViridianCity_EventScript_TutorialStart
 	goto_if_eq VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN, 0, ViridianCity_EventScript_TutorialNotReady
@@ -121,7 +120,8 @@ ViridianCity_EventScript_TutorialCompleted::
 	end
 
 ViridianCity_EventScript_TutorialStart::
-	call ViridianCity_EventScript_DoTutorialBattle
+	msgbox ViridianCity_Text_WhatsThisDexnav
+	setvar VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN, 2
 	release
 	end
 
@@ -166,7 +166,7 @@ ViridianCity_EventScript_YoungsterDeclineExplanation::
 ViridianCity_EventScript_Woman::
 	lock
 	faceplayer
-	goto_if_eq VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN, 0, ViridianCity_EventScript_WomanRoadBlocked
+	goto_if_eq VAR_GIOVANNI_VIRIDIAN_CITY, 0, ViridianCity_EventScript_WomanRoadBlocked
 	msgbox ViridianCity_Text_GoShoppingInPewterOccasionally
 	release
 	end
@@ -190,6 +190,27 @@ ViridianCity_EventScript_RoadBlocked::
 	closemessage
 	applymovement LOCALID_PLAYER, ViridianCity_Movement_WalkDown
 	waitmovement 0
+	releaseall
+	end
+
+ViridianCity_EventScript_GiovanniDexNav::
+	lock
+	faceplayer
+	setvar VAR_GIOVANNI_VIRIDIAN_CITY, 1
+	textcolor NPC_TEXT_COLOR_MALE
+	msgbox ViridianCity_Text_GiovanniDexNav, MSGBOX_NPC
+	textcolor NPC_TEXT_COLOR_NEUTRAL
+	playfanfare MUS_RG_OBTAIN_KEY_ITEM
+	message ViridianCity_Text_ReceivedDexNavFromGiovanni
+	waitmessage
+	waitfanfare
+	setflag FLAG_DEXNAV_GET
+	call EventScript_RestorePrevTextColor
+	msgbox ViridianCity_Text_GiovanniPlacesToBe, MSGBOX_NPC
+	fadescreen FADE_TO_BLACK
+	setflag FLAG_HIDE_GIOVANNIVCITY
+	removeobject LOCALID_VIRIDIAN_GIOVANNI2
+	fadescreen FADE_FROM_BLACK
 	releaseall
 	end
 
@@ -232,6 +253,22 @@ ViridianCity_EventScript_DoTutorialBattle::
 	msgbox ViridianCity_Text_WatchThatToLearnBasics
 	return
 
+ViridianCity_Text_GiovanniDexNav::
+	.string "Hey, you look like a capable TRAINER.\n"
+	.string "Here, take this DEXNAV. My inventors\p"
+	.string "have created a device that will\n"
+	.string "help you find and catch rare POKéMON.$"
+
+ViridianCity_Text_ReceivedDexNavFromGiovanni::
+	.string "{PLAYER} received the DEXNAV\n"
+	.string "from the Viridian City GYM Leader.$"
+
+ViridianCity_Text_GiovanniPlacesToBe::
+	.string "I have a lot of places to be, so I\n"
+	.string "can't stay and chat, but good luck\p"
+	.string "with your training! I'm sure we\n"
+	.string "will meet again one day.$"
+
 ViridianCity_Text_CanCarryMonsAnywhere::
 	.string "Those POKé BALLS at your waist!\n"
 	.string "You have POKéMON, don't you?\p"
@@ -252,6 +289,19 @@ ViridianCity_Text_WantToKnowAboutCaterpillarMons::
 ViridianCity_Text_OhOkayThen::
 	.string "Oh, okay then!$"
 
+ViridianCity_Text_WhatsThisDexnav::
+	.string "What's this?\n"
+	.string "A new gadget from the GYM LEADER?\p"
+	.string "It looks like some kind of\n"
+	.string "handheld device.\p"
+	.string "Oh, I see! It's called a DEXNAV!\n"
+	.string "I've heard of that!\p"
+	.string "It allows you to chain encounters\n"
+	.string "with the same species of POKéMON!\p"
+	.string "The more you chain, the better the\n"
+	.string "POKéMON you'll find!\p"
+	.string "Sounds handy!$"
+
 ViridianCity_Text_ExplainCaterpieWeedle::
 	.string "CATERPIE has no poison,\n"
 	.string "but WEEDLE does.\p"
@@ -259,10 +309,11 @@ ViridianCity_Text_ExplainCaterpieWeedle::
 	.string "stabbed by WEEDLE's POISON STING.$"
 
 ViridianCity_Text_GrandpaHasntHadCoffeeYet::
-	.string "Oh, Grandpa!\n"
-	.string "Don't be so mean!\p"
-	.string "I'm so sorry.\n"
-	.string "He hasn't had his coffee yet.$"
+	.string "Is that the Viridian City\n"
+	.string "gym leader? He normally takes\p"
+	.string "a lot of business trips!\p"
+	.string "I wonder what he is standing\n"
+	.string "around for. Maybe it's important.$"
 
 ViridianCity_Text_GoShoppingInPewterOccasionally::
 	.string "I go shopping in PEWTER CITY\n"
@@ -271,9 +322,9 @@ ViridianCity_Text_GoShoppingInPewterOccasionally::
 	.string "VIRIDIAN FOREST when I go.$"
 
 ViridianCity_Text_ThisIsPrivateProperty::
-	.string "I absolutely forbid you from\n"
-	.string "going through here!\p"
-	.string "This is private property!$"
+	.string "You feel compelled to go to\n"
+	.string "the pokémart. Maybe yo need\p"
+	.string "to do something!$"
 
 ViridianCity_Text_ShowYouHowToCatchMons::
 	.string "Well, now, I've had my coffee, and\n"
