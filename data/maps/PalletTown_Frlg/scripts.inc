@@ -550,6 +550,7 @@ PalletTown_Text_LookCopiedTrainerTipsSign::
 @ Used by NPC
 PalletTown_Text_PressStartToOpenMenuCopy::
 	.string "TRAINER TIPS!\p"
-	.string "Press START to open the MENU!$"
+	.string "EVs are allocated from the\n"
+	.string "party menu!$"
 
 

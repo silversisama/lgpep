@@ -28301,7 +28301,7 @@
               {
                 "min_level": 12,
                 "max_level": 12,
-                "species": "SPECIES_SPEAROW"
+                "species": "SPECIES_PIKACHU"
               },
               {
                 "min_level": 12,
@@ -31105,7 +31105,7 @@
               {
                 "min_level": 25,
                 "max_level": 25,
-                "species": "SPECIES_RATICATE"
+                "species": "SPECIES_EEVEE"
               },
               {
                 "min_level": 27,

@@ -1326,6 +1326,11 @@ bool32 ComputePlayerShinyOdds(u32 personality, u32 value)
     {
         isShiny = FALSE;
     }
+    else if (FlagGet(FLAG_SHINY_GUARANTEED))
+    {
+        isShiny = TRUE;
+        FlagClear(FLAG_SHINY_GUARANTEED);
+    }
     else if (P_FLAG_FORCE_SHINY != 0 && FlagGet(P_FLAG_FORCE_SHINY))
     {
         isShiny = TRUE;
@@ -1860,7 +1865,7 @@ void CalculateMonStats(struct Pokemon *mon)
     else
     {
         s32 n = 2 * GetSpeciesBaseHP(species) + iv[STAT_HP];
-        newMaxHP = ((n * level) / 100) + level + (10 + ev[STAT_HP]);
+        newMaxHP = (((n + ev[STAT_HP] / 4) * level) / 100) + level + 10;
     }
 
     gBattleScripting.levelUpHP = newMaxHP - oldMaxHP;

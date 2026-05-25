@@ -13,6 +13,17 @@ CeladonCity_DepartmentStore_4F_EventScript_FloorSign::
 	msgbox CeladonCity_DepartmentStore_4F_Text_FloorSign, MSGBOX_SIGN
 	end
 
+CeladonCity_DepartmentStore_4F_EventScript_Clerk2::
+	lock
+	faceplayer
+	message gText_HowMayIServeYou
+	waitmessage
+	pokemart CeladonCity_DepartmentStore_4F_NatureItems
+	msgbox gText_PleaseComeAgain
+	release
+	end
+
+	.align 2
 CeladonCity_DepartmentStore_4F_EventScript_Clerk::
 	lock
 	faceplayer
@@ -35,11 +46,37 @@ CeladonCity_DepartmentStore_4F_Items::
 	release
 	end
 
+CeladonCity_DepartmentStore_4F_NatureItems::
+	.2byte ITEM_LONELY_MINT
+	.2byte ITEM_ADAMANT_MINT
+	.2byte ITEM_NAUGHTY_MINT
+	.2byte ITEM_BRAVE_MINT
+	.2byte ITEM_BOLD_MINT
+	.2byte ITEM_IMPISH_MINT
+	.2byte ITEM_LAX_MINT
+	.2byte ITEM_RELAXED_MINT
+	.2byte ITEM_MODEST_MINT
+	.2byte ITEM_MILD_MINT
+	.2byte ITEM_RASH_MINT
+	.2byte ITEM_QUIET_MINT
+	.2byte ITEM_CALM_MINT
+	.2byte ITEM_GENTLE_MINT
+	.2byte ITEM_CAREFUL_MINT
+	.2byte ITEM_SASSY_MINT
+	.2byte ITEM_TIMID_MINT
+	.2byte ITEM_HASTY_MINT
+	.2byte ITEM_JOLLY_MINT
+	.2byte ITEM_NAIVE_MINT
+	.2byte ITEM_SERIOUS_MINT
+	.2byte ITEM_NONE
+	release
+	end
+
 CeladonCity_DepartmentStore_4F_Text_GettingPokeDollAsPresent::
-	.string "I'm getting a present for my\n"
-	.string "girlfriend.\p"
-	.string "I guess a POKé DOLL will be it.\n"
-	.string "It's the popular thing.$"
+	.string "I'm getting mints for my\n"
+	.string "pokemon.\p"
+	.string "Having the best natures for\n"
+	.string "them gives you an edge in battle!$"
 
 CeladonCity_DepartmentStore_4F_Text_CanRunAwayWithPokeDoll::
 	.string "I heard something useful.\p"
@@ -49,7 +86,7 @@ CeladonCity_DepartmentStore_4F_Text_CanRunAwayWithPokeDoll::
 	.string "POKéMON is distracted.$"
 
 CeladonCity_DepartmentStore_4F_Text_FloorSign::
-	.string "Express yourself with gifts!\n"
-	.string "4F: WISE MAN GIFTS\p"
-	.string "Evolution Special!\n"
+	.string "Express yourself with gifts!\p"
+	.string "4F: WISE GIFTS and NATURE\n"
+	.string "MINTS! Evolution Special!\p"
 	.string "Element STONES on sale now!$"

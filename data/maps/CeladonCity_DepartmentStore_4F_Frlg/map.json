@@ -3,7 +3,6 @@
   "name": "CeladonCity_DepartmentStore_4F_Frlg",
   "layout": "LAYOUT_CELADON_CITY_DEPARTMENT_STORE_4F",
   "music": "MUS_POKE_CENTER",
-  "region": "REGION_KANTO",
   "region_map_section": "MAPSEC_CELADON_CITY",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -57,6 +56,20 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "CeladonCity_DepartmentStore_4F_EventScript_Clerk",
       "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_CLERK",
+      "x": 5,
+      "y": 13,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 3,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "CeladonCity_DepartmentStore_4F_EventScript_Clerk2",
+      "flag": "0"
     }
   ],
   "warp_events": [
@@ -92,5 +105,6 @@
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "CeladonCity_DepartmentStore_4F_EventScript_FloorSign"
     }
-  ]
+  ],
+  "region": "REGION_KANTO"
 }
