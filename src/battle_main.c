@@ -1813,7 +1813,7 @@ void BattleMainCB2(void)
     else
     {
         u32 s;
-        u32 fadeResult;
+        u32 fadeResult = PALETTE_FADE_STATUS_DONE;
 
         // Update select entries at higher speed
         // disable speed up during palette fades otherwise we run into issues with blending
@@ -1841,7 +1841,7 @@ void BattleMainCB2(void)
                     gMain.callback1();
             }
         }
-
+ 
         if (fadeResult != PALETTE_FADE_STATUS_LOADING)
         {
             // final update

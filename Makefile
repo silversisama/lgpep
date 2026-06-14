@@ -154,8 +154,10 @@ INCLUDE_SCANINC_ARGS := $(INCLUDE_DIRS:%=-I %)
 
 ifeq ($(DEBUG),1)
 O_LEVEL ?= g
+DEBUG_DWARF_FLAG := -gdwarf-4
 else
 O_LEVEL ?= 2
+DEBUG_DWARF_FLAG :=
 endif
 CPPFLAGS := $(INCLUDE_CPP_ARGS) -Wno-trigraphs -DMODERN=1 -DTESTING=$(TEST) -D$(GAME_VERSION) -std=gnu17
 ifeq ($(RELEASE),1)
@@ -196,10 +198,10 @@ LIBPATH := -L "$(dir $(shell $(PATH_ARMCC) -mthumb -print-file-name=libgcc.a))" 
 LIB := $(LIBPATH) -lc -lnosys -lgcc -L../../libagbsyscall -lagbsyscall
 # Enable debug info if set
 ifeq ($(DINFO),1)
-  override CFLAGS += -g
+  override CFLAGS += -g -gdwarf-4
 else
   ifeq ($(DEBUG),1)
-    override CFLAGS += -g
+    override CFLAGS += -g -gdwarf-4
   endif
 endif
 

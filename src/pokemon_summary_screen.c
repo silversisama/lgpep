@@ -18,6 +18,7 @@
 #include "graphics.h"
 #include "international_string_util.h"
 #include "item.h"
+#include "item_icon.h"
 #include "link.h"
 #include "m4a.h"
 #include "malloc.h"
@@ -110,6 +111,7 @@ enum
 {
     SPRITE_ARR_ID_MON,
     SPRITE_ARR_ID_BALL,
+    SPRITE_ARR_ID_ITEM,
     SPRITE_ARR_ID_STATUS,
     SPRITE_ARR_ID_TYPE, // 2 for mon types, 5 for move types(4 moves and 1 to learn), used interchangeably, because mon types and move types aren't shown on the same screen
     SPRITE_ARR_ID_MOVE_SELECTOR1 = SPRITE_ARR_ID_TYPE + TYPE_ICON_SPRITE_COUNT, // 10 sprites that make up the selector
@@ -783,6 +785,7 @@ static const u8 sMovesPPLayout[] = _("{PP}{DYNAMIC 0}/{DYNAMIC 1}");
 #define TAG_MOVE_TYPES 30002
 #define TAG_MON_MARKINGS 30003
 #define TAG_CATEGORY_ICONS 30004
+#define TAG_ITEM_ICON 30005
 
 static const struct OamData sOamData_CategoryIcons =
 {
@@ -1429,6 +1432,87 @@ static void InitBGs(void)
     ShowBg(3);
 }
 
+static void ApplySummaryScreenDarkTheme(void)
+{
+    u8  i;
+    u16 base;
+    gPlttBufferUnfaded[BG_PLTT_ID(0) + 0] = RGB(4, 4, 5);    // #212129
+    for (i = 0; i < 6; i++)
+    {
+        base = BG_PLTT_ID(i);
+        gPlttBufferUnfaded[base +  3] = RGB(0,  0,  0);   // preto  - fg nomes moves
+        gPlttBufferUnfaded[base +  4] = RGB(9,  9, 13);   // #4A4A6B - shadow moves
+        gPlttBufferUnfaded[base +  6] = RGB(5,  5,  7);   // #2E2E3C - sombra frame
+        gPlttBufferUnfaded[base +  7] = RGB(9,  9, 13);   // #4A4A6B
+        gPlttBufferUnfaded[base +  8] = RGB(8,  8, 12);
+        gPlttBufferUnfaded[base +  9] = RGB(7,  7, 10);   // #3A3A52
+        gPlttBufferUnfaded[base + 10] = RGB(6,  6,  9);
+        gPlttBufferUnfaded[base + 11] = RGB(5,  5,  7);   // #2E2E3C
+        gPlttBufferUnfaded[base + 12] = RGB(9,  9, 13);
+        gPlttBufferUnfaded[base + 13] = RGB(7,  7, 10);
+        gPlttBufferUnfaded[base + 14] = RGB(5,  5,  7);
+        gPlttBufferUnfaded[base + 15] = RGB(4,  4,  5);   // #212129
+    }
+    base = BG_PLTT_ID(6);
+    gPlttBufferUnfaded[base + 0] = RGB(4, 4, 5); 
+    base = BG_PLTT_ID(7);
+    gPlttBufferUnfaded[base + 0] = RGB(4,  4,  5);   // #212129
+    gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31);
+    gPlttBufferUnfaded[base + 2] = RGB(0,  0,  0);
+    gPlttBufferUnfaded[base + 4] = RGB(7,  7, 10);
+    base = BG_PLTT_ID(8);
+    gPlttBufferUnfaded[base +  0] = RGB(4,  4,  5);
+    gPlttBufferUnfaded[base +  1] = RGB(0,  0,  0); 
+    gPlttBufferUnfaded[base +  2] = RGB(8,  8, 10);
+    gPlttBufferUnfaded[base +  3] = RGB(26, 22,  0);
+    gPlttBufferUnfaded[base +  4] = RGB(13, 11,  0);
+    gPlttBufferUnfaded[base +  5] = RGB(29, 12,  0);
+    gPlttBufferUnfaded[base +  6] = RGB(14,  6,  0);  
+    gPlttBufferUnfaded[base +  7] = RGB(31,  0,  0); 
+    gPlttBufferUnfaded[base +  8] = RGB(15,  0,  0);
+    base = BG_PLTT_ID(15);
+    gPlttBufferUnfaded[base + 0] = RGB(4,  4,  5);   // #212129 - fundo escuro
+    gPlttBufferUnfaded[base + 1] = RGB(31, 31, 31);  // branco  - texto START/Relearn
+    gPlttBufferUnfaded[base + 2] = RGB(0,  0,  0);   // preto   - sombra
+    CpuCopy16(
+        gPlttBufferUnfaded + BG_PLTT_ID(0),
+        gPlttBufferFaded   + BG_PLTT_ID(0),
+        8 * PLTT_SIZE_4BPP
+    );
+    // Slot 8 (PP) e slot 15 (Relearn) estão fora dos primeiros 8 — sincronizar separado
+    CpuCopy16(
+        gPlttBufferUnfaded + BG_PLTT_ID(8),
+        gPlttBufferFaded   + BG_PLTT_ID(8),
+        PLTT_SIZE_4BPP
+    );
+    CpuCopy16(
+        gPlttBufferUnfaded + BG_PLTT_ID(15),
+        gPlttBufferFaded   + BG_PLTT_ID(15),
+        PLTT_SIZE_4BPP
+    );
+}
+
+static void ApplyMoveSelectorDarkTheme(void)
+{
+    u8  slot = IndexOfSpritePaletteTag(TAG_MOVE_SELECTOR);
+    if (slot == 0xFF)
+        return; // paleta ainda não carregada
+    u16 base = OBJ_PLTT_ID(slot);
+    u8  j;
+
+    gPlttBufferUnfaded[base + 1]  = RGB(9,  9, 13);   // #4A4A6B - bolinha principal
+    gPlttBufferUnfaded[base + 2]  = RGB(14, 13, 16);  // #736B84 - bolinha highlight
+    gPlttBufferUnfaded[base + 3]  = RGB(4,  4,  5);   // #212129 - contorno/sombra
+    gPlttBufferUnfaded[base + 4]  = RGB(9,  9, 13);   // #4A4A6B - linha divisória
+    for (j = 5; j < 16; j++)
+        gPlttBufferUnfaded[base + j] = RGB(7, 7, 10); // #3A3A52 - demais
+
+    CpuCopy16(
+        gPlttBufferUnfaded + base,
+        gPlttBufferFaded   + base,
+        PLTT_SIZE_4BPP
+    );
+}
 static bool8 DecompressGraphics(void)
 {
     switch (sMonSummaryScreen->switchCounter)
@@ -1464,6 +1548,7 @@ static bool8 DecompressGraphics(void)
     case 6:
         LoadPalette(gSummaryScreen_Pal, BG_PLTT_ID(0), 8 * PLTT_SIZE_4BPP);
         LoadPalette(&gPPTextPalette, BG_PLTT_ID(8) + 1, PLTT_SIZEOF(16 - 1));
+        ApplySummaryScreenDarkTheme();
         sMonSummaryScreen->switchCounter++;
         break;
     case 7:
@@ -1484,6 +1569,7 @@ static bool8 DecompressGraphics(void)
         break;
     case 11:
         LoadSpritePalette(&sMoveSelectorSpritePal);
+        ApplyMoveSelectorDarkTheme();
         sMonSummaryScreen->switchCounter++;
         break;
     case 12:
@@ -2091,6 +2177,13 @@ static void Task_ChangeSummaryMon(u8 taskId)
         break;
     case 2:
         DestroySpriteAndFreeResources(&gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL]]);
+        if (sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM] != SPRITE_NONE)
+        {
+            FreeSpriteTilesByTag(TAG_ITEM_ICON);
+            FreeSpritePaletteByTag(TAG_ITEM_ICON);
+            DestroySprite(&gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]]);
+            sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM] = SPRITE_NONE;
+        }
         break;
     case 3:
         CopyMonToSummaryStruct(&sMonSummaryScreen->currentMon);
@@ -4712,10 +4805,26 @@ static void CreateCaughtBallSprite(struct Pokemon *mon)
 {
     enum PokeBall ball = GetMonData(mon, MON_DATA_POKEBALL);
 
+    u16 item = GetMonData(mon, MON_DATA_HELD_ITEM);
     LoadBallGfx(ball);
     sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL] = CreateSprite(&gPokeBalls[ball].spriteTemplate, 16, 136, 0);
     gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL]].callback = SpriteCallbackDummy;
     gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL]].oam.priority = 3;
+    if (sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM] != SPRITE_NONE)
+    {
+        DestroySprite(&gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]]);
+        sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM] = SPRITE_NONE;
+    }
+    if (item != ITEM_NONE)
+    {
+        sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM] = AddItemIconSprite(TAG_ITEM_ICON, TAG_ITEM_ICON, item);
+        if (sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM] != SPRITE_NONE)
+        {
+            gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]].x = 72;  // final da janela de apelido
+            gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]].y = 104; // altura central do nickname
+            gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_ITEM]].oam.priority = 3;
+        }
+    }
 }
 
 static void CreateSetStatusSprite(void)

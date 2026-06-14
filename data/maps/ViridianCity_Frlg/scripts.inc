@@ -16,7 +16,6 @@ ViridianCity_EventScript_SetOldManNormal::
 
 ViridianCity_EventScript_SetOldManStandingByRoad::
 	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_OLD_MAN_1
-	setobjectxyperm LOCALID_TUTORIAL_MAN, 21, 8
 	setobjectmovementtype LOCALID_TUTORIAL_MAN, MOVEMENT_TYPE_LOOK_AROUND
 	return
 
@@ -300,6 +299,8 @@ ViridianCity_Text_WhatsThisDexnav::
 	.string "with the same species of POKéMON!\p"
 	.string "The more you chain, the better the\n"
 	.string "POKéMON you'll find!\p"
+	.string "At a chain of 100, you'll get a \n"
+	.string "special surprise, I hear!\p"
 	.string "Sounds handy!$"
 
 ViridianCity_Text_ExplainCaterpieWeedle::
