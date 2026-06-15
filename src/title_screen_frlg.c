@@ -110,6 +110,9 @@ const u8 gGraphics_TitleScreen_GameTitleLogoMap[] = INCBIN_U8("graphics/title_sc
 const u16 gGraphics_TitleScreen_BoxArtMonPals[] = INCBIN_U16("graphics/title_screen_frlg/firered/box_art_mon.gbapal");
 const u8 gGraphics_TitleScreen_BoxArtMonTiles[] = INCBIN_U8("graphics/title_screen_frlg/firered/box_art_mon.4bpp.smol");
 const u8 gGraphics_TitleScreen_BoxArtMonMap[] = INCBIN_U8("graphics/title_screen_frlg/firered/box_art_mon.bin.smolTM");
+const u16 gGraphics_TitleScreen_PokemonBGPals[] = INCBIN_U16("graphics/title_screen_frlg/firered/pokemon_bg.gbapal");
+const u8 gGraphics_TitleScreen_PokemonBGTiles[] = INCBIN_U8("graphics/title_screen_frlg/firered/pokemon_bg.4bpp.smol");
+const u8 gGraphics_TitleScreen_PokemonBGMap[] = INCBIN_U8("graphics/title_screen_frlg/firered/pokemon_bg.bin.smolTM");
 const u16 gGraphics_TitleScreen_BackgroundPals[] = INCBIN_U16("graphics/title_screen_frlg/firered/background.gbapal");
 const u8 gGraphics_TitleScreen_CopyrightPressStartTiles[] = INCBIN_U8("graphics/title_screen_frlg/copyright_press_start.4bpp.smol");
 const u8 gGraphics_TitleScreen_CopyrightPressStartMap[] = INCBIN_U8("graphics/title_screen_frlg/copyright_press_start.bin.smolTM");
@@ -128,7 +131,7 @@ const u8 gGraphics_TitleScreen_CopyrightPressStartTiles[] = INCBIN_U8("graphics/
 const u8 gGraphics_TitleScreen_CopyrightPressStartMap[] = INCBIN_U8("graphics/title_screen_frlg/copyright_press_start.bin.smolTM");
 const u16 gTitleScreen_Slash_Pal[] = INCBIN_U16("graphics/title_screen_frlg/leafgreen/slash.gbapal");
 #endif
-
+ 
 const u32 gTitleScreen_BlankSprite_Tiles[] = INCBIN_U32("graphics/title_screen_frlg/blank_sprite.4bpp.smol");
 
 static const struct OamData sOamData_FlameOrLeaf = {
@@ -405,9 +408,9 @@ void CB2_InitTitleScreenFrlg(void)
         LoadPalette(gGraphics_TitleScreen_GameTitleLogoPals, BG_PLTT_ID(0), 13 * PLTT_SIZE_4BPP);
         DecompressAndCopyTileDataToVram(0, gGraphics_TitleScreen_GameTitleLogoTiles, 0, 0, 0);
         DecompressAndCopyTileDataToVram(0, gGraphics_TitleScreen_GameTitleLogoMap, 0, 0, 1);
-        LoadPalette(gGraphics_TitleScreen_BoxArtMonPals, BG_PLTT_ID(13), PLTT_SIZE_4BPP);
-        DecompressAndCopyTileDataToVram(1, gGraphics_TitleScreen_BoxArtMonTiles, 0, 0, 0);
-        DecompressAndCopyTileDataToVram(1, gGraphics_TitleScreen_BoxArtMonMap, 0, 0, 1);
+        LoadPalette(gGraphics_TitleScreen_PokemonBGPals, BG_PLTT_ID(13), PLTT_SIZE_4BPP);
+        DecompressAndCopyTileDataToVram(1, gGraphics_TitleScreen_PokemonBGTiles, 0, 0, 0);
+        DecompressAndCopyTileDataToVram(1, gGraphics_TitleScreen_PokemonBGMap, 0, 0, 1);
         LoadPalette(gGraphics_TitleScreen_BackgroundPals, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
         DecompressAndCopyTileDataToVram(2, gGraphics_TitleScreen_CopyrightPressStartTiles, 0, 0, 0);
         DecompressAndCopyTileDataToVram(2, gGraphics_TitleScreen_CopyrightPressStartMap, 0, 0, 1);
@@ -631,7 +634,7 @@ static void SetTitleScreenScene_FadeIn(s16 *data)
             BlendPalettes(palettes, 16, RGB(30, 30, 31));
             BeginNormalPaletteFade(palettes, 1, 16, 0, RGB(30, 30, 31));
             ShowBg(0);
-            CpuCopy16(gGraphics_TitleScreen_BoxArtMonPals, &gPlttBufferUnfaded[BG_PLTT_ID(13)], PLTT_SIZE_4BPP);
+            CpuCopy16(gGraphics_TitleScreen_PokemonBGPals, &gPlttBufferUnfaded[BG_PLTT_ID(13)], PLTT_SIZE_4BPP);
             BlendPalettesGradually(1 << 13, 1, 15, 0, RGB(30, 30, 31), 0, 0);
             tState++;
         }
@@ -949,7 +952,7 @@ static void LoadMainTitleScreenPalsAndResetBgs(void)
     DestroyBlendPalettesGraduallyTask();
     ResetPaletteFadeControl();
     LoadPalette(gGraphics_TitleScreen_GameTitleLogoPals, BG_PLTT_ID(0), 13 * PLTT_SIZE_4BPP);
-    LoadPalette(gGraphics_TitleScreen_BoxArtMonPals, BG_PLTT_ID(13), PLTT_SIZE_4BPP);
+    LoadPalette(gGraphics_TitleScreen_PokemonBGPals, BG_PLTT_ID(13), PLTT_SIZE_4BPP);
     LoadPalette(gGraphics_TitleScreen_BackgroundPals, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
     LoadPalette(gGraphics_TitleScreen_BackgroundPals, BG_PLTT_ID(14), PLTT_SIZE_4BPP);
     ResetBgPositions();
