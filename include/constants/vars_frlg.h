@@ -201,14 +201,14 @@
 #define VAR_MYSTERY_GIFT_5         0x40BA
 #define VAR_MYSTERY_GIFT_6         0x40BB
 #define VAR_MYSTERY_GIFT_7         0x40BC
-#define VAR_0x40BD                 0x40BD
-#define VAR_0x40BE                 0x40BE
-#define VAR_0x40BF                 0x40BF
-#define VAR_0x40C0                 0x40C0
-#define VAR_0x40C1                 0x40C1
-#define VAR_0x40C2                 0x40C2
-#define VAR_0x40C3                 0x40C3
-#define VAR_0x40C4                 0x40C4
+#define VAR_NUZLOCKE_ENCOUNTERS_1                        0x40BD // Nuzlocke: Track first encounters in routes/areas (32 bits)
+#define VAR_NUZLOCKE_ENCOUNTERS_2                        0x40BE // Nuzlocke: Track first encounters in routes/areas (32 bits)
+#define VAR_NUZLOCKE_ENCOUNTERS_3                        0x40BF // Nuzlocke: Track first encounters in routes/areas (32 bits)
+#define VAR_NUZLOCKE_ENCOUNTERS_4                        0x40C0 // Nuzlocke: Track first encounters in routes/areas (32 bits)
+#define VAR_NUZLOCKE_CATCHES_1                           0x40C1 // Nuzlocke: Track successful catches in routes/areas (32 bits)
+#define VAR_NUZLOCKE_CATCHES_2                           0x40C2 // Nuzlocke: Track successful catches in routes/areas (32 bits)
+#define VAR_NUZLOCKE_CATCHES_3                           0x40C3 // Nuzlocke: Track successful catches in routes/areas (32 bits)
+#define VAR_NUZLOCKE_CATCHES_4                           0x40C4 // Nuzlocke: Track successful catches in routes/areas (32 bits)     
 #define VAR_0x40C5                 0x40C5
 #define VAR_0x40C6                 0x40C6
 #define VAR_0x40C7                 0x40C7

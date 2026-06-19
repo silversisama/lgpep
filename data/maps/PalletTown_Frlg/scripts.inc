@@ -418,7 +418,7 @@ PalletTown_EventScript_TownSign::
 
 PalletTown_EventScript_TrainerTips::
 	lockall
-	msgbox PalletTown_Text_PressStartToOpenMenu
+	msgbox PalletTown_Text_PressStartToOpenMenuCopy
 	setvar VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 1
 	releaseall
 	end

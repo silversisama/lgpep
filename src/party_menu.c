@@ -4733,18 +4733,21 @@ static void ShowOrHideHeldItemSprite(enum Item item, struct PartyMenuBox *menuBo
     }
     if (item != ITEM_NONE)
     {
-        if (menuBox->infoRects == &sPartyBoxInfoRects[PARTY_BOX_EQUAL_COLUMN])
+        menuBox->itemSpriteId = AddItemIconSprite(tilesTag, palTag, item);
+        if (menuBox->itemSpriteId != SPRITE_NONE)
         {
+            if (menuBox->infoRects == &sPartyBoxInfoRects[PARTY_BOX_EQUAL_COLUMN])
+            {
                 gSprites[menuBox->itemSpriteId].x = sEqualItemIconPos[slot][0];
                 gSprites[menuBox->itemSpriteId].y = sEqualItemIconPos[slot][1];
-        }
-        else
-        {
+            }
+            else
+            {
                 gSprites[menuBox->itemSpriteId].x = menuBox->spriteCoords[2] + 4;
                 gSprites[menuBox->itemSpriteId].y = menuBox->spriteCoords[3];
-        }
-        gSprites[menuBox->itemSpriteId].oam.priority = 1;
-        ScaleItemIconSprite(menuBox->itemSpriteId, 0xC0);  // 75%
+            }
+            gSprites[menuBox->itemSpriteId].oam.priority = 1;
+            ScaleItemIconSprite(menuBox->itemSpriteId, 0xC0);  // 75%
             if (hadSprite)
             {
                 gSprites[menuBox->itemSpriteId].x = oldX;
@@ -4753,6 +4756,7 @@ static void ShowOrHideHeldItemSprite(enum Item item, struct PartyMenuBox *menuBo
                 gSprites[menuBox->itemSpriteId].y2 = oldY2;
             }
         }
+    }
 }
 
 static void UpdatePartyMonHeldItemSprite(struct Pokemon *mon, struct PartyMenuBox *menuBox)

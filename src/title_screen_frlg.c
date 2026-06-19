@@ -301,8 +301,8 @@ static const struct BgTemplate sBgTemplates[] = {
         .baseTile = 0
     }, {
         .bg = 2,
-        .charBaseIndex = 2,
-        .mapBaseIndex = 29,
+        .charBaseIndex = 3,
+        .mapBaseIndex = 28,
         .screenSize = 0,
         .paletteMode = 0, // 4bpp
         .priority = 2,
@@ -415,8 +415,8 @@ void CB2_InitTitleScreenFrlg(void)
         DecompressAndCopyTileDataToVram(2, gGraphics_TitleScreen_CopyrightPressStartTiles, 0, 0, 0);
         DecompressAndCopyTileDataToVram(2, gGraphics_TitleScreen_CopyrightPressStartMap, 0, 0, 1);
         LoadPalette(gGraphics_TitleScreen_BackgroundPals, BG_PLTT_ID(14), PLTT_SIZE_4BPP);
-        DecompressAndCopyTileDataToVram(3, sBorderBgTiles, 0, 0, 0);
-        DecompressAndCopyTileDataToVram(3, sBorderBgMap, 0, 0, 1);
+        //DecompressAndCopyTileDataToVram(3, sBorderBgTiles, 0, 0, 0);
+        //DecompressAndCopyTileDataToVram(3, sBorderBgMap, 0, 0, 1);
         LoadSpriteGfxAndPals();
         break;
     case 2:

@@ -64,6 +64,7 @@ static void WarpToTruck(void);
 static void ResetMiniGamesRecords(void);
 static void ResetItemFlags(void);
 static void ResetDexNav(void);
+static const u8 sRivalName[] = _("Blue");
 
 EWRAM_DATA bool8 gDifferentSaveFile = FALSE;
 EWRAM_DATA bool8 gEnableContestDebugging = FALSE;
@@ -178,7 +179,7 @@ void NewGameInitData(void)
         RtcReset();
 
 #if IS_FRLG
-    StringCopy(rivalName, gSaveBlock1Ptr->rivalName);
+    StringCopy(gSaveBlock1Ptr->rivalName, sRivalName);
 #endif
     gDifferentSaveFile = TRUE;
     gSaveBlock2Ptr->encryptionKey = 0;
@@ -228,7 +229,7 @@ void NewGameInitData(void)
     else
         RunScriptImmediately(EventScript_ResetAllMapFlags);
 #if IS_FRLG
-        StringCopy(gSaveBlock1Ptr->rivalName, rivalName);
+        StringCopy(gSaveBlock1Ptr->rivalName, sRivalName);
 #endif
     ResetMiniGamesRecords();
     InitUnionRoomChatRegisteredTexts();

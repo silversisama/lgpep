@@ -700,12 +700,11 @@ PewterCity_EventScript_AideGiveRunningShoes::
 	textcolor NPC_TEXT_COLOR_NEUTRAL
 	playfanfare MUS_RG_OBTAIN_KEY_ITEM
 	message PewterCity_Text_ReceivedRunningShoesFromAide
+	giveitem ITEM_POKEMON_BOX_LINK
 	waitmessage
 	waitfanfare
 	msgbox PewterCity_Text_SwitchedShoesWithRunningShoes
 	special DisableMsgBoxWalkaway
-	signmsg
-	msgbox PewterCity_Text_ExplainRunningShoes
 	normalmsg
 	call EventScript_RestorePrevTextColor
 	msgbox PewterCity_Text_MustBeGoingBackToLab
@@ -950,11 +949,11 @@ PewterCity_Text_AskedToDeliverThis::
 
 PewterCity_Text_ReceivedRunningShoesFromAide::
 	.string "{PLAYER} received the\n"
-	.string "RUNNING SHOES from the AIDE.$"
+	.string "BOX LINK from the AIDE.$"
 
 PewterCity_Text_SwitchedShoesWithRunningShoes::
-	.string "{PLAYER} switched shoes with the\n"
-	.string "RUNNING SHOES.$"
+	.string "{PLAYER} put the BOX LINK\n"
+	.string "in the KEY ITEMS pocket.$"
 
 PewterCity_Text_ExplainRunningShoes::
 	.string "Press the B Button to run.\n"
@@ -968,7 +967,7 @@ PewterCity_Text_MustBeGoingBackToLab::
 PewterCity_Text_RunningShoesLetterFromMom::
 	.string "There's a letter attached…\p"
 	.string "Dear {PLAYER},\p"
-	.string "Here is a pair of RUNNING SHOES\n"
+	.string "Here is my special BOX LINK\n"
 	.string "for my beloved challenger.\p"
 	.string "Remember, I'll always cheer for\n"
 	.string "you! Don't ever give up!\p"

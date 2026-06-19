@@ -119,6 +119,7 @@ ViridianCity_EventScript_TutorialCompleted::
 	end
 
 ViridianCity_EventScript_TutorialStart::
+	applymovement LOCALID_TUTORIAL_MAN, Common_Movement_FacePlayer
 	msgbox ViridianCity_Text_WhatsThisDexnav
 	setvar VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN, 2
 	release
@@ -194,7 +195,7 @@ ViridianCity_EventScript_RoadBlocked::
 
 ViridianCity_EventScript_GiovanniDexNav::
 	lock
-	faceplayer
+	applymovement LOCALID_VIRIDIAN_GIOVANNI2, Common_Movement_FacePlayer
 	setvar VAR_GIOVANNI_VIRIDIAN_CITY, 1
 	textcolor NPC_TEXT_COLOR_MALE
 	msgbox ViridianCity_Text_GiovanniDexNav, MSGBOX_NPC
