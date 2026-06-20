@@ -18,6 +18,7 @@
 #include "link.h"
 #include "main.h"
 #include "m4a.h"
+#include "nuzlocke.h"
 #include "palette.h"
 #include "party_menu.h"
 #include "pokeball.h"
@@ -1256,6 +1257,7 @@ void SetBattleEndCallbacks(enum BattlerId battler)
         }
         else
         {
+            NuzlockeOnBattleEnd();
             m4aSongNumStop(SE_LOW_HEALTH);
             gMain.inBattle = FALSE;
             gMain.callback1 = gPreBattleCallback1;

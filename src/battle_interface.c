@@ -16,6 +16,7 @@
 #include "util.h"
 #include "gpu_regs.h" 
 #include "battle_message.h"
+#include "nuzlocke.h"
 #include "pokedex.h"
 #include "palette.h"
 #include "wild_encounter.h"

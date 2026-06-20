@@ -1336,6 +1336,8 @@ extern const u32 gItemIcon_FloatStone[];
 extern const u16 gItemIconPalette_FloatStone[];
 extern const u32 gItemIcon_RockyHelmet[];
 extern const u16 gItemIconPalette_RockyHelmet[];
+extern const u32 gItemIcon_FlipPhone[];
+extern const u16 gItemIconPalette_FlipPhone[];
 extern const u32 gItemIcon_AirBalloon[];
 extern const u16 gItemIconPalette_AirBalloon[];
 extern const u32 gItemIcon_RedCard[];

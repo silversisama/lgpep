@@ -31,6 +31,7 @@
 #include "main.h"
 #include "move_relearner.h"
 #include "naming_screen.h"
+#include "nuzlocke.h"
 #include "overworld.h"
 #include "party_menu.h"
 #include "pokedex.h"

@@ -231,7 +231,7 @@ SilphCo_4F_EventScript_ItemMaxRevive::
 	end
 
 SilphCo_4F_EventScript_ItemEscapeRope::
-	finditem ITEM_ESCAPE_ROPE
+	finditem ITEM_UP_GRADE
 	end
 
 SilphCo_4F_EventScript_ItemFullHeal::

@@ -12,6 +12,7 @@
 #include "battle_z_move.h"
 #include "battle_move_resolution.h"
 #include "item.h" 
+#include "nuzlocke.h"
 #include "util.h"
 #include "pokemon.h"
 #include "random.h"

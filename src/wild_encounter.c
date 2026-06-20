@@ -11,6 +11,7 @@
 #include "field_player_avatar.h"
 #include "link.h"
 #include "metatile_behavior.h"
+#include "nuzlocke.h"
 #include "overworld.h"
 #include "ow_synchronize.h"
 #include "pokeblock.h"

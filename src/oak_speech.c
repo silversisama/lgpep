@@ -9,6 +9,7 @@
 #include "math_util.h"
 #include "menu.h"
 #include "naming_screen.h"
+#include "nuzlocke.h"
 #include "overworld.h"
 #include "palette.h"
 #include "pokeball.h"

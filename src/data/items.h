@@ -16017,8 +16017,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_FIELD,
         .fieldUseFunc = ItemUseOutOfBattle_Cut,
-        .iconPic = gItemIcon_QuestionMark,
-        .iconPalette = gItemIconPalette_QuestionMark,
+        .iconPic = gItemIcon_FlipPhone,
+        .iconPalette = gItemIconPalette_FlipPhone,
     },
 
     [ITEM_FLY_TOOL] =
@@ -16033,8 +16033,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_FIELD,
         .fieldUseFunc = ItemUseOutOfBattle_Fly,
-        .iconPic = gItemIcon_QuestionMark,
-        .iconPalette = gItemIconPalette_QuestionMark,
+        .iconPic = gItemIcon_FlipPhone,
+        .iconPalette = gItemIconPalette_FlipPhone,
     },
 
     [ITEM_SURF_TOOL] =
@@ -16049,8 +16049,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_FIELD,
         .fieldUseFunc = ItemUseOutOfBattle_Surf,
-        .iconPic = gItemIcon_QuestionMark,
-        .iconPalette = gItemIconPalette_QuestionMark,
+        .iconPic = gItemIcon_FlipPhone,
+        .iconPalette = gItemIconPalette_FlipPhone,
     },
 
     [ITEM_STRENGTH_TOOL] =
@@ -16065,8 +16065,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_FIELD,
         .fieldUseFunc = ItemUseOutOfBattle_Strength,
-        .iconPic = gItemIcon_QuestionMark,
-        .iconPalette = gItemIconPalette_QuestionMark,
+        .iconPic = gItemIcon_FlipPhone,
+        .iconPalette = gItemIconPalette_FlipPhone,
     },
 
     [ITEM_FLASH_TOOL] =
@@ -16081,8 +16081,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_FIELD,
         .fieldUseFunc = ItemUseOutOfBattle_Flash,
-        .iconPic = gItemIcon_QuestionMark,
-        .iconPalette = gItemIconPalette_QuestionMark,
+        .iconPic = gItemIcon_FlipPhone,
+        .iconPalette = gItemIconPalette_FlipPhone,
     },
 
     [ITEM_ROCK_SMASH_TOOL] =
@@ -16097,8 +16097,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_FIELD,
         .fieldUseFunc = ItemUseOutOfBattle_RockSmash,
-        .iconPic = gItemIcon_QuestionMark,
-        .iconPalette = gItemIconPalette_QuestionMark,
+        .iconPic = gItemIcon_FlipPhone,
+        .iconPalette = gItemIconPalette_FlipPhone,
     },
 
     [ITEM_WATERFALL_TOOL] =
@@ -16113,8 +16113,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_FIELD,
         .fieldUseFunc = ItemUseOutOfBattle_Waterfall,
-        .iconPic = gItemIcon_QuestionMark,
-        .iconPalette = gItemIconPalette_QuestionMark,
+        .iconPic = gItemIcon_FlipPhone,
+        .iconPalette = gItemIconPalette_FlipPhone,
     },
 
     [ITEM_DIVE_TOOL] =
@@ -16129,8 +16129,25 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_FIELD,
         .fieldUseFunc = ItemUseOutOfBattle_Dive,
-        .iconPic = gItemIcon_QuestionMark,
-        .iconPalette = gItemIconPalette_QuestionMark,
+        .iconPic = gItemIcon_FlipPhone,
+        .iconPalette = gItemIconPalette_FlipPhone,
+    },
+
+    [ITEM_MASTER_BALL_POUCH] =
+    {
+        .name = ITEM_NAME("Master Ball Pouch"),
+        .pluralName = ITEM_PLURAL_NAME("Master Ball Pouches"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "A convenient\n"
+            "container that\n"
+            "holds M. Balls."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_BerryPouch,
+        .iconPalette = gItemIconPalette_BerryPouch,
     },
 };
 

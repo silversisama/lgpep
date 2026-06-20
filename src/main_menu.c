@@ -18,6 +18,7 @@
 #include "list_menu.h"
 #include "mystery_event_menu.h"
 #include "naming_screen.h"
+#include "nuzlocke.h"
 #include "oak_speech.h"
 #include "option_menu.h"
 #include "overworld.h"
