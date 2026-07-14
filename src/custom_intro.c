@@ -484,7 +484,7 @@ static void Task_CI_FadeIn(u8 taskId)
     {
         /* Start the intro BGM as soon as the scene is fully visible -
          * same approach as intro_frlg.c (m4aSongNumStart after fade). */
-        m4aSongNumStart(MUS_RG_INTRO_FIGHT);
+        m4aSongNumStart(MUS_LGPETITLE);
         gTasks[taskId].func = Task_CI_ThrowBalls;
     }
 }
@@ -1630,8 +1630,6 @@ void CB2_StartCustomIntroScreen3(void)
     for (i = 0; i < S3_NUM_ROSES; i++)
         S3_SpawnRose(i);
 
-    /* Play Team Rocket theme */
-    PlayBGM(MUS_RG_ROCKETDUO);
 
     /* Fade in from black */
     BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);

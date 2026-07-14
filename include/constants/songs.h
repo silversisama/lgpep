@@ -502,7 +502,8 @@
 #define MUS_CASINO_PLUS_9           568 // MUS_CASINO_PLUS_9
 #define MUS_CASINO_PLUS_GACHA       569 // MUS_CASINO_PLUS_GACHA
 #define MUS_RG_ROCKETDUO            570 // MUS_ROCKETDUO
-#define END_MUS                     MUS_RG_ROCKETDUO
+#define MUS_LGPETITLE               571 // MUS_LGPETITLE
+#define END_MUS                     MUS_LGPETITLE
 
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.

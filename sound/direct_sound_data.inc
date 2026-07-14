@@ -203,6 +203,12 @@ DirectSoundWaveData_trumbone::
 	.incbin "sound/direct_sound_samples/trumbone.bin"
 
 	.align 2
+
+DirectSoundWaveData_bassoon::
+	.incbin "sound/direct_sound_samples/bassoon.bin"
+
+	.align 2
+
 DirectSoundWaveData_sc88pro_tuba_39:: @N.B.: These tuba samples are actually sampled at 36 and 48, then pitched up
 	.incbin "sound/direct_sound_samples/sc88pro_tuba_39.bin"
 
