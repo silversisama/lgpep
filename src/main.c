@@ -127,6 +127,7 @@ void AgbMain(void)
     AGBPrintInit();
 #endif
 #endif
+
     gAgbMainLoop_sp = __builtin_frame_address(0);
     AgbMainLoop();
 }

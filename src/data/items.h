@@ -15828,6 +15828,20 @@ const struct ItemInfo gItemsInfo[] =
         .iconPic = gItemIcon_PokeshiDoll,
         .iconPalette = gItemIconPalette_PokeshiDoll,
     },
+
+    [ITEM_RIDE_CAPSULE] =
+    {
+        .name = ITEM_NAME("Ride Capsule"),
+        .price = 0,
+        .description = sQuestionMarksDesc,
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_RideCapsule,
+        .iconPic = gItemIcon_AbilityCapsule,
+        .iconPalette = gItemIconPalette_AbilityCapsule,
+    },
+
 };
 
 #undef ITEM_NAME
