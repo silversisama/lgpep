@@ -16,6 +16,7 @@
 #include "oras_dowse.h"
 #include "overworld.h"
 #include "party_menu.h"
+#include "pokeride.h"
 #include "random.h"
 #include "rotating_gate.h"
 #include "rtc.h"
@@ -104,6 +105,8 @@ static enum Collision CheckForPlayerAvatarCollision(enum Direction);
 static enum Collision CheckForPlayerAvatarStaticCollision(enum Direction);
 static enum Collision CheckForObjectEventStaticCollision(struct ObjectEvent *, s16, s16, enum Direction, u8);
 static bool8 CanStopSurfing(s16, s16, enum Direction);
+static bool8 CanStartSwimming(s16, s16, u8);
+static bool8 CanStopSwimming(s16, s16, enum Direction);
 static bool8 ShouldJumpLedge(s16, s16, enum Direction);
 static bool8 TryPushBoulder(s16, s16, enum Direction);
 static void CheckAcroBikeCollision(s16, s16, u8, enum Collision *);
@@ -115,6 +118,7 @@ static void PlayerAvatarTransition_MachBike(struct ObjectEvent *);
 static void PlayerAvatarTransition_AcroBike(struct ObjectEvent *);
 static void PlayerAvatarTransition_Surfing(struct ObjectEvent *);
 static void PlayerAvatarTransition_Underwater(struct ObjectEvent *);
+static void PlayerAvatarTransition_Riding(struct ObjectEvent *);
 static void PlayerAvatarTransition_ReturnToField(struct ObjectEvent *);
 
 static bool8 PlayerAnimIsMultiFrameStationary(void);
@@ -246,6 +250,7 @@ static void (*const sPlayerAvatarTransitionFuncs[])(struct ObjectEvent *) =
     [PLAYER_AVATAR_STATE_FIELD_MOVE] = PlayerAvatarTransition_ReturnToField,
     [PLAYER_AVATAR_STATE_FISHING]    = PlayerAvatarTransition_Dummy,
     [PLAYER_AVATAR_STATE_WATERING]   = PlayerAvatarTransition_Dummy,
+    [PLAYER_AVATAR_STATE_RIDING]     = PlayerAvatarTransition_Riding,
 };
 
 static bool8 (*const sArrowWarpMetatileBehaviorChecks[])(u8) =
@@ -256,7 +261,7 @@ static bool8 (*const sArrowWarpMetatileBehaviorChecks[])(u8) =
     [DIR_EAST - 1]  = MetatileBehavior_IsEastArrowWarp,
 };
 
-static const u8 sRivalAvatarGfxIds[][GENDER_COUNT] =
+static const u16 sRivalAvatarGfxIds[][GENDER_COUNT] =
 {
     [PLAYER_AVATAR_STATE_NORMAL]     = {OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL,     OBJ_EVENT_GFX_RIVAL_MAY_NORMAL},
     [PLAYER_AVATAR_STATE_MACH_BIKE]  = {OBJ_EVENT_GFX_RIVAL_BRENDAN_MACH_BIKE,  OBJ_EVENT_GFX_RIVAL_MAY_MACH_BIKE},
@@ -267,6 +272,7 @@ static const u8 sRivalAvatarGfxIds[][GENDER_COUNT] =
     [PLAYER_AVATAR_STATE_FISHING]    = {OBJ_EVENT_GFX_BRENDAN_FISHING,          OBJ_EVENT_GFX_MAY_FISHING},
     [PLAYER_AVATAR_STATE_WATERING]   = {OBJ_EVENT_GFX_BRENDAN_WATERING,         OBJ_EVENT_GFX_MAY_WATERING},
     [PLAYER_AVATAR_STATE_VSSEEKER]   = {OBJ_EVENT_GFX_RIVAL_BRENDAN_FIELD_MOVE, OBJ_EVENT_GFX_RIVAL_MAY_FIELD_MOVE},
+    [PLAYER_AVATAR_STATE_RIDING]     = {OBJ_EVENT_GFX_BRENDAN_RIDING,       OBJ_EVENT_GFX_MAY_RIDING},
 };
 
 static const u16 sPlayerAvatarGfxIds[][GENDER_COUNT] =
@@ -280,6 +286,7 @@ static const u16 sPlayerAvatarGfxIds[][GENDER_COUNT] =
     [PLAYER_AVATAR_STATE_FISHING]    = {PLAYER_AVATAR_GFX_MALE_FISHING,    PLAYER_AVATAR_GFX_FEMALE_FISHING},
     [PLAYER_AVATAR_STATE_WATERING]   = {PLAYER_AVATAR_GFX_MALE_WATERING,   PLAYER_AVATAR_GFX_FEMALE_WATERING},
     [PLAYER_AVATAR_STATE_VSSEEKER]   = {PLAYER_AVATAR_GFX_MALE_VSSEEKER,   PLAYER_AVATAR_GFX_FEMALE_VSSEEKER},
+    [PLAYER_AVATAR_STATE_RIDING]     = {PLAYER_AVATAR_GFX_MALE_RIDING,     PLAYER_AVATAR_GFX_FEMALE_RIDING},
 };
 
 static const u8 sFRLGAvatarGfxIds[GENDER_COUNT] =
@@ -297,7 +304,7 @@ static const u8 sRSAvatarGfxIds[GENDER_COUNT] =
 static const struct PACKED
 {
     u16 graphicsId;
-    u8 playerFlag;
+    u16 playerFlag;
 } sPlayerAvatarGfxToStateFlag[GENDER_COUNT][5] =
 {
     [MALE] =
@@ -306,7 +313,8 @@ static const struct PACKED
         {PLAYER_AVATAR_GFX_MALE_MACH_BIKE,  PLAYER_AVATAR_FLAG_MACH_BIKE},
         {PLAYER_AVATAR_GFX_MALE_ACRO_BIKE,  PLAYER_AVATAR_FLAG_ACRO_BIKE},
         {PLAYER_AVATAR_GFX_MALE_SURFING,    PLAYER_AVATAR_FLAG_SURFING},
-        {PLAYER_AVATAR_GFX_MALE_UNDERWATER, PLAYER_AVATAR_FLAG_UNDERWATER},
+        // {PLAYER_AVATAR_GFX_MALE_UNDERWATER, PLAYER_AVATAR_FLAG_UNDERWATER},
+        {PLAYER_AVATAR_GFX_MALE_RIDING,     PLAYER_AVATAR_FLAG_RIDING},
     },
     [FEMALE] =
     {
@@ -314,7 +322,8 @@ static const struct PACKED
         {PLAYER_AVATAR_GFX_FEMALE_MACH_BIKE,      PLAYER_AVATAR_FLAG_MACH_BIKE},
         {PLAYER_AVATAR_GFX_FEMALE_ACRO_BIKE,      PLAYER_AVATAR_FLAG_ACRO_BIKE},
         {PLAYER_AVATAR_GFX_FEMALE_SURFING,        PLAYER_AVATAR_FLAG_SURFING},
-        {PLAYER_AVATAR_GFX_FEMALE_UNDERWATER,     PLAYER_AVATAR_FLAG_UNDERWATER},
+        // {PLAYER_AVATAR_GFX_FEMALE_UNDERWATER,     PLAYER_AVATAR_FLAG_UNDERWATER},
+        {PLAYER_AVATAR_GFX_FEMALE_RIDING,         PLAYER_AVATAR_FLAG_RIDING},
     }
 };
 
@@ -444,6 +453,8 @@ static void MovePlayerAvatarUsingKeypadInput(enum Direction direction, u16 newKe
 {
     if (gPlayerAvatar.flags & (PLAYER_AVATAR_FLAG_MACH_BIKE | PLAYER_AVATAR_FLAG_ACRO_BIKE))
         MovePlayerOnBike(direction, newKeys, heldKeys);
+    else if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_RIDING)
+        MovePlayerOnPokeRide(direction, newKeys, heldKeys);
     else
         MovePlayerNotOnBike(direction, heldKeys);
 }
@@ -667,6 +678,9 @@ static bool8 ForcedMovement_MatSpin(void)
 static bool8 ForcedMovement_MuddySlope(void)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+
+    if (PokeRide_IsRideFlying())
+        return FALSE;
 
     if (playerObjEvent->movementDirection != DIR_NORTH || GetPlayerSpeed() < PLAYER_SPEED_FASTEST)
     {
@@ -980,6 +994,22 @@ enum Collision CheckForObjectEventCollision(struct ObjectEvent *objectEvent, s16
     if (collision == COLLISION_ELEVATION_MISMATCH && CanStopSurfing(x, y, direction))
         return COLLISION_STOP_SURFING;
 
+    if (collision == COLLISION_ELEVATION_MISMATCH && CanStartSwimming(x, y, metatileBehavior))
+        return COLLISION_START_SWIMMING;
+
+    if (collision == COLLISION_ELEVATION_MISMATCH && CanStopSwimming(x, y, direction))
+        return COLLISION_STOP_SWIMMING;
+
+    if (PokeRide_IsRideFlying())
+    {
+        if (MetatileBehavior_IsJumpSouth(metatileBehavior)
+         || MetatileBehavior_IsJumpNorth(metatileBehavior)
+         || MetatileBehavior_IsJumpWest(metatileBehavior)
+         || MetatileBehavior_IsJumpEast(metatileBehavior))
+            return COLLISION_NONE;
+        return collision;
+    }
+
     if (ShouldJumpLedge(x, y, direction))
     {
         IncrementGameStat(GAME_STAT_JUMPED_DOWN_LEDGES);
@@ -1026,6 +1056,26 @@ static bool8 CanStopSurfing(s16 x, s16 y, enum Direction direction)
     {
         return FALSE;
     }
+}
+
+static bool8 CanStartSwimming(s16 x, s16 y, u8 metatileBehavior)
+{
+    if ((PokeRide_CanRideSwim() || PokeRide_IsRideFlying())
+        && MetatileBehavior_IsSurfableAndNotWaterfall(metatileBehavior)
+        && GetObjectEventIdByPosition(x, y, 3) == OBJECT_EVENTS_COUNT
+       )
+        return TRUE;
+    return FALSE;
+}
+
+static bool8 CanStopSwimming(s16 x, s16 y, enum Direction UNUSED direction)
+{
+    if ((PokeRide_CanRideSwim() || PokeRide_IsRideFlying())
+        && MapGridGetElevationAt(x, y) == ELEVATION_DEFAULT
+        && GetObjectEventIdByPosition(x, y, ELEVATION_DEFAULT) == OBJECT_EVENTS_COUNT
+    )
+        return TRUE;
+    return FALSE;
 }
 
 static bool8 ShouldJumpLedge(s16 x, s16 y, enum Direction direction)
@@ -1184,6 +1234,13 @@ static void PlayerAvatarTransition_Underwater(struct ObjectEvent *objEvent)
     ObjectEventTurn(objEvent, objEvent->movementDirection);
     SetPlayerAvatarStateMask(PLAYER_AVATAR_FLAG_UNDERWATER);
     objEvent->fieldEffectSpriteId = StartUnderwaterSurfBlobBobbing(objEvent->spriteId);
+}
+
+static void PlayerAvatarTransition_Riding(struct ObjectEvent *objEvent)
+{
+    ObjectEventSetGraphicsId(objEvent, GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_RIDING));
+    ObjectEventTurn(objEvent, objEvent->movementDirection);
+    SetPlayerAvatarStateMask(PLAYER_AVATAR_FLAG_RIDING);
 }
 
 static void PlayerAvatarTransition_ReturnToField(struct ObjectEvent *objEvent)

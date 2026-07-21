@@ -173,13 +173,6 @@ CeruleanCity_House5_EventScript_BerryCrushRankings::
 	releaseall
 	end
 
-CeruCity_House5_EventScript_BulbasaurGift::
-	lockall
-	msgbox CeruleanCity_House5_Text_BulbasaurGift
-	special GiveBulbasaur
-	waitstate
-	releaseall
-	end
 
 CeruleanCity_House1_Text_AnyInterestInBerries::
 	.string "I concoct a variety of medicine\n"

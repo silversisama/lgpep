@@ -8250,7 +8250,7 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_LightBall,
     },
 
-    [ITEM_EVE_RIBBON`] =
+    [ITEM_EVE_RIBBON] =
     {
         .name = ITEM_NAME("Eve Ribbon"),
         .price = (I_PRICE >= GEN_7) ? 1000 : 100,
@@ -16022,6 +16022,23 @@ const struct ItemInfo gItemsInfo[] =
         .iconPic = gItemIcon_PokeshiDoll,
         .iconPalette = gItemIconPalette_PokeshiDoll,
     },
+
+    [ITEM_RIDE_CAPSULE] =
+    {
+        .name = ITEM_NAME("Ride Capsule"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "A capsule given to you by\n"
+            "the fan club president\n"
+            "that allows for riding."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_RideCapsule,
+        .iconPic = gItemIcon_PokeBall,
+        .iconPalette = gItemIconPalette_PokeBall,
+    },
+
 
      [ITEM_CUT_TOOL] =
     {

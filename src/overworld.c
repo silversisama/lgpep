@@ -49,6 +49,7 @@
 #include "oras_dowse.h"
 #include "palette.h"
 #include "play_time.h"
+#include "pokeride.h"
 #include "random.h"
 #include "roamer.h"
 #include "rotating_gate.h"
@@ -1934,6 +1935,7 @@ void CB2_NewGame(void)
     ResetInitialPlayerAvatarState();
     PlayTimeCounter_Start();
     ScriptContext_Init();
+    PokeRide_Init();
     UnlockPlayerFieldControls();
     if (IS_FRLG)
         gFieldCallback = FieldCB_WarpExitFadeFromBlack;
@@ -2033,6 +2035,7 @@ static void CB2_LoadMapOnReturnToFieldCableClub(void)
 
 void CB2_ReturnToField(void)
 {
+    PokeRide_ResetSprites();
     if (IsOverworldLinkActive() == TRUE)
     {
         SetMainCallback2(CB2_ReturnToFieldLink);
@@ -2145,6 +2148,7 @@ void CB2_ContinueSavedGame(void)
 
     PlayTimeCounter_Start();
     ScriptContext_Init();
+    PokeRide_Init();
     UnlockPlayerFieldControls();
     gExitStairsMovementDisabled = TRUE;
     InitMatchCallCounters();

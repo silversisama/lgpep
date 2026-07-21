@@ -52,6 +52,7 @@
 #include "constants/items.h"
 #include "difficulty.h"
 #include "follower_npc.h"
+#include "pokeride.h"
 #include "main_menu.h"
 #include "constants/flags.h"
 #include "randomizer.h"
@@ -251,6 +252,7 @@ void NewGameInitData(void)
     #endif
     nuzlockePrev ? FlagSet(FLAG_NUZLOCKE) : FlagClear(FLAG_NUZLOCKE);
     nuzlockeHCPrev ? FlagSet(FLAG_NUZLOCKEHC) : FlagClear(FLAG_NUZLOCKEHC);
+    ClearPokeRideData();
 }
 
 static void ResetMiniGamesRecords(void)
