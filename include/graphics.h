@@ -1129,6 +1129,8 @@ extern const u16 gItemIconPalette_UltranecroziumZ[];
 // Species-specific Held Items
 extern const u32 gItemIcon_LightBall[];
 extern const u16 gItemIconPalette_LightBall[];
+extern const u32 gItemIcon_EveRibbon[];
+extern const u16 gItemIconPalette_EveRibbon[];
 extern const u32 gItemIcon_Leek[];
 extern const u16 gItemIconPalette_Leek[];
 extern const u32 gItemIcon_Bone[];

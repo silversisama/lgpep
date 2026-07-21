@@ -225,6 +225,10 @@ const struct HoldEffectInfo gHoldEffectsInfo[HOLD_EFFECT_COUNT] =
     {
     },
 
+    [HOLD_EFFECT_EVE_RIBBON] =
+    {
+    },
+
     [HOLD_EFFECT_TYPE_POWER] =
     {
     },

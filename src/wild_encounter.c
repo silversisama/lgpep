@@ -340,6 +340,9 @@ u8 ChooseWildMonLevel(const struct WildPokemon *wildPokemon, u8 wildMonIndex, en
     u8 max;
     u8 range;
     u8 rand;
+    u32 partymin = MAX_LEVEL;
+    u32 partymax = 0;
+    u32 i;
 
     if (LURE_STEP_COUNT == 0)
     {
@@ -353,6 +356,38 @@ u8 ChooseWildMonLevel(const struct WildPokemon *wildPokemon, u8 wildMonIndex, en
         {
             min = wildPokemon[wildMonIndex].maxLevel;
             max = wildPokemon[wildMonIndex].minLevel;
+        }
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) != SPECIES_NONE && !GetMonData(&gPlayerParty[i], MON_DATA_SANITY_IS_EGG))
+            {
+                partymax = (partymax > GetMonData(&gPlayerParty[i], MON_DATA_LEVEL)) ? partymax : GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
+                partymin = (partymin < GetMonData(&gPlayerParty[i], MON_DATA_LEVEL)) ? partymin : GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
+            }
+        }
+
+        range = partymax / 5;
+        if (range > (partymax - partymin))
+        {
+            partymin = partymax - range;
+        }
+
+        if (Random() % 4 != 0)
+        {
+            if (partymax > max)
+            {
+                max = partymax;
+            }
+
+            if (partymin > min)
+            {
+                min = partymin;
+            }
+
+            if (Random() % 4 != 0)
+            {
+                max--;
+            }
         }
         range = max - min + 1;
         rand = Random() % range;

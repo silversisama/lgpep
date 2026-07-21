@@ -7129,6 +7129,10 @@ static inline u32 CalcAttackStat(struct BattleContext *ctx)
         if (atkBaseSpeciesId == SPECIES_PIKACHU && (GetConfig(B_LIGHT_BALL_ATTACK_BOOST) >= GEN_4 || IsBattleMoveSpecial(move)))
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(2.0));
         break;
+    case HOLD_EFFECT_EVE_RIBBON:
+        if (atkBaseSpeciesId == SPECIES_EEVEE && (GetConfig(B_LIGHT_BALL_ATTACK_BOOST) >= GEN_4 || IsBattleMoveSpecial(move)))
+            modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(2.0));
+        break;
     case HOLD_EFFECT_CHOICE_BAND:
         if (GetBattlerSide(battlerAtk) == B_SIDE_PLAYER && FlagGet(FLAG_NUZLOCKEBAN))
         break;

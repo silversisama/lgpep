@@ -1145,6 +1145,9 @@ const u16 gItemIconPalette_UltranecroziumZ[] = INCBIN_U16("graphics/items/icon_p
 const u32 gItemIcon_LightBall[] = INCBIN_U32("graphics/items/icons/light_ball.4bpp.smol");
 const u16 gItemIconPalette_LightBall[] = INCBIN_U16("graphics/items/icon_palettes/light_ball.gbapal");
 
+const u32 gItemIcon_EveRibbon[] = INCBIN_U32("graphics/items/icons/eve_ribbon.4bpp.smol");
+const u16 gItemIconPalette_EveRibbon[] = INCBIN_U16("graphics/items/icon_palettes/eve_ribbon.gbapal");
+
 const u32 gItemIcon_Leek[] = INCBIN_U32("graphics/items/icons/leek.4bpp.smol");
 const u16 gItemIconPalette_Leek[] = INCBIN_U16("graphics/items/icon_palettes/leek.gbapal");
 

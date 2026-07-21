@@ -133,6 +133,7 @@ struct Trainer
     bool8 isBossTrainer:1;
     u16 overrideTrainer;
     enum TrainerPicID trainerBackPic;
+    u8 dynamicLevelRatio;
 };
 
 struct TrainerClass
@@ -308,6 +309,11 @@ static inline const u8 GetTrainerBackPicFromId(u16 trainerId)
         return gBattlePartners[partnerDifficulty][trainerId - TRAINER_PARTNER(PARTNER_NONE)].trainerBackPic;
 
     return GetTrainerStructFromId(trainerId)->trainerBackPic;
+}
+
+static inline const u8 GetTrainerDynamicPartyLevelFromId(u16 trainerId)
+{
+    return GetTrainerStructFromId(trainerId)->dynamicLevelRatio;
 }
 
 static inline const struct StartingStatuses GetTrainerStartingStatusFromId(u16 trainerId)

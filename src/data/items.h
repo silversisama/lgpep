@@ -8250,6 +8250,24 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_LightBall,
     },
 
+    [ITEM_EVE_RIBBON`] =
+    {
+        .name = ITEM_NAME("Eve Ribbon"),
+        .price = (I_PRICE >= GEN_7) ? 1000 : 100,
+        .holdEffect = HOLD_EFFECT_EVE_RIBBON,
+        .description = COMPOUND_STRING(
+            "A hold item that\n"
+            "raises the Atk and\n"
+            "Sp. Atk of Eevee."),
+        .pocket = POCKET_HELD_ITEMS,
+        .sortType = ITEM_TYPE_HELD_ITEM,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 30,
+        .iconPic = gItemIcon_EveRibbon,
+        .iconPalette = gItemIconPalette_EveRibbon,
+    },
+
     [ITEM_LEEK] =
     {
         .name = ITEM_NAME("Leek"),

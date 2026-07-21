@@ -1489,6 +1489,18 @@ static u8 GetEncounterLevelFromMapData(u16 species, enum EncounterType environme
     u8 i;
     u16 speciesToCheck;
 
+    // Scale the wild mons against the party mons
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) != SPECIES_NONE && !GetMonData(&gPlayerParty[i], MON_DATA_SANITY_IS_EGG))
+        {
+            min = (min < GetMonData(&gPlayerParty[i], MON_DATA_LEVEL)) ? min : GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
+            max = (max > GetMonData(&gPlayerParty[i], MON_DATA_LEVEL)) ? max : GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
+        }
+    }
+
+    min = (max - min > max / 5) ? min : max - (max / 5 );
+
     switch (environment)
     {
     case ENCOUNTER_TYPE_LAND:    // grass
@@ -1500,7 +1512,7 @@ static u8 GetEncounterLevelFromMapData(u16 species, enum EncounterType environme
 
         for (i = 0; i < LAND_WILD_COUNT; i++)
         {
-            #if FLAG_RANDOMIZER_WILD_MON == TRUE 
+            #if RANDOMIZER_AVAILABLE == TRUE 
                 speciesToCheck = RandomizeWildEncounter(
                     landMonsInfo->wildPokemon[i].species,
                     gWildMonHeaders[headerId].mapNum,
@@ -1525,7 +1537,7 @@ static u8 GetEncounterLevelFromMapData(u16 species, enum EncounterType environme
 
         for (i = 0; i < WATER_WILD_COUNT; i++)
         {
-            #if FLAG_RANDOMIZER_WILD_MON == TRUE
+            #if RANDOMIZER_AVAILABLE == TRUE
                 speciesToCheck = RandomizeWildEncounter(
                     waterMonsInfo->wildPokemon[i].species,
                     gWildMonHeaders[headerId].mapNum,
@@ -1730,7 +1742,7 @@ static bool8 CapturedAllLandMons(u32 headerId)
         for (i = 0; i < LAND_WILD_COUNT; ++i)
         {
             species = landMonsInfo->wildPokemon[i].species;
-            #if FLAG_RANDOMIZER_WILD_MON == TRUE
+            #if RANDOMIZER_AVAILABLE == TRUE
                 species = RandomizeWildEncounter(
                     species,
                     gWildMonHeaders[headerId].mapNum,
@@ -1772,7 +1784,7 @@ static bool8 CapturedAllWaterMons(u32 headerId)
         for (i = 0; i < WATER_WILD_COUNT; ++i)
         {
             species = waterMonsInfo->wildPokemon[i].species;
-            #if FLAG_RANDOMIZER_WILD_MON == TRUE
+            #if RANDOMIZER_AVAILABLE == TRUE
                 species = RandomizeWildEncounter(
                     species,
                     gWildMonHeaders[headerId].mapNum,
@@ -1967,7 +1979,7 @@ static void DexNavLoadEncounterData(void)
         for (i = 0; i < LAND_WILD_COUNT; i++)
         {
             species = landMonsInfo->wildPokemon[i].species;
-            #if FLAG_RANDOMIZER_WILD_MON == TRUE
+            #if RANDOMIZER_AVAILABLE == TRUE
                 species = RandomizeWildEncounter(
                     species,
                     gWildMonHeaders[headerId].mapNum,
@@ -1975,7 +1987,7 @@ static void DexNavLoadEncounterData(void)
                     WILD_AREA_LAND, i);
             #endif
             if (species != SPECIES_NONE && !SpeciesInArray(species, 0))
-                sDexNavUiDataPtr->landSpecies[grassIndex++] = landMonsInfo->wildPokemon[i].species;
+                sDexNavUiDataPtr->landSpecies[grassIndex++] = species;
         }
     }
 
@@ -1985,7 +1997,7 @@ static void DexNavLoadEncounterData(void)
         for (i = 0; i < WATER_WILD_COUNT; i++)
         {
             species = waterMonsInfo->wildPokemon[i].species;
-            #if FLAG_RANDOMIZER_WILD_MON == TRUE
+            #if RANDOMIZER_AVAILABLE == TRUE
                 species = RandomizeWildEncounter(
                     species,
                     gWildMonHeaders[headerId].mapNum,
@@ -1993,7 +2005,7 @@ static void DexNavLoadEncounterData(void)
                     WILD_AREA_WATER, i);
             #endif
             if (species != SPECIES_NONE && !SpeciesInArray(species, 1))
-                sDexNavUiDataPtr->waterSpecies[waterIndex++] = waterMonsInfo->wildPokemon[i].species;
+                sDexNavUiDataPtr->waterSpecies[waterIndex++] = species;
         }
     }
 
