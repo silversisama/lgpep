@@ -338,6 +338,8 @@ static const struct SpriteTemplate sCISpriteTemplate_Eevee =
 /* =========================================================================
  * VBlank / main callbacks
  * ========================================================================= */
+static void MainCB2_EndCustomIntro(void);
+
 static void VBlankCB_CustomIntro(void)
 {
     LoadOam();
@@ -351,6 +353,17 @@ void MainCB2_CustomIntro(void)
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
+
+    /* Skip: any key press (while not mid-fade) cuts straight to the title
+     * screen, same convention as the vanilla MainCB2_Intro/MainCB2_EndIntro. */
+    if (gMain.newKeys != 0 && !gPaletteFade.active)
+        SetMainCallback2(MainCB2_EndCustomIntro);
+}
+
+static void MainCB2_EndCustomIntro(void)
+{
+    if (!UpdatePaletteFade())
+        SetMainCallback2(CB2_InitTitleScreen);
 }
 
 /* =========================================================================
@@ -952,6 +965,11 @@ static void MainCB2_S2(void)
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
+
+    /* Same skip convention as MainCB2_CustomIntro - Screen 2 runs on its
+     * own main callback so it needs the check duplicated here. */
+    if (gMain.newKeys != 0 && !gPaletteFade.active)
+        SetMainCallback2(MainCB2_EndCustomIntro);
 }
 
 /* -------------------------------------------------------------------------
@@ -1645,6 +1663,8 @@ static void Task_S3_FadeIn(u8 taskId)
 {
     if (gPaletteFade.active)
         return;
+
+    PlayCryInternal(SPECIES_MEOWTH, 0, 120, CRY_PRIORITY_NORMAL, CRY_MODE_NORMAL);
 
     gTasks[taskId].tS3Timer = 0;
     gTasks[taskId].func     = Task_S3_Hold;
@@ -2835,6 +2855,8 @@ static void Task_S5_DogsJump(u8 taskId)
     {
         StartSpriteAnim(&gSprites[entId], 1);
         StartSpriteAnim(&gSprites[raiId], 1);
+        PlayCryInternal(SPECIES_ENTEI,  0, 120, CRY_PRIORITY_NORMAL, CRY_MODE_NORMAL);
+        PlayCryInternal(SPECIES_RAIKOU, 0, 120, CRY_PRIORITY_NORMAL, CRY_MODE_NORMAL);
     }
     else if (t == S5_T_APEX)
     {
@@ -2887,6 +2909,17 @@ static void Task_S5_FadeToBirds(u8 taskId)
 
     if (gPaletteFade.active)
         return;
+
+    /* BUGFIX (beast-screen VRAM glitch): the palette fade above only
+     * blends colours to black -- it does NOT stop the PPU from scanning
+     * out BG VRAM. The block below rewrites the tile data, tilemap, and
+     * palette for both BGs; if any part of that lands mid-scanout, the
+     * old and new data interleave for a frame and show up as a brief
+     * flicker/corruption exactly when this screen swaps to Suicune. Force
+     * a blank screen for the duration of the rewrite -- same technique
+     * every CB2_StartCustomIntroScreenN entry point in this file already
+     * uses -- then restore DISPCNT once everything is written. */
+    SetGpuReg(REG_OFFSET_DISPCNT, 0);
 
     /* Free Part A resources */
     ResetSpriteData();
@@ -2957,8 +2990,8 @@ static void Task_S5_FadeToBirds(u8 taskId)
     for (i = 0; sS5Pals_Birds[i].tag != 0; i++)
         LoadSpritePalette(&sS5Pals_Birds[i]);
 
-    /* Lugia - sea level, left->right */
-    lugId = CreateSprite(&sS5Template_Lugia, -64, 118, 1);
+    /* Lugia - sea level, left->right (lowered slightly per feedback) */
+    lugId = CreateSprite(&sS5Template_Lugia, -64, 130, 1);
     StartSpriteAnim(&gSprites[lugId], 0);
 
     /* Ho-Oh - upper sky, right->left, hFlipped */
@@ -2968,6 +3001,8 @@ static void Task_S5_FadeToBirds(u8 taskId)
 
     gTasks[taskId].tS5LugId = lugId;
     gTasks[taskId].tS5HoId  = hoId;
+
+    PlayCryInternal(SPECIES_SUICUNE, 0, 120, CRY_PRIORITY_NORMAL, CRY_MODE_NORMAL);
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
     gTasks[taskId].tS5Timer = 0;
@@ -3639,6 +3674,7 @@ static void Task_S6_BeamGrow(u8 taskId)
     if (gSprites[beamId].data[1])
     {
         PlayCryInternal(SPECIES_DEOXYS, 0, 120, CRY_PRIORITY_NORMAL, CRY_MODE_NORMAL);
+        PlaySE(SE_M_EXPLOSION);
         gTasks[taskId].tS6Timer = 0;
         gTasks[taskId].func     = Task_S6_Impact;
     }
@@ -3924,11 +3960,16 @@ static void Task_S7_Hold1(u8 taskId)
 
 /* --------------------------------------------------------------------------
  * Task: PressButton
- *   State 0: trigger button press visuals and sound, then wait one full
- *            VBlank before touching VRAM (prevents the mid-scanline yellow
- *            corruption line that appears when VRAM is written while the
- *            PPU is still rendering the current frame).
- *   State 1: PPU is now in VBlank — safe to swap BG tiles/tilemap/palette.
+ *   State 0: trigger button press visuals and sound (OAM/palette only,
+ *            safe mid-frame).
+ *   State 1: force the display blank before touching BG VRAM, swap
+ *            bgfinal1 -> bgfinal2, then restore DISPCNT. This is the same
+ *            technique used by every other screen transition in this file
+ *            (see Task_S5_FadeToBirds) — waiting a frame and hoping it
+ *            lands in VBlank is NOT enough, since RunTasks() runs in the
+ *            main loop, not the VBlank ISR, so the old "wait one frame"
+ *            version could still write mid-scanline and produce the
+ *            yellow flash.
  * -------------------------------------------------------------------------- */
 static void Task_S7_PressButton(u8 taskId)
 {
@@ -3942,14 +3983,21 @@ static void Task_S7_PressButton(u8 taskId)
         PlaySE(SE_PC_LOGIN);
         gTasks[taskId].tS7Timer = 1;
         return;
-        /* Return here and wait until next VBlank before writing BG VRAM. */
     }
 
-    /* Frame N+1 (VBlank has passed): now safe to overwrite BG VRAM.
-     * The screen was black for exactly 0 visible frames — no glitch. */
+    /* Force a real blank for the duration of the BG VRAM rewrite — this
+     * guarantees no partial/mixed tile data is ever scanned out, instead
+     * of relying on task-frame timing to line up with hardware VBlank. */
+    SetGpuReg(REG_OFFSET_DISPCNT, 0);
+
     DecompressDataWithHeaderVram(sS7Bg2_Gfx,    (void *)(BG_CHAR_ADDR(0)));
     DecompressDataWithHeaderVram(sS7Bg2_Tilemap, (void *)(BG_SCREEN_ADDR(16)));
     LoadPalette(sS7Bg2_Pal, BG_PLTT_ID(0), sizeof(sS7Bg2_Pal));
+
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0
+                                 | DISPCNT_OBJ_1D_MAP
+                                 | DISPCNT_BG1_ON
+                                 | DISPCNT_OBJ_ON);
 
     gTasks[taskId].tS7Timer = 0;
     gTasks[taskId].func     = Task_S7_Hold2;
