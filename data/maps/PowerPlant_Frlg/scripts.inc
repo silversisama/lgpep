@@ -58,6 +58,8 @@ PowerPlant_EventScript_Zapdos::
 
 PowerPlant_EventScript_DefeatedZapdos::
 	setflag FLAG_FOUGHT_ZAPDOS
+	message Text_LegendCapture
+	givemon SPECIES_ZAPDOS, 50, 0, BALL_MASTER, 0, 0, 0, 0, 0, 0, 0, 0, 0, 31, 31, 31, 31, 31, 31, MOVE_DRILL_PECK, MOVE_ROOST, MOVE_DISCHARGE, MOVE_RAIN_DANCE, 0
 	goto EventScript_RemoveStaticMon
 	end
 

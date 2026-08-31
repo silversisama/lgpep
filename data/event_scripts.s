@@ -1802,6 +1802,11 @@ Text_MonFlewAway::
 Text_Gyaoo::
 	.string "Gyaoo!$"
 
+Text_LegendCapture::
+	.string "{PLAYER} reaches into the\n"
+	.string "Master pouch for a ball!$"
+
+
 EventScript_BrailleCursorWaitButton::
 	special BrailleCursorToggle
 	waitbuttonpress

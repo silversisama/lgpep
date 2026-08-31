@@ -7,11 +7,6 @@ CeladonCity_GameCorner_OnLoad::
 	end
 
 CeladonCity_GameCorner_EventScript_HideRocketHideout::
-	setmetatile 15, 2, METATILE_GameCorner_Floor_ShadeFull, 0
-	setmetatile 16, 2, METATILE_GameCorner_Floor_ShadeFull, 0
-	setmetatile 17, 2, METATILE_GameCorner_Floor_ShadeFull, 0
-	setmetatile 16, 3, METATILE_GameCorner_PurpleWall_Floor, 1
-	setmetatile 17, 3, METATILE_GameCorner_PurpleWall_Floor, 1
 	return
 
 CeladonCity_GameCorner_EventScript_InfoClerk::
@@ -62,9 +57,6 @@ CeladonCity_GameCorner_EventScript_CheckWinnings::
 	playse SE_SHOP
 	delay 40
 
-CeladonCity_GameCorner_NoWin::
-	releaseall
-	end
 
 CeladonCity_GameCorner_EventScript_Blackjack::
 	lockall
@@ -418,11 +410,16 @@ Celadon_Onix_Not_Enough::
 Celadon_Butterfree_Not_Enough::
 	msgbox Celadon_Bird_Not_Enough, MSGBOX_DEFAULT
 	releaseall
-	end			
+	end	
+
 CeladonCity_GameCorner_CancelVF::
 	hidecoinsbox 0, 5
 CeladonCity_GameCorner_CancelBJ::
 	closemessage
+CeladonCity_GameCorner_NoWin::
+	releaseall
+	end
+
 CeladonVF_Not_Enough::
 	msgbox CeladonFlip_Not_Enough, MSGBOX_DEFAULT
 	releaseall
@@ -777,11 +774,6 @@ CeladonCity_GameCorner_EventScript_Poster::
 
 CeladonCity_GameCorner_EventScript_OpenRocketHideout::
 	playse SE_UNLOCK
-	setmetatile 15, 2, METATILE_GameCorner_Floor_StairsTop, 0
-	setmetatile 16, 2, METATILE_GameCorner_StairsTop, 1
-	setmetatile 17, 2, METATILE_GameCorner_StairsBottom, 1
-	setmetatile 16, 3, METATILE_GameCorner_PurpleWall_StairsTop, 1
-	setmetatile 17, 3, METATILE_GameCorner_PurpleWall_stairsBottom, 1
 	special DrawWholeMapView
 	setflag FLAG_OPENED_ROCKET_HIDEOUT
 	return
